@@ -206,16 +206,16 @@
           <sc-for list="{{ pathCards }}" as="p" hint-placeholder-count="6">
             <div style="background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);">
               <div style="height:84px;background:linear-gradient(125deg,{{ p.color }},{{ p.colorDark }});padding:15px;display:flex;align-items:flex-start;justify-content:space-between;">
-                <span style="width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;">{{ p.icon }}</span>
+                <span style="width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;">{{ p.iconWhite }}</span>
                 <span style="font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.22);color:#fff;">{{ p.statusLabel }}</span>
               </div>
               <div style="padding:14px 18px 18px;">
-                <div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:{{ p.progBg }};color:{{ p.progColor }};">{{ p.programName }}</span></div>
+                <div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--brand-soft);color:var(--brand);">{{ p.learnerCount }} learners</span></div>
                 <div style="font-size:16px;font-weight:700;color:var(--text);">{{ p.name }}</div>
                 <div style="display:flex;gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
                   <div><div style="font-size:16px;font-weight:700;color:var(--text);">{{ p.levelCount }}</div><div style="font-size:11px;color:var(--text-3);">Levels</div></div>
-                  <div><div style="font-size:16px;font-weight:700;color:var(--text);">{{ p.moduleCount }}</div><div style="font-size:11px;color:var(--text-3);">Modules</div></div>
                   <div><div style="font-size:16px;font-weight:700;color:var(--text);">{{ p.resCount }}</div><div style="font-size:11px;color:var(--text-3);">Resources</div></div>
+                  <div><div style="font-size:16px;font-weight:700;color:var(--text);">{{ p.learnerCount }}</div><div style="font-size:11px;color:var(--text-3);">Learners</div></div>
                 </div>
                 <div style="display:flex;gap:8px;margin-top:14px;">
                   <button onClick="{{ p.edit }}" style="flex:1;padding:9px;border-radius:9px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:12.5px;font-weight:700;cursor:pointer;">Edit</button>
@@ -1773,15 +1773,16 @@ class Component extends DCLogic {
     ];
     const activity=acts.map(a=>({ text:a.text, time:a.time, color:ACT[a.t], bg:this.mix(ACT[a.t],12), icon:this.svg(aIc[a.t],15,ACT[a.t],2) }));
 
-    const courseCards=S.courses.map(c=>{
+    let pathCards=S.courses.map(c=>{
       const rs=S.resources.filter(r=>r.courseId===c.id);
-      const paths=new Set(rs.map(r=>r.path)).size;
+      const levelSet=new Set(rs.map(r=>r.level));
       const st=c.status;
       const stCol={published:'#15803d',draft:'#b45309',archived:'#64748b'}[st];
-      return { ...c, colorDark:this.dark(c.color,28), iconWhite:this.iconEl(c.icon,24,'#fff',2), pathCount:paths, resCount:rs.length,
-        statusLabel:st, statusColor:stCol, statusBg:'rgba(255,255,255,.22)', opacity:st==='archived'?'.6':'1',
+      return { ...c, colorDark:this.dark(c.color,28), iconWhite:this.iconEl(c.icon,24,'#fff',2),
+        levelCount:levelSet.size, resCount:rs.length, learnerCount:c.learners,
+        statusLabel:st, statusColor:stCol,
         edit:()=>this.setState({wizard:this.newWizard(c),screen:'builder'}),
-        learnersView:()=>this.setState({viewer:'admin',screen:'enrollments'}) };
+        viewLevels:()=>this.setState({screen:'levels',filterPath:c.id}) };
     });
 
     // shared filter state
@@ -1850,20 +1851,8 @@ class Component extends DCLogic {
     const allModules=this.getModules();
 
     const sfPaths=sf.paths||{q:'',prog:'',status:''};
-    let pathCards=allPaths.map(p=>{
-      const c=this.courseById(p.courseId)||{}; const col=c.color||'#4A2E80';
-      const lvls=allLevels.filter(l=>l.courseId===p.courseId&&l.pathName===p.name);
-      const mods=allModules.filter(m=>m.courseId===p.courseId&&m.pathName===p.name);
-      const rs=S.resources.filter(r=>r.courseId===p.courseId&&r.path===p.name);
-      const st=c.status||'published'; const stCol={published:'#15803d',draft:'#b45309',archived:'#64748b'}[st]||'#64748b';
-      return { ...p, programName:c.name||'', color:col, colorDark:this.dark(col,28), icon:this.iconEl(c.icon||'rocket',24,'#fff',2),
-        statusLabel:st, statusColor:stCol, progBg:this.mix(col,13), progColor:col,
-        levelCount:lvls.length, moduleCount:mods.length, resCount:rs.length,
-        edit:()=>this.openEditPath(p),
-        viewLevels:()=>this.setState({screen:'levels',filterPath:p.courseId+'|'+p.name,filterLevel:null}) };
-    });
-    if(sfPaths.q) pathCards=pathCards.filter(p=>p.name.toLowerCase().includes(sfPaths.q.toLowerCase())||p.programName.toLowerCase().includes(sfPaths.q.toLowerCase()));
-    if(sfPaths.prog) pathCards=pathCards.filter(p=>p.courseId===sfPaths.prog);
+    if(sfPaths.q) pathCards=pathCards.filter(p=>p.name.toLowerCase().includes(sfPaths.q.toLowerCase()));
+    if(sfPaths.prog) pathCards=pathCards.filter(p=>p.id===sfPaths.prog);
     if(sfPaths.status) pathCards=pathCards.filter(p=>p.statusLabel===sfPaths.status);
 
     const sfLevels=sf.levels||{q:'',prog:''};
@@ -1928,7 +1917,7 @@ class Component extends DCLogic {
       goBuild:()=>this.go('paths'),
       goUsers:()=>this.go('users'), goHomolog:()=>this.go('homologations'),
       activity,
-      pathsCountLabel:pathCards.length+' paths across '+S.courses.length+' programs',
+      pathsCountLabel:pathCards.length+' role paths',
       levelsCountLabel:filteredLevels.length+' levels'+(fPath?' — filtered':''),
       modulesCountLabel:filteredModules.length+' modules'+(fLevel?' — filtered':''),
       skillsEmpty:skillRows.length===0,
@@ -1997,7 +1986,6 @@ class Component extends DCLogic {
       levelOptions, saveNewModule:()=>this.saveNewModule(),
       stopProp:(e)=>this.stopProp(e),
       courseCountLabel:S.courses.length+' programs · '+allPaths.length+' paths · '+allModules.length+' modules',
-      courseCards,
       resLibRows:resLibUnique, resLibCount:resLibUnique.length,
       skillRows,
       userRows,
