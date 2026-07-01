@@ -735,7 +735,7 @@
               <div style="display:flex;align-items:flex-start;gap:14px;">
                 <div style="width:40px;height:40px;border-radius:50%;background:{{ h.avatarBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0;">{{ h.initials }}</div>
                 <div style="flex:1;min-width:0;">
-                  <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:14.5px;font-weight:700;">{{ h.res.title }}</span><sc-if value="{{ h.overdue }}" hint-placeholder-val="{{ false }}"><span style="font-size:10.5px;font-weight:700;color:#dc2626;background:color-mix(in srgb,#dc2626 12%,var(--surface));padding:2px 9px;border-radius:20px;">OVERDUE</span></sc-if></div>
+                  <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:14.5px;font-weight:700;">{{ h.res.title }}</span><span style="font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:20px;background:{{ h.typeBg }};color:{{ h.typeColor }};">{{ h.typeLabel }}</span><sc-if value="{{ h.overdue }}" hint-placeholder-val="{{ false }}"><span style="font-size:10.5px;font-weight:700;color:#dc2626;background:color-mix(in srgb,#dc2626 12%,var(--surface));padding:2px 9px;border-radius:20px;">OVERDUE</span></sc-if></div>
                   <div style="font-size:12.5px;color:var(--text-2);margin-top:2px;">{{ h.user.name }} · {{ h.res.platform }} · submitted {{ h.submittedLabel }}</div>
                   <div style="display:flex;align-items:center;gap:10px;margin-top:12px;padding:11px 14px;border-radius:11px;background:var(--surface-2);border:1px solid var(--border);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5z"/><path d="M14 2v6h6"/></svg><span style="flex:1;font-size:13px;font-weight:600;">{{ h.res.evidence }}</span></div>
                 </div>
@@ -1743,6 +1743,15 @@ class Component extends DCLogic {
     this.setState({enrollRequests}); this.flash('Solicitud rechazada','ok');
   }
 
+  approveHomologRequest(reqId){
+    const req=this.state.homologRequests.find(r=>r.id===reqId); if(!req) return;
+    const resources=this.state.resources.map(r=>r.id===req.resourceId?{...r,status:'completed',hasCert:true,score:90,completedDate:this.TODAY}:r);
+    const homologRequests=this.state.homologRequests.map(r=>r.id===reqId?{...r,status:'approved'}:r);
+    this.setState({resources,homologRequests});
+    this.pushNotif('Homologación aprobada: "'+req.title+'"','approved');
+    this.flash('Homologación aprobada — recurso marcado como completado','ok');
+  }
+
   renderVals(){
     return Object.assign({}, this.vChrome(), this.vNav(), this.vAdmin(), this.vWizard(), this.vManager(), this.vLearner(), this.vModals());
   }
@@ -2218,14 +2227,27 @@ class Component extends DCLogic {
         courseName:e.course?e.course.name:'—', courseColor:e.course?e.course.color:'#64748b', level:curLevel, prog:e.prog, last:e.last,
         statusLabel:st[0], statusColor:st[1], statusBg:this.mix(st[1],14) };
     });
-    const approvalRows=pending.slice().sort((a,b)=>a.submitted.localeCompare(b.submitted)).map(h=>({ ...h, initials:this.initials(h.user.name), avatarBg:this.avatarBg(h.user.name), approve:()=>this.approve(h), reject:()=>this.openReject(h) }));
+    const evidenceRows=pending.map(h=>({
+      ...h, initials:this.initials(h.user.name), avatarBg:this.avatarBg(h.user.name),
+      type:'evidence', typeBg:this.mix('#2563eb',12), typeColor:'#2563eb', typeLabel:'Evidence',
+      approve:()=>this.approve(h), reject:()=>this.openReject(h)
+    }));
+    const homReqs=(S.homologRequests||[]).filter(h=>h.status==='pending').map(h=>{
+      const u=this.userById(h.userId); const res=S.resources.find(r=>r.id===h.resourceId)||{title:h.title,platform:'—'};
+      return { id:h.id, res:{...res,title:h.title||res.title,evidence:h.evidence||'evidencia.pdf'}, user:u,
+        overdue:false, submittedLabel:this.fmtDate(h.submitted), initials:this.initials(u.name), avatarBg:this.avatarBg(u.name),
+        type:'homologation', typeBg:this.mix('#7c3aed',12), typeColor:'#7c3aed', typeLabel:'Homologation',
+        approve:()=>this.approveHomologRequest(h.id),
+        reject:()=>this.openReject({resId:h.resourceId,res:{title:h.title},user:u}) };
+    });
+    const approvalRows=[...evidenceRows,...homReqs].sort((a,b)=>a.submitted.localeCompare(b.submitted));
 
     const programOptions=S.courses.map(c=>({id:c.id,name:c.name}));
     return {
       showTeam:isMgr&&S.screen==='team', showProgress:isMgr&&S.screen==='progress', showApprovals:isMgr&&S.screen==='approvals',
       mgrCards:[ {value:team.length,label:'Team learners',color:'var(--text)',flag:false},
         {value:avg+'%',label:'Avg completion',color:'var(--text)',flag:false},
-        {value:pending.length,label:'Pending approvals',color:pending.length?'#dc2626':'var(--text)',flag:pending.length>0},
+        {value:approvalRows.length,label:'Pending approvals',color:approvalRows.length?'#dc2626':'var(--text)',flag:approvalRows.length>0},
         {value:atRisk.length,label:'At-risk learners',color:atRisk.length?'#b45309':'var(--text)',flag:false} ],
       atRisk, atRiskEmpty:atRisk.length===0,
       mgrApprovals:approvalRows.slice(0,3), mgrApprovalsMore:Math.max(0,approvalRows.length-3), mgrApprovalsEmpty:approvalRows.length===0,
