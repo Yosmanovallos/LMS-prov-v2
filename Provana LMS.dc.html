@@ -891,10 +891,15 @@
                 <div style="font-size:16px;font-weight:700;color:var(--text);">{{ c.name }}</div>
                 <div style="font-size:12.5px;color:var(--text-2);margin-top:4px;line-height:1.5;min-height:38px;">{{ c.desc }}</div>
                 <div style="display:flex;flex-wrap:wrap;gap:5px;margin:10px 0;"><sc-for list="{{ c.skills }}" as="s" hint-placeholder-count="3"><span style="font-size:10.5px;font-weight:600;padding:2px 9px;border-radius:20px;background:var(--brand-soft);color:var(--brand);">{{ s }}</span></sc-for></div>
-                <div style="display:flex;gap:14px;font-size:11.5px;color:var(--text-3);padding-top:8px;border-top:1px solid var(--border);"><span><strong style="color:var(--text);">{{ c.pathCount }}</strong> paths</span><span><strong style="color:var(--text);">{{ c.resCount }}</strong> resources</span></div>
+                <div style="display:flex;gap:14px;font-size:11.5px;color:var(--text-3);padding-top:8px;border-top:1px solid var(--border);"><span><strong style="color:var(--text);">{{ c.levelCount }}</strong> levels</span><span><strong style="color:var(--text);">{{ c.resCount }}</strong> resources</span></div>
                 <div style="display:flex;gap:8px;margin-top:14px;">
-                  <sc-if value="{{ c.assigned }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.open }}" style="flex:1;padding:10px;border-radius:10px;border:none;background:var(--brand);color:#fff;font-size:12.5px;font-weight:700;">View Course</button></sc-if>
-                  <sc-if value="{{ c.assigned }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.preview }}" style="flex:1;padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:12.5px;font-weight:700;">Preview</button><button onClick="{{ c.request }}" style="padding:10px 14px;border-radius:10px;border:none;background:var(--brand);color:#fff;font-size:12.5px;font-weight:700;">Request</button></sc-if>
+  <button onClick="{{ c.preview }}" style="flex:1;padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:12.5px;font-weight:700;">Preview</button>
+  <sc-if value="{{ c.pending }}" hint-placeholder-val="{{ false }}">
+    <button style="padding:10px 14px;border-radius:10px;border:none;background:var(--surface-2);color:var(--text-3);font-size:12.5px;font-weight:700;" disabled>Solicitud enviada</button>
+  </sc-if>
+  <sc-if value="{{ !c.pending }}" hint-placeholder-val="{{ true }}">
+    <button onClick="{{ c.request }}" style="padding:10px 14px;border-radius:10px;border:none;background:var(--brand);color:#fff;font-size:12.5px;font-weight:700;cursor:pointer;">Solicitar acceso</button>
+  </sc-if>
                 </div>
               </div>
             </div>
@@ -1755,6 +1760,16 @@ class Component extends DCLogic {
     const enrollRequests=this.state.enrollRequests.map(r=>r.id===reqId?{...r,status:'rejected'}:r);
     this.setState({enrollRequests}); this.flash('Solicitud rechazada','ok');
   }
+  requestSecondaryPath(pathId,level){
+    const S=this.state; const learner=S.users.find(u=>u.id==='u1');
+    const alreadyReq=(S.enrollRequests||[]).some(r=>r.userId==='u1'&&r.pathId===pathId&&r.status==='pending');
+    if(alreadyReq){this.flash('Ya enviaste una solicitud para este path','warn');return;}
+    const req={id:'ereq'+Date.now(),userId:'u1',pathId,level,status:'pending',submitted:this.TODAY};
+    const c=this.courseById(pathId);
+    this.setState({enrollRequests:[...(S.enrollRequests||[]),req]});
+    this.pushNotif('Solicitud de acceso enviada: '+( c?c.name:pathId),'assign');
+    this.flash('Solicitud enviada al manager','ok');
+  }
 
   approveHomologRequest(reqId){
     const req=this.state.homologRequests.find(r=>r.id===reqId); if(!req) return;
@@ -2361,14 +2376,17 @@ class Component extends DCLogic {
 
     // explore
     const q=S.search.trim().toLowerCase();
-    const exploreCards=S.courses.filter(c=>c.status!=='draft').filter(c=>!q||c.name.toLowerCase().includes(q)).map(c=>{
-      const rs=this.state.resources.filter(r=>r.courseId===c.id);
-      const skillSet=new Set(); rs.forEach(r=>(r.skills||[]).forEach(s=>skillSet.add(s)));
-      const assigned=c.id===cid;
-      return { ...c, colorDark:this.dark(c.color,28), iconWhite:this.iconEl(c.icon,22,'#fff',2),
-        pathCount:new Set(rs.map(r=>r.path)).size, resCount:rs.length, skills:[...skillSet].slice(0,4), assigned,
-        preview:()=>this.setState({previewCourse:c.id}), open:()=>this.setState({detailCourse:c.id,screen:'course',detailRes:null}),
-        request:()=>this.requestAccess(c) };
+    const assignedPathIds=new Set([learnerUser.primaryPathId,...(learnerUser.secondaryPaths||[]).map(sp=>sp.pathId)].filter(Boolean));
+    const exploreCards=S.courses.filter(c=>!assignedPathIds.has(c.id)).map(c=>{
+      const rs=S.resources.filter(r=>r.courseId===c.id);
+      const levels=[...new Set(rs.map(r=>r.level))];
+      const pending=(S.enrollRequests||[]).some(r=>r.userId===learnerUser.id&&r.pathId===c.id&&r.status==='pending');
+      return { ...c, colorDark:this.dark(c.color,28), iconWhite:this.iconEl(c.icon,24,'#fff',2),
+        levelCount:levels.size||levels.length, resCount:rs.length,
+        skills:[...new Set(rs.flatMap(r=>r.skills||[]))].slice(0,4),
+        pending, assigned:false,
+        preview:()=>this.setState({previewCourse:c.id,previewOpen:true}),
+        request:()=>this.requestSecondaryPath(c.id,levels[0]||'Junior') };
     });
 
     return {
