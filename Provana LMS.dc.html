@@ -908,6 +908,68 @@
       </div>
       </sc-if>
 
+      <!-- LEARNER: HOMOLOGAR -->
+      <sc-if value="{{ showHomologar }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:720px;margin:0 auto;">
+
+        <!-- Form -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 26px;box-shadow:var(--shadow);margin-bottom:20px;">
+          <div style="font-size:16px;font-weight:700;margin-bottom:4px;">Solicitar homologación</div>
+          <div style="font-size:13px;color:var(--text-3);margin-bottom:20px;">Declara que ya completaste un recurso fuera de la plataforma y sube tu evidencia. Tu manager lo revisará.</div>
+
+          <!-- Step 1: Select resource -->
+          <div style="margin-bottom:16px;">
+            <label style="font-size:12px;font-weight:700;color:var(--text-2);display:block;margin-bottom:6px;">1. Seleccionar recurso</label>
+            <div style="display:flex;gap:10px;">
+              <select value="{{ homologFormPath }}" onChange="{{ setHomologPath }}" style="flex:1;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);font-size:13px;color:var(--text);outline:none;">
+                <option value="">Seleccionar path…</option>
+                <sc-for list="{{ homologPathOptions }}" as="po" hint-placeholder-count="3"><option value="{{ po.id }}">{{ po.name }}</option></sc-for>
+              </select>
+              <select value="{{ homologFormResource }}" onChange="{{ setHomologResource }}" style="flex:1.6;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);font-size:13px;color:var(--text);outline:none;">
+                <option value="">Seleccionar recurso…</option>
+                <sc-for list="{{ homologResourceOptions }}" as="ro" hint-placeholder-count="4"><option value="{{ ro.id }}">{{ ro.label }}</option></sc-for>
+              </select>
+            </div>
+          </div>
+
+          <!-- Step 2: Evidence -->
+          <div style="margin-bottom:16px;">
+            <label style="font-size:12px;font-weight:700;color:var(--text-2);display:block;margin-bottom:6px;">2. Subir evidencia</label>
+            <button onClick="{{ pickHomologEvidence }}" style="display:flex;align-items:center;gap:10px;width:100%;padding:12px 14px;border-radius:11px;border:1.5px dashed var(--border);background:var(--surface-2);color:{{ homologEvidenceColor }};font-size:13px;font-weight:600;text-align:left;cursor:pointer;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8 12 3 7 8"/><path d="M12 3v12"/></svg>
+              {{ homologEvidenceLabel }}
+            </button>
+          </div>
+
+          <!-- Step 3: Note + Submit -->
+          <div style="margin-bottom:16px;">
+            <label style="font-size:12px;font-weight:700;color:var(--text-2);display:block;margin-bottom:6px;">3. Nota adicional <span style="font-weight:400;color:var(--text-3);">(opcional)</span></label>
+            <textarea value="{{ homologFormNote }}" onInput="{{ setHomologNote }}" placeholder="Contexto adicional para tu manager…" style="width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);font-size:13px;color:var(--text);outline:none;min-height:72px;resize:vertical;"></textarea>
+          </div>
+
+          <button onClick="{{ submitHomologRequest }}" style="width:100%;padding:13px;border-radius:11px;border:none;background:var(--brand);color:#fff;font-size:14px;font-weight:700;cursor:pointer;">Enviar solicitud al manager</button>
+        </div>
+
+        <!-- History -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 24px;box-shadow:var(--shadow);">
+          <div style="font-size:14px;font-weight:700;margin-bottom:14px;">Historial de solicitudes</div>
+          <sc-if value="{{ homologHistoryEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:20px;text-align:center;font-size:13px;color:var(--text-3);">No has enviado solicitudes aún.</div>
+          </sc-if>
+          <sc-for list="{{ homologHistory }}" as="h" hint-placeholder-count="2">
+            <div style="display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);">
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ h.title }}</div>
+                <div style="font-size:11.5px;color:var(--text-3);margin-top:2px;">Enviado {{ h.submittedLabel }}<sc-if value="{{ h.managerNote }}" hint-placeholder-val="{{ false }}"> · {{ h.managerNote }}</sc-if></div>
+              </div>
+              <span style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:{{ h.statusBg }};color:{{ h.statusColor }};white-space:nowrap;">{{ h.statusLabel }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+      </div>
+      </sc-if>
+
       <!-- LEARNER: COURSE PAGE -->
       <sc-if value="{{ showCoursePage }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:1200px;margin:0 auto;">
@@ -1332,6 +1394,7 @@ class Component extends DCLogic {
   state = {
     theme:'light', viewer:'admin', screen:'paths', search:'', searchOpen:false, notifOpen:false,
     detailCourse:'qa', detailRes:null, learnerTab:'overview', learnerOpenPath:{}, evidenceFile:'',
+    homologFormPath:'', homologFormResource:'', homologFormEvidence:'', homologFormNote:'',
     wizard:null, rejectFor:null, rejectNote:'', enrollOpen:false, enrollUser:'', enrollCourse:'', previewCourse:null, certView:null,
     filterPath:null, filterLevel:null, filterModule:null,
     newPathOpen:false, newLevelOpen:false, newModuleOpen:false,
@@ -1770,6 +1833,20 @@ class Component extends DCLogic {
     this.pushNotif('Solicitud de acceso enviada: '+( c?c.name:pathId),'assign');
     this.flash('Solicitud enviada al manager','ok');
   }
+
+  submitHomologRequest(){
+    const S=this.state;
+    if(!S.homologFormPath||!S.homologFormResource){this.flash('Selecciona un path y un recurso','warn');return;}
+    if(!S.homologFormEvidence){this.flash('Adjunta una evidencia','warn');return;}
+    const res=S.resources.find(r=>r.id===S.homologFormResource);
+    const req={id:'hreq'+Date.now(),userId:'u1',resourceId:S.homologFormResource,pathId:S.homologFormPath,
+      level:res?res.level:'',module:res?res.module:'',title:res?res.title:'',
+      evidence:S.homologFormEvidence,note:S.homologFormNote,status:'pending',submitted:this.TODAY,managerNote:''};
+    this.setState({homologRequests:[...S.homologRequests,req],homologFormPath:'',homologFormResource:'',homologFormEvidence:'',homologFormNote:''});
+    this.pushNotif('Solicitud de homologación enviada al manager','assign');
+    this.flash('Solicitud enviada al manager','ok');
+  }
+  pickHomologEvidence(){ this.setState({homologFormEvidence:'certificado-'+Date.now()+'.pdf'}); }
 
   approveHomologRequest(reqId){
     const req=this.state.homologRequests.find(r=>r.id===reqId); if(!req) return;
@@ -2389,9 +2466,23 @@ class Component extends DCLogic {
         request:()=>this.requestSecondaryPath(c.id,levels[0]||'Junior') };
     });
 
+    // homologar
+    const homologPathOptions=[
+      {id:learnerUser.primaryPathId,name:(this.courseById(learnerUser.primaryPathId)||{}).name||'Primary'},
+      ...(learnerUser.secondaryPaths||[]).map(sp=>({id:sp.pathId,name:(this.courseById(sp.pathId)||{}).name||sp.pathId}))
+    ].filter(p=>p.id);
+    const homologResourceOptions=S.homologFormPath?S.resources.filter(r=>r.courseId===S.homologFormPath&&r.status!=='completed').map(r=>({id:r.id,label:r.title+' ('+r.level+' · '+r.module+')'})):[];
+    const homologHistory=(S.homologRequests||[]).filter(h=>h.userId==='u1').map(h=>({
+      ...h, statusLabel:h.status==='pending'?'Pendiente':h.status==='approved'?'Aprobado':'Rechazado',
+      statusColor:h.status==='pending'?'#b45309':h.status==='approved'?'#15803d':'#dc2626',
+      statusBg:this.mix(h.status==='pending'?'#b45309':h.status==='approved'?'#15803d':'#dc2626',12),
+      submittedLabel:this.fmtDate(h.submitted)
+    }));
+
     return {
       showHome:isLn&&S.screen==='home', showExplore:isLn&&S.screen==='explore', showCoursePage:isLn&&S.screen==='course',
       showMyPaths:isLn&&S.screen==='mypaths',
+      showHomologar:isLn&&S.screen==='homologar',
       goMyPaths:()=>this.setState({screen:'mypaths'}),
       goHomologar:()=>this.setState({screen:'homologar'}),
       myPathTabs: allPaths.map(p=>{
@@ -2430,7 +2521,19 @@ class Component extends DCLogic {
       pickEvidence:()=>{ const n=['certificate.pdf','completion-screenshot.png','badge.png','transcript.pdf'][Math.floor(Math.random()*4)]; this.setState({evidenceFile:n}); },
       submitEvidence:()=>this.submitEvidence(), markDone:()=>{ if(selRes) this.markResourceDone(selRes.id); },
       cp_back:()=>this.go('explore'),
-      exploreCards, exploreEmpty:exploreCards.length===0
+      exploreCards, exploreEmpty:exploreCards.length===0,
+      // homologar
+      homologPathOptions, homologResourceOptions,
+      homologFormPath:S.homologFormPath, homologFormResource:S.homologFormResource,
+      homologFormEvidence:S.homologFormEvidence, homologFormNote:S.homologFormNote,
+      homologEvidenceLabel:S.homologFormEvidence||'Adjuntar certificado o captura…',
+      homologEvidenceColor:S.homologFormEvidence?'var(--brand)':'var(--text-3)',
+      homologHistory, homologHistoryEmpty:homologHistory.length===0,
+      setHomologPath:(e)=>this.setState({homologFormPath:e.target.value,homologFormResource:''}),
+      setHomologResource:(e)=>this.setState({homologFormResource:e.target.value}),
+      setHomologNote:(e)=>this.setState({homologFormNote:e.target.value}),
+      pickHomologEvidence:()=>this.pickHomologEvidence(),
+      submitHomologRequest:()=>this.submitHomologRequest()
     };
   }
 
