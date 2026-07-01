@@ -1838,6 +1838,8 @@ class Component extends DCLogic {
     const S=this.state;
     if(!S.homologFormPath||!S.homologFormResource){this.flash('Selecciona un path y un recurso','warn');return;}
     if(!S.homologFormEvidence){this.flash('Adjunta una evidencia','warn');return;}
+    const alreadyReq=(S.homologRequests||[]).some(r=>r.userId==='u1'&&r.resourceId===S.homologFormResource&&r.status==='pending');
+    if(alreadyReq){this.flash('Ya enviaste una solicitud para este recurso','warn');return;}
     const res=S.resources.find(r=>r.id===S.homologFormResource);
     const req={id:'hreq'+Date.now(),userId:'u1',resourceId:S.homologFormResource,pathId:S.homologFormPath,
       level:res?res.level:'',module:res?res.module:'',title:res?res.title:'',
