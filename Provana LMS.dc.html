@@ -1073,63 +1073,6 @@
       </div>
       </sc-if>
 
-      <!-- LEARNER: COURSE PAGE -->
-      <sc-if value="{{ showCoursePage }}" hint-placeholder-val="{{ false }}">
-      <div style="max-width:1200px;margin:0 auto;">
-        <button onClick="{{ cp_back }}" style="display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--text-3);background:none;border:none;margin-bottom:14px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>All courses</button>
-        <div style="display:grid;grid-template-columns:330px 1fr;gap:20px;align-items:start;">
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow);">
-            <div style="font-size:14px;font-weight:700;padding:4px 8px 12px;">{{ cp_courseName }}</div>
-            <sc-for list="{{ cp_tree }}" as="p" hint-placeholder-count="2">
-              <div style="margin-bottom:6px;">
-                <button onClick="{{ p.toggle }}" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;padding:8px;border:none;background:transparent;color:var(--text);font-size:13px;font-weight:700;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="{{ p.chev }}"><path d="m9 18 6-6-6-6"/></svg>{{ p.path }}</button>
-                <sc-if value="{{ p.open }}" hint-placeholder-val="{{ true }}">
-                  <div style="padding-left:12px;">
-                    <sc-for list="{{ p.levels }}" as="l" hint-placeholder-count="2">
-                      <div style="margin:4px 0;"><div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-3);padding:5px 8px;">{{ l.level }}</div>
-                        <sc-for list="{{ l.modules }}" as="m" hint-placeholder-count="2">
-                          <div style="padding-left:6px;"><div style="font-size:11.5px;font-weight:600;color:var(--text-2);padding:3px 8px;">{{ m.module }}</div>
-                            <sc-for list="{{ m.resources }}" as="r" hint-placeholder-count="2"><button onClick="{{ r.pick }}" style="{{ r.style }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.dot }};flex-shrink:0;"></span><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.title }}</span></button></sc-for>
-                          </div>
-                        </sc-for>
-                      </div>
-                    </sc-for>
-                  </div>
-                </sc-if>
-              </div>
-            </sc-for>
-          </div>
-          <sc-if value="{{ cp_hasSel }}" hint-placeholder-val="{{ true }}">
-          <div>
-            <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 26px;box-shadow:var(--shadow);">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#fff;background:{{ cp_platColor }};padding:4px 11px;border-radius:20px;">{{ cp_platform }}</span><span style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:{{ cp_statusBg }};color:{{ cp_statusColor }};">{{ cp_statusLabel }}</span><span style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:{{ cp_homBg }};color:{{ cp_homColor }};">{{ cp_homLabel }}</span></div>
-              <div style="font-size:22px;font-weight:800;letter-spacing:-.01em;margin-bottom:8px;">{{ cp_title }}</div>
-              <sc-if value="{{ cp_hasDesc }}" hint-placeholder-val="{{ true }}"><div style="font-size:13.5px;color:var(--text-2);line-height:1.6;margin-bottom:16px;">{{ cp_desc }}</div></sc-if>
-              <div style="display:flex;gap:24px;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:16px;"><div><div style="font-size:11px;color:var(--text-3);">Duration</div><div style="font-size:14px;font-weight:700;">{{ cp_duration }}</div></div><div><div style="font-size:11px;color:var(--text-3);">Points</div><div style="font-size:14px;font-weight:700;">{{ cp_points }}</div></div></div>
-              <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px;">Skills you'll develop</div>
-              <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;"><sc-for list="{{ cp_skills }}" as="s" hint-placeholder-count="2"><span style="font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;background:var(--brand-soft);color:var(--brand);">{{ s }}</span></sc-for></div>
-              <a href="{{ cp_link }}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:11px;background:var(--brand);color:#fff;font-size:13.5px;font-weight:700;text-decoration:none;">Open on Platform<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
-            </div>
-            <sc-if value="{{ cp_canSubmit }}" hint-placeholder-val="{{ false }}">
-            <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 24px;box-shadow:var(--shadow);margin-top:16px;">
-              <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Submit evidence for homologation</div>
-              <div style="font-size:12.5px;color:var(--text-3);margin-bottom:14px;">This resource requires manager validation. Upload your certificate or proof of completion.</div>
-              <div style="display:flex;gap:10px;"><button onClick="{{ pickEvidence }}" style="flex:1;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:11px;border:1.5px dashed var(--border);background:var(--surface-2);color:{{ cp_fileColor }};font-size:13px;font-weight:600;text-align:left;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8 12 3 7 8"/><path d="M12 3v12"/></svg>{{ cp_fileLabel }}</button><button onClick="{{ submitEvidence }}" style="padding:12px 22px;border-radius:11px;border:none;background:var(--brand);color:#fff;font-size:13px;font-weight:700;">Submit</button></div>
-            </div>
-            </sc-if>
-            <sc-if value="{{ cp_isAuto }}" hint-placeholder-val="{{ false }}">
-            <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-radius:14px;background:color-mix(in srgb,#15803d 9%,var(--surface));border:1px solid color-mix(in srgb,#15803d 22%,var(--surface));margin-top:16px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg><span style="font-size:13px;color:var(--text-2);font-weight:600;">Auto-validated — no evidence needed. Marking this complete validates it instantly.</span><button onClick="{{ markDone }}" style="margin-left:auto;padding:8px 16px;border-radius:9px;border:none;background:#15803d;color:#fff;font-size:12.5px;font-weight:700;">Mark complete</button></div>
-            </sc-if>
-            <sc-if value="{{ cp_isWaiting }}" hint-placeholder-val="{{ false }}">
-            <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-radius:14px;background:color-mix(in srgb,#b45309 9%,var(--surface));border:1px solid color-mix(in srgb,#b45309 22%,var(--surface));margin-top:16px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span style="font-size:13px;color:var(--text-2);font-weight:600;">Evidence submitted — awaiting your manager's validation.</span></div>
-            </sc-if>
-          </div>
-          </sc-if>
-        </div>
-      </div>
-      </sc-if>
-
-
     </div>
   </main>
 
@@ -1527,7 +1470,7 @@
 class Component extends DCLogic {
   state = {
     theme:'light', viewer:'admin', screen:'paths', search:'', searchOpen:false, notifOpen:false,
-    detailCourse:'qa', detailRes:null, learnerTab:'overview', learnerOpenPath:{}, evidenceFile:'',
+    detailCourse:'qa', detailRes:null, learnerTab:'overview', evidenceFile:'',
     myPathActive:null,
     homologFormPath:'', homologFormResource:'', homologFormEvidence:'', homologFormNote:'',
     wizard:null, rejectFor:null, rejectNote:'', enrollOpen:false, enrollUser:'', enrollCourse:'', previewCourse:null, certView:null,
@@ -2052,8 +1995,7 @@ class Component extends DCLogic {
       history:['History','Recursos completados'],
       certificates:['Certificates','Certificados obtenidos'],
       homologar:['Homologar','Solicita crédito por cursos previos'],
-      explore:['Explore Courses','Discover courses and grow your skills'],
-      course:['Course', S.detailCourse?(this.courseById(S.detailCourse)||{}).name:'']
+      explore:['Explore Courses','Discover courses and grow your skills']
     };
     const scr = S.screen==='builder'?'builder':S.screen;
     const pt=titles[scr]||['',''];
@@ -2588,18 +2530,6 @@ class Component extends DCLogic {
     const cont=inProg[0]||all.find(r=>r.status==='not-started')||all[0];
     const contD=cont?this.decorate(cont):null;
 
-    // course page tree (learner)
-    const lcid=S.detailCourse||cid;
-    const lcourse=this.courseById(lcid);
-    const tree=this.tree(lcid).map(p=>({
-      path:p.path, open:S.learnerOpenPath[p.path]!==false, toggle:()=>this.setState({learnerOpenPath:Object.assign({},S.learnerOpenPath,{[p.path]:S.learnerOpenPath[p.path]===false})}),
-      chev:S.learnerOpenPath[p.path]!==false?'transform:rotate(90deg);transition:.15s;':'transition:.15s;',
-      levels:p.levels.map(l=>({ level:l.level, modules:l.modules.map(m=>({ module:m.module, resources:m.resources.map(r=>{
-        const d=this.decorate(r); const dot={ 'completed':'#15803d','in-progress':'#2563eb','waiting':'#b45309','not-started':'#cbd5e1' }[r.status];
-        return { id:r.id, title:r.title, dot, sel:S.detailRes===r.id, pick:()=>this.setState({detailRes:r.id,evidenceFile:''}),
-          style:S.detailRes===r.id?'display:flex;align-items:center;gap:8px;width:100%;text-align:left;padding:7px 10px;border:none;border-radius:8px;background:var(--brand-soft);color:var(--brand);font-size:12.5px;font-weight:600;':'display:flex;align-items:center;gap:8px;width:100%;text-align:left;padding:7px 10px;border:none;border-radius:8px;background:transparent;color:var(--text-2);font-size:12.5px;font-weight:500;' };
-      }) })) }))
-    }));
     const selRes=S.detailRes?this.decorate(this.state.resources.find(r=>r.id===S.detailRes)):null;
     const canSubmit=!!selRes&&(selRes.status==='not-started'||selRes.status==='in-progress')&&selRes.homolog==='required'&&!this.isAuto(selRes.platform);
 
@@ -2704,7 +2634,7 @@ class Component extends DCLogic {
     }));
 
     return {
-      showHome:isLn&&S.screen==='home', showExplore:isLn&&S.screen==='explore', showCoursePage:isLn&&S.screen==='course',
+      showHome:isLn&&S.screen==='home', showExplore:isLn&&S.screen==='explore',
       showMyPaths:isLn&&S.screen==='mypaths',
       showHomologar:isLn&&S.screen==='homologar',
       goMyPaths:()=>this.setState({screen:'mypaths'}),
@@ -2743,23 +2673,8 @@ class Component extends DCLogic {
       hasContinue:!!contD,
       cl_title:contD?contD.title:'', cl_breadcrumb:contD?contD.breadcrumb:'', cl_platform:contD?contD.platform:'', cl_platColor:contD?contD.platColor:'#000',
       cl_progress:contD?contD.progressVal:0, cl_remaining:contD?(contD.remainingLabel||contD.duration):'', cl_color:course.color, cl_colorDark:this.dark(course.color,30),
-      cl_continue:()=>{ if(contD) this.setState({detailCourse:cid,screen:'course',detailRes:contD.id}); },
+      cl_continue:()=>{ if(contD) this.setState({myPathActive:cid,screen:'active',detailRes:contD.id}); },
       ln_courseName:course.name,
-      // course page
-      cp_courseName:lcourse.name, cp_tree:tree,
-      cp_hasSel:!!selRes,
-      cp_title:selRes?selRes.title:'', cp_platform:selRes?selRes.platform:'', cp_platColor:selRes?this.platColor(selRes.platform):'#000',
-      cp_desc:selRes?selRes.description:'', cp_hasDesc:selRes?selRes.hasDesc:false,
-      cp_duration:selRes?selRes.duration:'', cp_points:selRes?selRes.points:0, cp_link:selRes?selRes.link:'#',
-      cp_statusLabel:selRes?selRes.statusLabel:'', cp_statusBg:selRes?selRes.statusBg:'', cp_statusColor:selRes?selRes.statusColor:'',
-      cp_skills:selRes?(selRes.skills||[]):[],
-      cp_homLabel:selRes?selRes.homLabel:'', cp_homColor:selRes?selRes.homColor:'', cp_homBg:selRes?selRes.homBg:'',
-      cp_canSubmit:canSubmit, cp_isAuto:selRes?(this.isAuto(selRes.platform)||selRes.homolog==='auto'):false,
-      cp_isWaiting:selRes?selRes.status==='waiting':false, cp_isDone:selRes?selRes.status==='completed':false,
-      cp_fileLabel:S.evidenceFile||'Choose evidence file (PDF, PNG, DOCX…)', cp_fileColor:S.evidenceFile?'var(--text)':'var(--text-3)',
-      pickEvidence:()=>{ const n=['certificate.pdf','completion-screenshot.png','badge.png','transcript.pdf'][Math.floor(Math.random()*4)]; this.setState({evidenceFile:n}); },
-      submitEvidence:()=>this.submitEvidence(), markDone:()=>{ if(selRes) this.markResourceDone(selRes.id); },
-      cp_back:()=>this.go('explore'),
       exploreCards, exploreEmpty:exploreCards.length===0,
       // homologar
       homologPathOptions, homologResourceOptions,
@@ -2801,7 +2716,7 @@ class Component extends DCLogic {
       pv_name:pc?pc.name:'', pv_desc:pc?pc.desc:'', pv_color:pc?pc.color:'#000', pv_colorDark:pc?this.dark(pc.color,28):'#000', pv_icon:pc?this.iconEl(pc.icon,26,'#fff',2):null,
       pv_tree:previewTree, pv_assigned:pcAssigned,
       pv_request:()=>{ if(pc) this.requestAccess(pc); this.setState({previewCourse:null}); },
-      pv_open:()=>{ if(pc){ this.setState({detailCourse:pc.id,screen:'course',previewCourse:null,detailRes:null}); } },
+      pv_open:()=>{ if(pc){ this.setState({myPathActive:pc.id,screen:'active',previewCourse:null,detailRes:null}); } },
       certOpen:!!cv, closeCert:()=>this.setState({certView:null}),
       cv_title:cv?cv.title:'', cv_course:cvCourse?cvCourse.name:'', cv_date:cv?this.fmtDate(cv.completedDate):'', cv_learner:'Yolanda Ortega',
       cv_color:cvCourse?cvCourse.color:'#4A2E80'
