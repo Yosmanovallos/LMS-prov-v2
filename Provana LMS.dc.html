@@ -2343,7 +2343,11 @@ class Component extends DCLogic {
 
     // my paths (path detail tree)
     const activeMyPath=S.detailCourse||learnerUser.primaryPathId||'qa';
-    const activeMyLevel=learnerUser.primaryLevel||'Senior QA';
+    const allPaths=[
+      {pathId:learnerUser.primaryPathId,level:learnerUser.primaryLevel,isPrimary:true},
+      ...(learnerUser.secondaryPaths||[]).map(sp=>({...sp,isPrimary:false}))
+    ].filter(p=>p.pathId);
+    const activeMyLevel=(allPaths.find(p=>p.pathId===activeMyPath)||{}).level||learnerUser.primaryLevel||'Senior QA';
     const myPathResources=S.resources.filter(r=>r.courseId===activeMyPath&&r.level===activeMyLevel);
     const myPathModuleMap={};
     myPathResources.forEach(r=>{ (myPathModuleMap[r.module]=myPathModuleMap[r.module]||[]).push(r); });
@@ -2353,10 +2357,6 @@ class Component extends DCLogic {
       resources:myPathModuleMap[mod].map(r=>({...this.decorate(r),statusIcon:STATUS_ICON[r.status]||'○',open:()=>this.setState({detailRes:r.id,detailCourse:activeMyPath,evidenceFile:'',screen:'mypaths'})}))
     }));
     const myPathProg=myPathResources.length?Math.round(myPathResources.filter(r=>r.status==='completed').length/myPathResources.length*100):0;
-    const allPaths=[
-      {pathId:learnerUser.primaryPathId,level:learnerUser.primaryLevel,isPrimary:true},
-      ...(learnerUser.secondaryPaths||[]).map(sp=>({...sp,isPrimary:false}))
-    ].filter(p=>p.pathId);
     const activeMyPathObj=this.courseById(activeMyPath)||{};
 
     // explore
