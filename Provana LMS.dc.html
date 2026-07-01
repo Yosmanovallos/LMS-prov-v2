@@ -293,14 +293,13 @@
           </select>
         </div>
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);">
-          <div style="display:grid;grid-template-columns:1.6fr 1fr 1.3fr 0.6fr 2fr 1.1fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Module</div><div>Level</div><div>Path</div><div>Resources</div><div>Skills</div><div style="text-align:right;">Actions</div></div>
+          <div style="display:grid;grid-template-columns:1.6fr 1fr 1.3fr 0.6fr 1.1fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Module</div><div>Level</div><div>Path</div><div>Resources</div><div style="text-align:right;">Actions</div></div>
           <sc-for list="{{ moduleRows }}" as="m" hint-placeholder-count="8">
-            <div style="display:grid;grid-template-columns:1.6fr 1fr 1.3fr 0.6fr 2fr 1.1fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;">
+            <div style="display:grid;grid-template-columns:1.6fr 1fr 1.3fr 0.6fr 1.1fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;">
               <div style="font-size:13.5px;font-weight:600;color:var(--text);">{{ m.name }}</div>
               <div><button onClick="{{ m.goLevel }}" style="font-size:11.5px;font-weight:600;color:var(--text-2);background:var(--surface-2);border:1px solid var(--border);border-radius:20px;padding:4px 11px;cursor:pointer;">{{ m.levelName }}</button></div>
               <div><button onClick="{{ m.goPath }}" style="font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:20px;border:none;background:{{ m.progBg }};color:{{ m.progColor }};cursor:pointer;">{{ m.pathName }}</button></div>
               <div><button onClick="{{ m.viewResources }}" style="font-size:13.5px;font-weight:700;color:var(--brand);background:none;border:none;padding:0;cursor:pointer;">{{ m.resCount }}</button></div>
-              <div style="display:flex;flex-wrap:wrap;gap:5px;"><sc-for list="{{ m.skills }}" as="s" hint-placeholder-count="3"><span style="font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;background:var(--brand-soft);color:var(--brand);">{{ s }}</span></sc-for></div>
               <div style="display:flex;gap:6px;justify-content:flex-end;">
                 <button onClick="{{ m.edit }}" style="font-size:12px;font-weight:600;color:var(--text-2);background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:6px 12px;cursor:pointer;">Edit</button>
                 <button onClick="{{ m.viewResources }}" style="font-size:12px;font-weight:700;color:var(--brand);background:var(--brand-soft);border:none;border-radius:8px;padding:6px 13px;cursor:pointer;">Resources →</button>
@@ -1887,11 +1886,10 @@ class Component extends DCLogic {
     const moduleRows=filteredModules.map(m=>{
       const c=this.courseById(m.courseId)||{}; const col=c.color||'#4A2E80';
       const rs=S.resources.filter(r=>r.courseId===m.courseId&&r.path===m.pathName&&r.level===m.levelName&&r.module===m.name);
-      const skills=[...new Set(rs.flatMap(r=>r.skills||[]))].slice(0,3);
       return { ...m, programName:c.name||'', progBg:this.mix(col,13), progColor:col,
-        resCount:rs.length, skills,
+        resCount:rs.length,
         edit:()=>this.openEditModule(m),
-        goLevel:()=>this.setState({screen:'levels',filterPath:m.courseId+'|'+m.pathName,filterLevel:null}),
+        goLevel:()=>this.setState({screen:'levels',filterPath:m.courseId,filterLevel:null}),
         goPath:()=>this.setState({screen:'paths',filterPath:null,filterLevel:null}),
         viewResources:()=>this.setState({screen:'resources'}) };
     });
