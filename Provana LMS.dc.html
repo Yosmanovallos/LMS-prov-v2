@@ -867,6 +867,7 @@
                 <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.8;">Tu path asignado</div>
                 <div style="font-size:20px;font-weight:800;">{{ heroName }}</div>
                 <div style="font-size:12.5px;opacity:.85;">{{ heroLevel }}</div>
+                <div style="font-size:11.5px;opacity:.75;margin-top:2px;">{{ heroDesc }}</div>
               </div>
             </div>
             <div style="text-align:right;flex-shrink:0;">
@@ -1470,7 +1471,7 @@
 class Component extends DCLogic {
   state = {
     theme:'light', viewer:'admin', screen:'paths', search:'', searchOpen:false, notifOpen:false,
-    detailCourse:'qa', detailRes:null, learnerTab:'overview', evidenceFile:'',
+    detailRes:null, learnerTab:'overview', evidenceFile:'',
     myPathActive:null,
     homologFormPath:'', homologFormResource:'', homologFormEvidence:'', homologFormNote:'',
     wizard:null, rejectFor:null, rejectNote:'', enrollOpen:false, enrollUser:'', enrollCourse:'', previewCourse:null, certView:null,
@@ -1989,7 +1990,7 @@ class Component extends DCLogic {
       approvals:['Approvals','Evidence review for your team'],
       mylearning:['My Learning','Pick up where you left off'],
       home:['Home','Tu aprendizaje de hoy'],
-      mypaths:['Mis Paths','Todos tus paths asignados'],
+      mypaths:['Paths','Todos tus paths asignados'],
       todo:['ToDo List','Recursos pendientes por empezar'],
       active:['Active Learning','Lo que estás cursando ahora'],
       history:['History','Recursos completados'],
@@ -2539,7 +2540,7 @@ class Component extends DCLogic {
     const primaryProg=this.courseProgress(learnerUser.primaryPathId||'qa');
     const homeSecondaries=(learnerUser.secondaryPaths||[]).map(sp=>{
       const c=this.courseById(sp.pathId); const prog=({qa:35,ba:20,bi:60,rpa:45,dev:50}[sp.pathId]||0);
-      return {...sp,name:c?c.name:'—',color:c?c.color:'#94a3b8',prog,go:()=>this.setState({screen:'mypaths',detailCourse:sp.pathId})};
+      return {...sp,name:c?c.name:'—',color:c?c.color:'#94a3b8',prog,go:()=>this.setState({screen:'active',myPathActive:sp.pathId})};
     });
 
     // paths landing: cards for every assigned path (primary + secondary)
@@ -2662,7 +2663,7 @@ class Component extends DCLogic {
       rd_isWaiting:selRes?selRes.status==='waiting':false,
       rd_fileLabel:S.evidenceFile||'Choose evidence file (PDF, PNG, DOCX…)', rd_fileColor:S.evidenceFile?'var(--text)':'var(--text-3)',
       rd_pickEvidence:()=>{ const n=['certificate.pdf','completion-screenshot.png','badge.png','transcript.pdf'][Math.floor(Math.random()*4)]; this.setState({evidenceFile:n}); },
-      rd_submitEvidence:()=>this.submitEvidence(), rd_markDone:()=>{ if(selRes) this.markResourceDone(selRes.id); },
+      rd_submitEvidence:()=>this.submitEvidence(), rd_markDone:()=>{ if(selRes) this.markResourceDone(selRes.id); this.setState({detailRes:null,evidenceFile:''}); },
       rd_close:()=>this.setState({detailRes:null,evidenceFile:''}),
       homePrimaryName:primaryPath?primaryPath.name:'Sin path asignado',
       homePrimaryLevel:learnerUser.primaryLevel||'—',
