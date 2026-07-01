@@ -2252,7 +2252,7 @@ class Component extends DCLogic {
     const homReqs=(S.homologRequests||[]).filter(h=>h.status==='pending').map(h=>{
       const u=this.userById(h.userId); const res=S.resources.find(r=>r.id===h.resourceId)||{title:h.title,platform:'—'};
       return { id:h.id, res:{...res,title:h.title||res.title,evidence:h.evidence||'evidencia.pdf'}, user:u,
-        overdue:false, submittedLabel:this.fmtDate(h.submitted), initials:this.initials(u.name), avatarBg:this.avatarBg(u.name),
+        submitted:h.submitted, overdue:false, submittedLabel:this.fmtDate(h.submitted), initials:this.initials(u.name), avatarBg:this.avatarBg(u.name),
         type:'homologation', typeBg:this.mix('#7c3aed',12), typeColor:'#7c3aed', typeLabel:'Homologation',
         approve:()=>this.approveHomologRequest(h.id),
         reject:()=>this.openReject({resId:h.resourceId,res:{title:h.title},user:u}) };
