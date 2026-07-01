@@ -940,6 +940,24 @@
         </div>
         </sc-if>
 
+        <!-- HISTORY -->
+        <sc-if value="{{ showHistory }}" hint-placeholder-val="{{ false }}">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);">
+          <div style="display:grid;grid-template-columns:2fr 1fr 0.8fr 1.1fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Course</div><div>Completed</div><div>Score</div><div>Homologation</div></div>
+          <sc-for list="{{ historyRows }}" as="r" hint-placeholder-count="4">
+            <button onClick="{{ r.open }}" style="display:grid;grid-template-columns:2fr 1fr 0.8fr 1.1fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;width:100%;text-align:left;background:none;border-left:none;border-right:none;border-top:none;cursor:pointer;">
+              <div style="display:flex;align-items:center;gap:10px;min-width:0;"><span style="width:7px;height:7px;border-radius:50%;background:{{ r.dotColor }};flex-shrink:0;"></span><div style="min-width:0;"><div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.title }}</div><div style="font-size:11px;color:var(--text-3);">{{ r.platform }}</div></div></div>
+              <div style="font-size:12.5px;color:var(--text-2);">{{ r.completedLabel }}</div>
+              <div style="font-size:13px;font-weight:700;color:var(--text);">{{ r.score }}%</div>
+              <div><span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:color-mix(in srgb,#15803d 12%,var(--surface));color:#15803d;">{{ r.homogLabel }}</span></div>
+            </button>
+          </sc-for>
+          <sc-if value="{{ historyEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:32px;text-align:center;font-size:13px;color:var(--text-3);">Aún no completas recursos en este path.</div>
+          </sc-if>
+        </div>
+        </sc-if>
+
       </div>
       </sc-if>
 
@@ -2589,6 +2607,15 @@ class Component extends DCLogic {
       resources:todoModuleMap[mod].map(r=>({...this.decorate(r), start:()=>this.startResource(r.id), open:()=>this.setState({detailRes:r.id})}))
     }));
 
+    // history
+    const historyRows=heroCompleted.map(r=>{
+      const d=this.decorate(r);
+      const isAutoVal=this.isAuto(r.platform)||r.homolog==='auto';
+      return { ...d, dotColor:this.platColor(r.platform),
+        homogLabel:isAutoVal?'Auto-validated':'Homologated',
+        open:()=>this.setState({detailRes:r.id}) };
+    });
+
     // explore
     const q=S.search.trim().toLowerCase();
     const assignedPathIds=new Set([learnerUser.primaryPathId,...(learnerUser.secondaryPaths||[]).map(sp=>sp.pathId)].filter(Boolean));
@@ -2633,6 +2660,7 @@ class Component extends DCLogic {
       heroPills,
       activeLearningCards, activeLearningEmpty:activeLearningCards.length===0,
       todoModules, todoEmpty:todoModules.length===0,
+      historyRows, historyEmpty:historyRows.length===0,
       homePrimaryName:primaryPath?primaryPath.name:'Sin path asignado',
       homePrimaryLevel:learnerUser.primaryLevel||'—',
       homePrimaryProg:primaryProg,
