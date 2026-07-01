@@ -548,11 +548,12 @@
       <sc-if value="{{ showUsers }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:1200px;margin:0 auto;">
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);">
-          <div style="display:grid;grid-template-columns:2fr 1fr 0.9fr 1.2fr 0.8fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--text-3);text-transform:uppercase;"><div>User</div><div>Role</div><div>Status</div><div>Manager</div><div style="text-align:right;">Actions</div></div>
+          <div style="display:grid;grid-template-columns:1.8fr 0.9fr 1.4fr 0.8fr 1.1fr 0.8fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--text-3);text-transform:uppercase;"><div>User</div><div>Role</div><div>Primary Path</div><div>Status</div><div>Manager</div><div style="text-align:right;">Actions</div></div>
           <sc-for list="{{ userRows }}" as="u" hint-placeholder-count="8">
-            <div style="display:grid;grid-template-columns:2fr 1fr 0.9fr 1.2fr 0.8fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;">
+            <div style="display:grid;grid-template-columns:1.8fr 0.9fr 1.4fr 0.8fr 1.1fr 0.8fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;">
               <div style="display:flex;align-items:center;gap:12px;min-width:0;"><div style="width:38px;height:38px;border-radius:50%;background:{{ u.avatarBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12.5px;flex-shrink:0;">{{ u.initials }}</div><div style="min-width:0;"><div style="font-size:13.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ u.name }}</div><div style="font-size:11.5px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ u.email }}</div></div></div>
               <div><span style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:{{ u.roleBg }};color:{{ u.roleColor }};text-transform:uppercase;letter-spacing:.04em;">{{ u.role }}</span></div>
+              <div><span style="font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:{{ u.primaryBg }};color:{{ u.primaryColor }};">{{ u.primaryLabel }}</span></div>
               <div><span style="font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:20px;background:{{ u.statusBg }};color:{{ u.statusColor }};">{{ u.status }}</span></div>
               <div style="font-size:12.5px;color:var(--text-2);">{{ u.managerName }}</div>
               <div style="text-align:right;"><button style="font-size:12px;font-weight:600;color:var(--brand);background:var(--brand-soft);border:none;border-radius:8px;padding:7px 16px;">Edit</button></div>
@@ -1817,10 +1818,14 @@ class Component extends DCLogic {
     const roleBadge={ 'Learner':'#4A2E80','Manager':'#0EA5A0','Admin':'#D99A00' };
     const userRows=S.users.map(u=>{
       const mgr=S.managers.find(m=>m.id===u.managerId);
+      const primaryPath=u.primaryPathId?this.courseById(u.primaryPathId):null;
+      const primaryLabel=primaryPath?(primaryPath.name+(u.primaryLevel?' › '+u.primaryLevel:'')):'—';
+      const primaryColor=primaryPath?primaryPath.color:'#94a3b8';
       return { ...u, initials:this.initials(u.name), avatarBg:this.avatarBg(u.name),
         roleColor:roleBadge[u.role], roleBg:this.mix(roleBadge[u.role],13),
         statusColor:u.status==='Active'?'#15803d':'#94a3b8', statusBg:this.mix(u.status==='Active'?'#15803d':'#94a3b8',14),
-        managerName:mgr?mgr.name:'—' };
+        managerName:mgr?mgr.name:'—',
+        primaryLabel, primaryColor, primaryBg:this.mix(primaryColor,13) };
     });
 
     // enrollments
