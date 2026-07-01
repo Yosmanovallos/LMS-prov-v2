@@ -1868,7 +1868,7 @@ class Component extends DCLogic {
           moduleCount:mods, resCount:res,
           progBg:this.mix(c.color||'#4A2E80',13), progColor:c.color||'#4A2E80',
           edit:()=>this.openEditLevel({courseId:r.courseId,pathName:c.name||r.courseId,name:r.level}),
-          viewModules:()=>this.setState({screen:'modules',filterPath:r.courseId,filterLevel:r.level}),
+          viewModules:()=>this.setState({screen:'modules',filterPath:r.courseId,filterLevel:r.courseId+'|'+(c.name||r.courseId)+'|'+r.level}),
           goPath:()=>this.setState({screen:'paths',filterPath:r.courseId})
         });
       }
@@ -1877,7 +1877,7 @@ class Component extends DCLogic {
     if(S.filterPath) levelRows=levelRows.filter(l=>l.courseId===S.filterPath);
     if(sfLevels.q) levelRows=levelRows.filter(l=>l.name.toLowerCase().includes(sfLevels.q.toLowerCase())||l.pathName.toLowerCase().includes(sfLevels.q.toLowerCase()));
     if(sfLevels.prog) levelRows=levelRows.filter(l=>l.courseId===sfLevels.prog);
-    const levelsCountLabel=levelRows.length+' levels';
+    const levelsCountLabel=levelRows.length+' levels'+(S.filterPath||sfLevels.prog?' — filtered':'');
 
     const sfModules=sf.modules||{q:'',prog:''};
     const fLevel=S.filterLevel;
