@@ -1241,7 +1241,7 @@
 class Component extends DCLogic {
   state = {
     theme:'light', viewer:'admin', screen:'paths', search:'', searchOpen:false, notifOpen:false,
-    detailCourse:'sr-qa', detailRes:null, learnerTab:'overview', learnerOpenPath:{}, evidenceFile:'',
+    detailCourse:'qa', detailRes:null, learnerTab:'overview', learnerOpenPath:{}, evidenceFile:'',
     wizard:null, rejectFor:null, rejectNote:'', enrollOpen:false, enrollUser:'', enrollCourse:'', previewCourse:null, certView:null,
     filterPath:null, filterLevel:null, filterModule:null,
     newPathOpen:false, newLevelOpen:false, newModuleOpen:false,
@@ -1263,23 +1263,26 @@ class Component extends DCLogic {
       {id:'n6', type:'reject', text:'Evidence for "API Testing with Postman" needs a clearer screenshot', time:'4 days ago', read:true}
     ],
     users:[
-      { id:'u1', name:'Yolanda Ortega', email:'yolanda.ortega@provana.com', role:'Learner', status:'Active', managerId:'m1', courseId:'sr-qa' },
-      { id:'u2', name:'Mateo Castro', email:'mateo.castro@provana.com', role:'Learner', status:'Active', managerId:'m2', courseId:'automation' },
-      { id:'u3', name:'Sofia Herrera', email:'sofia.herrera@provana.com', role:'Learner', status:'Active', managerId:'m1', courseId:'ba' },
-      { id:'u4', name:'Diego Ramirez', email:'diego.ramirez@provana.com', role:'Learner', status:'Inactive', managerId:'m3', courseId:'rpa' },
-      { id:'u5', name:'Carlos Mendez', email:'carlos.mendez@provana.com', role:'Manager', status:'Active', managerId:null, courseId:'qa-lead' },
-      { id:'u6', name:'Lucia Fernandez', email:'lucia.fernandez@provana.com', role:'Learner', status:'Active', managerId:'m2', courseId:'mid-qa' },
-      { id:'u7', name:'Patricia Lozano', email:'patricia.lozano@provana.com', role:'Admin', status:'Active', managerId:null, courseId:null },
-      { id:'u8', name:'Andres Vargas', email:'andres.vargas@provana.com', role:'Learner', status:'Active', managerId:'m3', courseId:'jr-qa' }
+      { id:'u1', name:'Yolanda Ortega',    email:'yolanda.ortega@provana.com',    role:'Learner',  status:'Active',   managerId:'m1', primaryPathId:'qa',  primaryLevel:'Senior QA',    secondaryPaths:[] },
+      { id:'u2', name:'Mateo Castro',      email:'mateo.castro@provana.com',      role:'Learner',  status:'Active',   managerId:'m2', primaryPathId:'dev', primaryLevel:'Junior Dev',    secondaryPaths:[{pathId:'qa',level:'Junior QA'}] },
+      { id:'u3', name:'Sofia Herrera',     email:'sofia.herrera@provana.com',     role:'Learner',  status:'Active',   managerId:'m1', primaryPathId:'ba',  primaryLevel:'Junior BA',     secondaryPaths:[] },
+      { id:'u4', name:'Diego Ramirez',     email:'diego.ramirez@provana.com',     role:'Learner',  status:'Inactive', managerId:'m3', primaryPathId:'rpa', primaryLevel:'Junior RPA',    secondaryPaths:[] },
+      { id:'u5', name:'Carlos Mendez',     email:'carlos.mendez@provana.com',     role:'Manager',  status:'Active',   managerId:null,  primaryPathId:null,  primaryLevel:null,            secondaryPaths:[] },
+      { id:'u6', name:'Lucia Fernandez',   email:'lucia.fernandez@provana.com',   role:'Learner',  status:'Active',   managerId:'m2', primaryPathId:'qa',  primaryLevel:'Mid-Level QA',  secondaryPaths:[{pathId:'bi',level:'BI Analyst'}] },
+      { id:'u7', name:'Patricia Lozano',   email:'patricia.lozano@provana.com',   role:'Admin',    status:'Active',   managerId:null,  primaryPathId:null,  primaryLevel:null,            secondaryPaths:[] },
+      { id:'u8', name:'Andres Vargas',     email:'andres.vargas@provana.com',     role:'Learner',  status:'Active',   managerId:'m3', primaryPathId:'qa',  primaryLevel:'Junior QA',     secondaryPaths:[] }
     ],
     courses:[
-      { id:'jr-qa', name:'Junior QA', desc:'Foundations of manual testing and QA fundamentals.', icon:'flask', color:'#2A6FDB', jobRole:'QA Engineer I', status:'published', learners:14 },
-      { id:'mid-qa', name:'Mid-Level QA', desc:'Test design, automation basics and data validation.', icon:'flask', color:'#7C3AED', jobRole:'QA Engineer II', status:'published', learners:9 },
-      { id:'sr-qa', name:'Senior QA', desc:'Advanced automation, performance and QA strategy.', icon:'flask', color:'#D99A00', jobRole:'Senior QA Engineer', status:'published', learners:6 },
-      { id:'qa-lead', name:'QA Lead', desc:'Quality leadership, mentoring and delivery oversight.', icon:'shield', color:'#0EA5A0', jobRole:'QA Lead', status:'published', learners:3 },
-      { id:'automation', name:'Automation Engineer', desc:'Frameworks, CI pipelines and tooling at scale.', icon:'cpu', color:'#1F8A5B', jobRole:'SDET', status:'published', learners:7 },
-      { id:'ba', name:'Business Analyst', desc:'Requirements gathering and process analysis.', icon:'chart', color:'#E0457B', jobRole:'Business Analyst', status:'published', learners:5 },
-      { id:'rpa', name:'RPA Developer', desc:'Robotic process automation and orchestration.', icon:'rocket', color:'#E2662C', jobRole:'RPA Developer', status:'draft', learners:0 }
+      { id:'qa',    name:'Quality Assurance',    desc:'Testing, automation and quality assurance.',              icon:'flask',     color:'#2A6FDB', status:'published', learners:29 },
+      { id:'ba',    name:'Business Analyst',     desc:'Requirements gathering and process analysis.',            icon:'chart',     color:'#E0457B', status:'published', learners:5  },
+      { id:'bi',    name:'Business Intelligence',desc:'Data analysis, reporting and BI tooling.',               icon:'database',  color:'#0EA5A0', status:'published', learners:3  },
+      { id:'rpa',   name:'RPA Developer',        desc:'Robotic process automation and orchestration.',          icon:'rocket',    color:'#E2662C', status:'published', learners:4  },
+      { id:'dev',   name:'Developer',            desc:'Software development and engineering.',                  icon:'code',      color:'#1F8A5B', status:'published', learners:7  },
+      { id:'arch',  name:'Architect',            desc:'System and enterprise architecture design.',             icon:'globe',     color:'#7C3AED', status:'published', learners:2  },
+      { id:'it',    name:'IT',                   desc:'Infrastructure, support and IT operations.',             icon:'cpu',       color:'#475569', status:'published', learners:4  },
+      { id:'cm',    name:'Case Manager',         desc:'Case management and client services.',                   icon:'clipboard', color:'#D99A00', status:'published', learners:6  },
+      { id:'legal', name:'Legal System',         desc:'Legal processes, compliance and documentation.',         icon:'shield',    color:'#DC2626', status:'published', learners:3  },
+      { id:'pm',    name:'Project Manager',      desc:'Project planning, delivery and stakeholder management.', icon:'briefcase', color:'#4A2E80', status:'published', learners:8  }
     ],
     skills:[
       {id:'sk1',name:'Test Automation'},{id:'sk2',name:'Playwright'},{id:'sk3',name:'Cypress'},{id:'sk4',name:'Selenium'},
@@ -1304,37 +1307,41 @@ class Component extends DCLogic {
       { id:'rule4', scope:'Internal courses', requirement:'No evidence needed', approver:'System (auto)' }
     ],
     resources:[
-      { id:'c1', courseId:'sr-qa', path:'Technical Path', level:'Foundational', module:'Playwright', platform:'Udemy', title:'Playwright Fundamentals', link:'https://www.udemy.com/course/playwright/', status:'completed', homolog:'required', duration:'6h 0m', points:100, description:'Modern end-to-end browser automation with Playwright.', evidence:'playwright-cert.pdf', skills:['Test Automation','Playwright'], score:94, completedDate:'2026-04-12', hasCert:true },
-      { id:'c2', courseId:'sr-qa', path:'Technical Path', level:'Intermediate', module:'Playwright', platform:'Udemy', title:'Playwright Advanced Patterns', link:'https://www.udemy.com/course/playwright-adv/', status:'in-progress', homolog:'optional', duration:'7h 0m', points:110, description:'Fixtures, sharding and visual testing at scale.', evidence:null, skills:['Playwright','Test Automation'], progress:60, lastActivity:'2 days ago', remaining:'3h left' },
-      { id:'c3', courseId:'sr-qa', path:'Technical Path', level:'Intermediate', module:'Cypress', platform:'Coursera', title:'Cypress Advanced', link:'https://www.coursera.org/learn/cypress-adv/', status:'in-progress', homolog:'optional', duration:'8h 0m', points:110, description:'Component testing, network stubbing and CI integration.', evidence:null, skills:['Cypress','Test Automation'], progress:35, lastActivity:'Yesterday', remaining:'5h left' },
-      { id:'c4', courseId:'sr-qa', path:'Technical Path', level:'Foundational', module:'Cypress', platform:'Udemy', title:'Cypress Fundamentals', link:'https://www.udemy.com/course/cypress/', status:'completed', homolog:'optional', duration:'5h 0m', points:80, description:'Getting started with Cypress for component and e2e tests.', evidence:'cypress-badge.png', skills:['Cypress'], score:86, completedDate:'2026-02-05', hasCert:true },
-      { id:'c5', courseId:'sr-qa', path:'Technical Path', level:'Advanced', module:'Selenium', platform:'Pluralsight', title:'Selenium Grid at Scale', link:'https://www.pluralsight.com/courses/selenium-grid/', status:'completed', homolog:'required', duration:'6h 0m', points:90, description:'Running distributed Selenium suites with Grid.', evidence:'selenium-grid.pdf', skills:['Selenium','Test Automation'], score:88, completedDate:'2026-03-02', hasCert:true },
-      { id:'c6', courseId:'sr-qa', path:'Technical Path', level:'Intermediate', module:'REST APIs', platform:'Coursera', title:'API Testing with Postman', link:'https://www.coursera.org/learn/api-testing/', status:'waiting', homolog:'required', duration:'5h 0m', points:80, description:'Design, run and automate REST API test collections.', evidence:'postman-completion.pdf', skills:['API Testing'], progress:100, lastActivity:'4 days ago' },
-      { id:'c7', courseId:'sr-qa', path:'Technical Path', level:'Advanced', module:'Performance', platform:'Udemy', title:'Performance Testing with JMeter', link:'https://www.udemy.com/course/jmeter/', status:'not-started', homolog:'required', duration:'9h 0m', points:120, description:'Load and stress testing fundamentals with Apache JMeter.', evidence:null, skills:['Performance Testing'], progress:0, dueDate:'2026-07-04' },
-      { id:'c8', courseId:'sr-qa', path:'Technical Path', level:'Intermediate', module:'Databases', platform:'LinkedIn Learning', title:'Advanced SQL for QA', link:'https://www.linkedin.com/learning/sql-qa/', status:'completed', homolog:'optional', duration:'4h 0m', points:70, description:'Validating data and writing complex test queries.', evidence:'sql-badge.png', skills:['SQL'], score:91, completedDate:'2026-02-18', hasCert:true },
-      { id:'c9', courseId:'sr-qa', path:'Compliance Path', level:'Advanced', module:'ISTQB', platform:'Internal', title:'ISTQB Advanced Test Analyst', link:'#', status:'waiting', homolog:'required', duration:'12h 0m', points:140, description:'Advanced-level certification track for senior test analysts.', evidence:'istqb-advanced.pdf', skills:['QA Strategy'], progress:100, lastActivity:'1 week ago' },
-      { id:'c10', courseId:'sr-qa', path:'Compliance Path', level:'Foundational', module:'Security', platform:'Microsoft Learn', title:'Security Testing Essentials', link:'https://learn.microsoft.com/security-testing/', status:'not-started', homolog:'optional', duration:'5h 0m', points:80, description:'OWASP basics and security testing for QA engineers.', evidence:null, skills:['Security Testing'], progress:0, dueDate:'2026-07-15' },
-      { id:'c11', courseId:'sr-qa', path:'Leadership Path', level:'Foundational', module:'Mentoring', platform:'YouTube', title:'Coaching Junior Testers (talk)', link:'https://www.youtube.com/watch?v=coaching', status:'completed', homolog:'auto', duration:'1h 0m', points:30, description:'Conference talk on mentoring junior QA engineers.', evidence:null, skills:['Coaching','Leadership'], score:100, completedDate:'2026-01-22', hasCert:false },
-      { id:'c12', courseId:'sr-qa', path:'Leadership Path', level:'Intermediate', module:'Strategy', platform:'Coursera', title:'Building a QA Strategy', link:'https://www.coursera.org/learn/qa-strategy/', status:'in-progress', homolog:'optional', duration:'5h 0m', points:90, description:'Define quality goals, metrics and a test approach.', evidence:null, skills:['QA Strategy','Leadership'], progress:20, lastActivity:'3 days ago', remaining:'4h left' },
-      { id:'c13', courseId:'jr-qa', path:'Technical Path', level:'Foundational', module:'Test Cases', platform:'Udemy', title:'Writing Effective Test Cases', link:'https://www.udemy.com/course/test-cases/', status:'not-started', homolog:'optional', duration:'4h 0m', points:60, description:'Crafting clear, maintainable manual test cases.', evidence:null, skills:['Manual Testing'] },
-      { id:'c14', courseId:'jr-qa', path:'Technical Path', level:'Foundational', module:'SDLC', platform:'YouTube', title:'Intro to the SDLC', link:'https://www.youtube.com/watch?v=sdlc', status:'not-started', homolog:'auto', duration:'1h 0m', points:30, description:'Overview of the software development lifecycle.', evidence:null, skills:['Manual Testing'] },
-      { id:'c15', courseId:'jr-qa', path:'Soft Skills Path', level:'Foundational', module:'Reporting', platform:'LinkedIn Learning', title:'Bug Reporting 101', link:'https://www.linkedin.com/learning/bug-reporting/', status:'not-started', homolog:'optional', duration:'2h 0m', points:40, description:'Writing actionable, reproducible bug reports.', evidence:null, skills:['Manual Testing'] },
-      { id:'c16', courseId:'mid-qa', path:'Technical Path', level:'Intermediate', module:'Selenium', platform:'Udemy', title:'Selenium WebDriver Mastery', link:'https://www.udemy.com/course/selenium/', status:'waiting', homolog:'required', duration:'8h 0m', points:100, description:'Building robust Selenium WebDriver suites.', evidence:'selenium-cert.pdf', skills:['Selenium','Test Automation'] },
-      { id:'c17', courseId:'mid-qa', path:'Technical Path', level:'Intermediate', module:'Databases', platform:'LinkedIn Learning', title:'SQL Fundamentals', link:'https://www.linkedin.com/learning/sql/', status:'not-started', homolog:'optional', duration:'4h 0m', points:70, description:'Core SQL queries for test data validation.', evidence:null, skills:['SQL'] },
-      { id:'c18', courseId:'mid-qa', path:'Compliance Path', level:'Foundational', module:'ISTQB', platform:'Udemy', title:'ISTQB Foundation Level', link:'https://www.udemy.com/course/istqb/', status:'not-started', homolog:'required', duration:'12h 0m', points:120, description:'Foundation-level ISTQB certification prep.', evidence:null, skills:['QA Strategy'] },
-      { id:'c19', courseId:'qa-lead', path:'Leadership Path', level:'Foundational', module:'Team Leadership', platform:'Coursera', title:'Leading QA Teams', link:'https://www.coursera.org/learn/leading-qa/', status:'not-started', homolog:'required', duration:'6h 0m', points:100, description:'People leadership for quality engineering teams.', evidence:null, skills:['Leadership'] },
-      { id:'c20', courseId:'qa-lead', path:'Leadership Path', level:'Intermediate', module:'Quality Strategy', platform:'Internal', title:'Enterprise Quality Strategy', link:'#', status:'not-started', homolog:'required', duration:'5h 0m', points:110, description:'Defining quality strategy across product lines.', evidence:null, skills:['QA Strategy','Leadership'] },
-      { id:'c21', courseId:'qa-lead', path:'Soft Skills Path', level:'Foundational', module:'Stakeholders', platform:'LinkedIn Learning', title:'Stakeholder Management', link:'https://www.linkedin.com/learning/stakeholders/', status:'not-started', homolog:'optional', duration:'4h 0m', points:70, description:'Managing expectations across stakeholders.', evidence:null, skills:['Leadership'] },
-      { id:'c22', courseId:'automation', path:'Technical Path', level:'Intermediate', module:'Frameworks', platform:'Udemy', title:'Designing Test Frameworks', link:'https://www.udemy.com/course/test-frameworks/', status:'not-started', homolog:'required', duration:'9h 0m', points:120, description:'Page Object Model and scalable framework design.', evidence:null, skills:['Test Automation','Python'] },
-      { id:'c23', courseId:'automation', path:'Technical Path', level:'Advanced', module:'CI/CD', platform:'Microsoft Learn', title:'CI Pipelines for Tests', link:'https://learn.microsoft.com/ci/', status:'not-started', homolog:'optional', duration:'5h 0m', points:90, description:'Wiring automated tests into CI pipelines.', evidence:null, skills:['CI/CD'] },
-      { id:'c24', courseId:'automation', path:'Technical Path', level:'Foundational', module:'Programming', platform:'Udemy', title:'Python for Automation', link:'https://www.udemy.com/course/python-automation/', status:'not-started', homolog:'optional', duration:'6h 0m', points:85, description:'Python essentials for test automation engineers.', evidence:null, skills:['Python','Test Automation'] },
-      { id:'c25', courseId:'automation', path:'Tooling Path', level:'Intermediate', module:'Containers', platform:'Pluralsight', title:'Docker for Test Environments', link:'https://www.pluralsight.com/courses/docker/', status:'not-started', homolog:'optional', duration:'6h 0m', points:80, description:'Reproducible test environments with Docker.', evidence:null, skills:['Docker','CI/CD'] },
-      { id:'c26', courseId:'ba', path:'Technical Path', level:'Foundational', module:'Requirements', platform:'Coursera', title:'Requirements Engineering', link:'https://www.coursera.org/learn/requirements/', status:'waiting', homolog:'required', duration:'7h 0m', points:90, description:'Eliciting and documenting clear requirements.', evidence:'requirements-proj.pdf', skills:['Requirements Analysis'] },
-      { id:'c27', courseId:'ba', path:'Technical Path', level:'Intermediate', module:'Data', platform:'LinkedIn Learning', title:'SQL for Analysts', link:'https://www.linkedin.com/learning/sql-analysts/', status:'not-started', homolog:'optional', duration:'5h 0m', points:75, description:'Querying data to support business analysis.', evidence:null, skills:['SQL'] },
-      { id:'c28', courseId:'ba', path:'Soft Skills Path', level:'Foundational', module:'Workshops', platform:'Udemy', title:'Facilitation Skills', link:'https://www.udemy.com/course/facilitation/', status:'not-started', homolog:'optional', duration:'3h 0m', points:60, description:'Running effective requirement workshops.', evidence:null, skills:['Facilitation'] },
-      { id:'c29', courseId:'rpa', path:'Technical Path', level:'Intermediate', module:'UiPath', platform:'Udemy', title:'UiPath Advanced Automation', link:'https://www.udemy.com/course/uipath/', status:'not-started', homolog:'required', duration:'10h 0m', points:110, description:'Building advanced UiPath automation workflows.', evidence:null, skills:['RPA'] },
-      { id:'c30', courseId:'rpa', path:'Technical Path', level:'Foundational', module:'Power Automate', platform:'Microsoft Learn', title:'Power Automate Essentials', link:'https://learn.microsoft.com/power-automate/', status:'not-started', homolog:'optional', duration:'6h 0m', points:80, description:'Low-code automation with Power Automate.', evidence:null, skills:['RPA'] }
-    ]
+      { id:'c1', courseId:'qa', path:'Technical Path', level:'Junior QA', module:'Playwright', platform:'Udemy', title:'Playwright Fundamentals', link:'https://www.udemy.com/course/playwright/', status:'completed', homolog:'required', duration:'6h 0m', points:100, description:'Modern end-to-end browser automation with Playwright.', evidence:'playwright-cert.pdf', skills:['Test Automation','Playwright'], score:94, completedDate:'2026-04-12', hasCert:true },
+      { id:'c2', courseId:'qa', path:'Technical Path', level:'Senior QA', module:'Playwright', platform:'Udemy', title:'Playwright Advanced Patterns', link:'https://www.udemy.com/course/playwright-adv/', status:'in-progress', homolog:'optional', duration:'7h 0m', points:110, description:'Fixtures, sharding and visual testing at scale.', evidence:null, skills:['Playwright','Test Automation'], progress:60, lastActivity:'2 days ago', remaining:'3h left' },
+      { id:'c3', courseId:'qa', path:'Technical Path', level:'Senior QA', module:'Cypress', platform:'Coursera', title:'Cypress Advanced', link:'https://www.coursera.org/learn/cypress-adv/', status:'in-progress', homolog:'optional', duration:'8h 0m', points:110, description:'Component testing, network stubbing and CI integration.', evidence:null, skills:['Cypress','Test Automation'], progress:35, lastActivity:'Yesterday', remaining:'5h left' },
+      { id:'c4', courseId:'qa', path:'Technical Path', level:'Junior QA', module:'Cypress', platform:'Udemy', title:'Cypress Fundamentals', link:'https://www.udemy.com/course/cypress/', status:'completed', homolog:'optional', duration:'5h 0m', points:80, description:'Getting started with Cypress for component and e2e tests.', evidence:'cypress-badge.png', skills:['Cypress'], score:86, completedDate:'2026-02-05', hasCert:true },
+      { id:'c5', courseId:'qa', path:'Technical Path', level:'QA Lead', module:'Selenium', platform:'Pluralsight', title:'Selenium Grid at Scale', link:'https://www.pluralsight.com/courses/selenium-grid/', status:'completed', homolog:'required', duration:'6h 0m', points:90, description:'Running distributed Selenium suites with Grid.', evidence:'selenium-grid.pdf', skills:['Selenium','Test Automation'], score:88, completedDate:'2026-03-02', hasCert:true },
+      { id:'c6', courseId:'qa', path:'Technical Path', level:'Senior QA', module:'REST APIs', platform:'Coursera', title:'API Testing with Postman', link:'https://www.coursera.org/learn/api-testing/', status:'waiting', homolog:'required', duration:'5h 0m', points:80, description:'Design, run and automate REST API test collections.', evidence:'postman-completion.pdf', skills:['API Testing'], progress:100, lastActivity:'4 days ago' },
+      { id:'c7', courseId:'qa', path:'Technical Path', level:'QA Lead', module:'Performance', platform:'Udemy', title:'Performance Testing with JMeter', link:'https://www.udemy.com/course/jmeter/', status:'not-started', homolog:'required', duration:'9h 0m', points:120, description:'Load and stress testing fundamentals with Apache JMeter.', evidence:null, skills:['Performance Testing'], progress:0, dueDate:'2026-07-04' },
+      { id:'c8', courseId:'qa', path:'Technical Path', level:'Senior QA', module:'Databases', platform:'LinkedIn Learning', title:'Advanced SQL for QA', link:'https://www.linkedin.com/learning/sql-qa/', status:'completed', homolog:'optional', duration:'4h 0m', points:70, description:'Validating data and writing complex test queries.', evidence:'sql-badge.png', skills:['SQL'], score:91, completedDate:'2026-02-18', hasCert:true },
+      { id:'c9', courseId:'qa', path:'Compliance Path', level:'QA Lead', module:'ISTQB', platform:'Internal', title:'ISTQB Advanced Test Analyst', link:'#', status:'waiting', homolog:'required', duration:'12h 0m', points:140, description:'Advanced-level certification track for senior test analysts.', evidence:'istqb-advanced.pdf', skills:['QA Strategy'], progress:100, lastActivity:'1 week ago' },
+      { id:'c10', courseId:'qa', path:'Compliance Path', level:'Junior QA', module:'Security', platform:'Microsoft Learn', title:'Security Testing Essentials', link:'https://learn.microsoft.com/security-testing/', status:'not-started', homolog:'optional', duration:'5h 0m', points:80, description:'OWASP basics and security testing for QA engineers.', evidence:null, skills:['Security Testing'], progress:0, dueDate:'2026-07-15' },
+      { id:'c11', courseId:'qa', path:'Leadership Path', level:'Junior QA', module:'Mentoring', platform:'YouTube', title:'Coaching Junior Testers (talk)', link:'https://www.youtube.com/watch?v=coaching', status:'completed', homolog:'auto', duration:'1h 0m', points:30, description:'Conference talk on mentoring junior QA engineers.', evidence:null, skills:['Coaching','Leadership'], score:100, completedDate:'2026-01-22', hasCert:false },
+      { id:'c12', courseId:'qa', path:'Leadership Path', level:'Senior QA', module:'Strategy', platform:'Coursera', title:'Building a QA Strategy', link:'https://www.coursera.org/learn/qa-strategy/', status:'in-progress', homolog:'optional', duration:'5h 0m', points:90, description:'Define quality goals, metrics and a test approach.', evidence:null, skills:['QA Strategy','Leadership'], progress:20, lastActivity:'3 days ago', remaining:'4h left' },
+      { id:'c13', courseId:'qa', path:'Technical Path', level:'Junior QA', module:'Test Cases', platform:'Udemy', title:'Writing Effective Test Cases', link:'https://www.udemy.com/course/test-cases/', status:'not-started', homolog:'optional', duration:'4h 0m', points:60, description:'Crafting clear, maintainable manual test cases.', evidence:null, skills:['Manual Testing'] },
+      { id:'c14', courseId:'qa', path:'Technical Path', level:'Junior QA', module:'SDLC', platform:'YouTube', title:'Intro to the SDLC', link:'https://www.youtube.com/watch?v=sdlc', status:'not-started', homolog:'auto', duration:'1h 0m', points:30, description:'Overview of the software development lifecycle.', evidence:null, skills:['Manual Testing'] },
+      { id:'c15', courseId:'qa', path:'Soft Skills Path', level:'Junior QA', module:'Reporting', platform:'LinkedIn Learning', title:'Bug Reporting 101', link:'https://www.linkedin.com/learning/bug-reporting/', status:'not-started', homolog:'optional', duration:'2h 0m', points:40, description:'Writing actionable, reproducible bug reports.', evidence:null, skills:['Manual Testing'] },
+      { id:'c16', courseId:'qa', path:'Technical Path', level:'Mid-Level QA', module:'Selenium', platform:'Udemy', title:'Selenium WebDriver Mastery', link:'https://www.udemy.com/course/selenium/', status:'waiting', homolog:'required', duration:'8h 0m', points:100, description:'Building robust Selenium WebDriver suites.', evidence:'selenium-cert.pdf', skills:['Selenium','Test Automation'] },
+      { id:'c17', courseId:'qa', path:'Technical Path', level:'Mid-Level QA', module:'Databases', platform:'LinkedIn Learning', title:'SQL Fundamentals', link:'https://www.linkedin.com/learning/sql/', status:'not-started', homolog:'optional', duration:'4h 0m', points:70, description:'Core SQL queries for test data validation.', evidence:null, skills:['SQL'] },
+      { id:'c18', courseId:'qa', path:'Compliance Path', level:'Mid-Level QA', module:'ISTQB', platform:'Udemy', title:'ISTQB Foundation Level', link:'https://www.udemy.com/course/istqb/', status:'not-started', homolog:'required', duration:'12h 0m', points:120, description:'Foundation-level ISTQB certification prep.', evidence:null, skills:['QA Strategy'] },
+      { id:'c19', courseId:'qa', path:'Leadership Path', level:'QA Lead', module:'Team Leadership', platform:'Coursera', title:'Leading QA Teams', link:'https://www.coursera.org/learn/leading-qa/', status:'not-started', homolog:'required', duration:'6h 0m', points:100, description:'People leadership for quality engineering teams.', evidence:null, skills:['Leadership'] },
+      { id:'c20', courseId:'qa', path:'Leadership Path', level:'QA Lead', module:'Quality Strategy', platform:'Internal', title:'Enterprise Quality Strategy', link:'#', status:'not-started', homolog:'required', duration:'5h 0m', points:110, description:'Defining quality strategy across product lines.', evidence:null, skills:['QA Strategy','Leadership'] },
+      { id:'c21', courseId:'qa', path:'Soft Skills Path', level:'QA Lead', module:'Stakeholders', platform:'LinkedIn Learning', title:'Stakeholder Management', link:'https://www.linkedin.com/learning/stakeholders/', status:'not-started', homolog:'optional', duration:'4h 0m', points:70, description:'Managing expectations across stakeholders.', evidence:null, skills:['Leadership'] },
+      { id:'c22', courseId:'dev', path:'Technical Path', level:'Mid-Level Dev', module:'Frameworks', platform:'Udemy', title:'Designing Test Frameworks', link:'https://www.udemy.com/course/test-frameworks/', status:'not-started', homolog:'required', duration:'9h 0m', points:120, description:'Page Object Model and scalable framework design.', evidence:null, skills:['Test Automation','Python'] },
+      { id:'c23', courseId:'dev', path:'Technical Path', level:'Senior Dev', module:'CI/CD', platform:'Microsoft Learn', title:'CI Pipelines for Tests', link:'https://learn.microsoft.com/ci/', status:'not-started', homolog:'optional', duration:'5h 0m', points:90, description:'Wiring automated tests into CI pipelines.', evidence:null, skills:['CI/CD'] },
+      { id:'c24', courseId:'dev', path:'Technical Path', level:'Junior Dev', module:'Programming', platform:'Udemy', title:'Python for Automation', link:'https://www.udemy.com/course/python-automation/', status:'not-started', homolog:'optional', duration:'6h 0m', points:85, description:'Python essentials for test automation engineers.', evidence:null, skills:['Python','Test Automation'] },
+      { id:'c25', courseId:'dev', path:'Tooling Path', level:'Mid-Level Dev', module:'Containers', platform:'Pluralsight', title:'Docker for Test Environments', link:'https://www.pluralsight.com/courses/docker/', status:'not-started', homolog:'optional', duration:'6h 0m', points:80, description:'Reproducible test environments with Docker.', evidence:null, skills:['Docker','CI/CD'] },
+      { id:'c26', courseId:'ba', path:'Technical Path', level:'Junior BA', module:'Requirements', platform:'Coursera', title:'Requirements Engineering', link:'https://www.coursera.org/learn/requirements/', status:'waiting', homolog:'required', duration:'7h 0m', points:90, description:'Eliciting and documenting clear requirements.', evidence:'requirements-proj.pdf', skills:['Requirements Analysis'] },
+      { id:'c27', courseId:'ba', path:'Technical Path', level:'Senior BA', module:'Data', platform:'LinkedIn Learning', title:'SQL for Analysts', link:'https://www.linkedin.com/learning/sql-analysts/', status:'not-started', homolog:'optional', duration:'5h 0m', points:75, description:'Querying data to support business analysis.', evidence:null, skills:['SQL'] },
+      { id:'c28', courseId:'ba', path:'Soft Skills Path', level:'Junior BA', module:'Workshops', platform:'Udemy', title:'Facilitation Skills', link:'https://www.udemy.com/course/facilitation/', status:'not-started', homolog:'optional', duration:'3h 0m', points:60, description:'Running effective requirement workshops.', evidence:null, skills:['Facilitation'] },
+      { id:'c29', courseId:'rpa', path:'Technical Path', level:'Senior RPA', module:'UiPath', platform:'Udemy', title:'UiPath Advanced Automation', link:'https://www.udemy.com/course/uipath/', status:'not-started', homolog:'required', duration:'10h 0m', points:110, description:'Building advanced UiPath automation workflows.', evidence:null, skills:['RPA'] },
+      { id:'c30', courseId:'rpa', path:'Technical Path', level:'Junior RPA', module:'Power Automate', platform:'Microsoft Learn', title:'Power Automate Essentials', link:'https://learn.microsoft.com/power-automate/', status:'not-started', homolog:'optional', duration:'6h 0m', points:80, description:'Low-code automation with Power Automate.', evidence:null, skills:['RPA'] }
+    ],
+    homologRequests:[
+      { id:'hreq1', userId:'u1', resourceId:'c7', pathId:'qa', level:'QA Lead', module:'Performance', title:'Performance Testing with JMeter', evidence:'jmeter-prev.pdf', status:'pending', submitted:'2026-06-28', managerNote:'' }
+    ],
+    enrollRequests:[],
   };
 
   TODAY = '2026-06-29';
@@ -1433,14 +1440,14 @@ class Component extends DCLogic {
     return Math.round(done/list.length*100);
   }
   enrollments(){
-    return this.state.users.filter(u=>u.role==='Learner'&&u.courseId).map(u=>{
-      const c=this.courseById(u.courseId);
-      const prog=u.id==='u1'?this.courseProgress('sr-qa'):({u2:42,u3:18,u4:5,u6:67,u8:88}[u.id]||0);
+    return this.state.users.filter(u=>u.role==='Learner'&&u.primaryPathId).map(u=>{
+      const c=this.courseById(u.primaryPathId);
+      const prog=u.id==='u1'?this.courseProgress('qa'):({u2:42,u3:18,u4:5,u6:67,u8:88}[u.id]||0);
       let status='not-started';
       if(prog>=100) status='completed'; else if(prog>0) status='in-progress';
-      const pendingEv=this.state.resources.some(r=>r.courseId===u.courseId&&r.status==='waiting');
+      const pendingEv=this.state.resources.some(r=>r.courseId===u.primaryPathId&&r.status==='waiting');
       if(pendingEv&&prog>0&&prog<100) status='awaiting';
-      return { ...u, course:c, prog, status, source: (u.id==='u3')?'manual':'auto', since: ({u1:'Apr 2026',u2:'Mar 2026',u3:'May 2026',u4:'May 2026',u6:'Feb 2026',u8:'Jan 2026'}[u.id]||'—'), last: ({u1:'2 days ago',u2:'Today',u3:'5 days ago',u4:'3 weeks ago',u6:'Yesterday',u8:'Today'}[u.id]||'—') };
+      return { ...u, course:c, prog, status, source:(u.id==='u3')?'manual':'auto', since:({u1:'Apr 2026',u2:'Mar 2026',u3:'May 2026',u4:'May 2026',u6:'Feb 2026',u8:'Jan 2026'}[u.id]||'—'), last:({u1:'2 days ago',u2:'Today',u3:'5 days ago',u4:'3 weeks ago',u6:'Yesterday',u8:'Today'}[u.id]||'—') };
     });
   }
   // homologation queue records (non-youtube waiting resources)
@@ -1798,7 +1805,7 @@ class Component extends DCLogic {
     const totalLearners=S.users.filter(u=>u.role==='Learner').length||1;
     let skillRows=S.skills.map(s=>{
       const res=S.resources.filter(r=>(r.skills||[]).includes(s.name));
-      const learnersWith=this.enrollments().filter(e=>this.state.resources.some(r=>r.courseId===e.courseId&&(r.skills||[]).includes(s.name)&&r.status==='completed')).length;
+      const learnersWith=this.enrollments().filter(e=>this.state.resources.some(r=>r.courseId===e.primaryPathId&&(r.skills||[]).includes(s.name)&&r.status==='completed')).length;
       const modCount=new Set(res.map(r=>r.module)).size;
       const coveragePct=Math.round((learnersWith/totalLearners)*100);
       return { ...s, resCount:res.length, learnerCount:learnersWith, modCount, coveragePct, goResources:()=>this.setState({screen:'resources'}),
@@ -2078,7 +2085,7 @@ class Component extends DCLogic {
     const avg=enr.length?Math.round(enr.reduce((a,e)=>a+e.prog,0)/enr.length):0;
     const pending=this.homologs();
     const atRisk=enr.filter(e=>e.prog<40&&e.status!=='completed').map(e=>{
-      const due=this.state.resources.filter(r=>r.courseId===e.courseId&&r.dueDate).sort((a,b)=>a.dueDate.localeCompare(b.dueDate))[0];
+      const due=this.state.resources.filter(r=>r.courseId===e.primaryPathId&&r.dueDate).sort((a,b)=>a.dueDate.localeCompare(b.dueDate))[0];
       return { name:e.name, initials:this.initials(e.name), avatarBg:this.avatarBg(e.name), courseName:e.course?e.course.name:'—', prog:e.prog,
         due:due?this.fmtDate(due.dueDate):'No deadline', reason:e.prog<10?'Barely started':'Behind schedule' };
     });
@@ -2088,7 +2095,7 @@ class Component extends DCLogic {
 
     const stMap={ 'not-started':['Inactive','#94a3b8'], 'in-progress':['On Track','#2563eb'], 'awaiting':['Behind','#b45309'], 'completed':['Completed','#15803d'] };
     const progressRows=enr.map(e=>{
-      const lvl=this.state.resources.filter(r=>r.courseId===e.courseId).map(r=>r.level);
+      const lvl=this.state.resources.filter(r=>r.courseId===e.primaryPathId).map(r=>r.level);
       const curLevel=lvl[0]||'—';
       const st= e.prog<10?['Inactive','#94a3b8']: (e.prog>=100?['Completed','#15803d']: (e.prog<40?['Behind','#b45309']:['On Track','#2563eb']));
       return { id:e.id, name:e.name, initials:this.initials(e.name), avatarBg:this.avatarBg(e.name), email:e.email,
@@ -2114,7 +2121,7 @@ class Component extends DCLogic {
 
   vLearner(){
     const S=this.state, isLn=S.viewer==='learner';
-    const cid='sr-qa';
+    const cid='qa';
     const all=this.state.resources.filter(r=>r.courseId===cid).map(r=>this.decorate(r));
     const course=this.courseById(cid);
     // continue: most recent in-progress
@@ -2224,7 +2231,7 @@ class Component extends DCLogic {
     // preview modal
     const pc=S.previewCourse?this.courseById(S.previewCourse):null;
     const previewTree=pc?this.tree(pc.id).map(p=>({ path:p.path, levels:p.levels.map(l=>({ level:l.level, modules:l.modules.map(m=>({ module:m.module, count:m.resources.length, resources:m.resources.map(r=>({title:r.title,platform:r.platform,platColor:this.platColor(r.platform)})) })) })) })):[];
-    const pcAssigned=pc&&pc.id==='sr-qa';
+    const pcAssigned=pc&&pc.id==='qa';
     // cert modal
     const cv=S.certView?this.state.resources.find(r=>r.id===S.certView):null;
     const cvCourse=cv?this.courseById(cv.courseId):null;
