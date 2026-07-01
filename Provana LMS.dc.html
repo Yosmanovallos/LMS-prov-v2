@@ -2270,27 +2270,6 @@ class Component extends DCLogic {
     const inProg=all.filter(r=>r.status==='in-progress');
     const cont=inProg[0]||all.find(r=>r.status==='not-started')||all[0];
     const contD=cont?this.decorate(cont):null;
-    // required = has dueDate or homolog required & not complete
-    const required=all.filter(r=>(r.dueDate||r.homolog==='required')&&r.status!=='completed').slice(0,4);
-    // progress per path
-    const paths={};
-    all.forEach(r=>{ (paths[r.path]=paths[r.path]||{done:0,total:0,color:this.platColor(r.platform)}); paths[r.path].total++; if(r.status==='completed') paths[r.path].done++; });
-    const pathProgress=Object.keys(paths).map((p,i)=>({ name:p, pct:Math.round(paths[p].done/paths[p].total*100), done:paths[p].done, total:paths[p].total, color:this.PALETTE[i%this.PALETTE.length] }));
-    // skills gained
-    const gained={}, pendingSk={};
-    all.forEach(r=>{ (r.skills||[]).forEach(s=>{ if(r.status==='completed') gained[s]=true; else if(r.status==='waiting') pendingSk[s]=true; }); });
-    const skillsGained=Object.keys(gained).map(s=>({ name:s, pending:false }));
-    const skillsPending=Object.keys(pendingSk).filter(s=>!gained[s]).map(s=>({ name:s, pending:true }));
-    const chipStyle=(pend)=> pend ? 'background:color-mix(in srgb,#b45309 13%,var(--surface));color:#b45309;' : 'background:var(--brand-soft);color:var(--brand);';
-    const allSkillChips=[...skillsGained,...skillsPending].map(c=>({ name:c.name, css:chipStyle(c.pending) }));
-    // tabs
-    const TABS=[['overview','Overview'],['todo','To Do'],['progress','In Progress'],['history','History'],['skills','Skills'],['certs','Certificates']];
-    const todo=all.filter(r=>r.status==='not-started'||r.status==='waiting');
-    const history=all.filter(r=>r.status==='completed').slice().sort((a,b)=>(b.completedDate||'').localeCompare(a.completedDate||''));
-    const certs=all.filter(r=>r.hasCert);
-    const counts={ todo:todo.length, progress:inProg.length, certs:certs.length };
-    const learnerTabs=TABS.map(t=>({ key:t[0], label:t[1], count:counts[t[0]]||0, hasCount:!!counts[t[0]], sel:S.learnerTab===t[0], pick:()=>this.setState({learnerTab:t[0]}),
-      style:S.learnerTab===t[0]?'padding:12px 2px;border:none;background:none;font-size:13.5px;font-weight:700;color:var(--brand);border-bottom:2.5px solid var(--brand);white-space:nowrap;':'padding:12px 2px;border:none;background:none;font-size:13.5px;font-weight:600;color:var(--text-3);border-bottom:2.5px solid transparent;white-space:nowrap;' }));
 
     // course page tree (learner)
     const lcid=S.detailCourse||cid;
@@ -2312,7 +2291,7 @@ class Component extends DCLogic {
     const primaryPath=learnerUser.primaryPathId?this.courseById(learnerUser.primaryPathId):null;
     const primaryProg=this.courseProgress(learnerUser.primaryPathId||'qa');
     const homeSecondaries=(learnerUser.secondaryPaths||[]).map(sp=>{
-      const c=this.courseById(sp.pathId); const prog=Math.floor(Math.random()*40);
+      const c=this.courseById(sp.pathId); const prog=({qa:35,ba:20,bi:60,rpa:45,dev:50}[sp.pathId]||0);
       return {...sp,name:c?c.name:'—',color:c?c.color:'#94a3b8',prog,go:()=>this.setState({screen:'mypaths',detailCourse:sp.pathId})};
     });
 
@@ -2329,7 +2308,7 @@ class Component extends DCLogic {
     });
 
     return {
-      showHome:isLn&&S.screen==='home', showMyLearning:isLn&&S.screen==='mylearning', showExplore:isLn&&S.screen==='explore', showCoursePage:isLn&&S.screen==='course',
+      showHome:isLn&&S.screen==='home', showExplore:isLn&&S.screen==='explore', showCoursePage:isLn&&S.screen==='course',
       goMyPaths:()=>this.setState({screen:'mypaths'}),
       goHomologar:()=>this.setState({screen:'homologar'}),
       homePrimaryName:primaryPath?primaryPath.name:'Sin path asignado',
@@ -2343,23 +2322,6 @@ class Component extends DCLogic {
       cl_progress:contD?contD.progressVal:0, cl_remaining:contD?(contD.remainingLabel||contD.duration):'', cl_color:course.color, cl_colorDark:this.dark(course.color,30),
       cl_continue:()=>{ if(contD) this.setState({detailCourse:cid,screen:'course',detailRes:contD.id}); },
       ln_courseName:course.name,
-      required:required.map(r=>({ ...r, go:()=>this.setState({detailCourse:cid,screen:'course',detailRes:r.id}) })), requiredEmpty:required.length===0,
-      pathProgress,
-      skillChips:allSkillChips, skillChipsEmpty:allSkillChips.length===0,
-      learnerTabs,
-      tab_overview:S.learnerTab==='overview', tab_todo:S.learnerTab==='todo', tab_progress:S.learnerTab==='progress', tab_history:S.learnerTab==='history', tab_skills:S.learnerTab==='skills', tab_certs:S.learnerTab==='certs',
-      todoList:todo, todoEmpty:todo.length===0,
-      progList:inProg, progEmpty:inProg.length===0,
-      historyList:history, historyEmpty:history.length===0,
-      certList:certs.map(c=>({ ...c, view:()=>this.setState({certView:c.id}) })), certEmpty:certs.length===0,
-      // skills tab full list
-      skillsFull: this.state.skills.map(s=>{
-        const has=skillsGained.some(g=>g.name===s.name); const pend=skillsPending.some(g=>g.name===s.name);
-        const src=all.find(r=>(r.skills||[]).includes(s.name));
-        return { name:s.name, has, pend, pct:has?100:pend?60:0, barColor:has?'#15803d':pend?'#b45309':'var(--border)',
-          state:has?'Gained':pend?'Pending validation':'Not started', stateColor:has?'#15803d':pend?'#b45309':'var(--text-3)',
-          source:src?src.title:'—' };
-      }),
       // course page
       cp_courseName:lcourse.name, cp_tree:tree,
       cp_hasSel:!!selRes,
