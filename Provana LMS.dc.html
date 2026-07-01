@@ -1394,6 +1394,7 @@ class Component extends DCLogic {
   state = {
     theme:'light', viewer:'admin', screen:'paths', search:'', searchOpen:false, notifOpen:false,
     detailCourse:'qa', detailRes:null, learnerTab:'overview', learnerOpenPath:{}, evidenceFile:'',
+    myPathActive:null,
     homologFormPath:'', homologFormResource:'', homologFormEvidence:'', homologFormNote:'',
     wizard:null, rejectFor:null, rejectNote:'', enrollOpen:false, enrollUser:'', enrollCourse:'', previewCourse:null, certView:null,
     filterPath:null, filterLevel:null, filterModule:null,
@@ -1586,6 +1587,20 @@ class Component extends DCLogic {
       breadcrumb:r.path+'  ›  '+r.level+'  ›  '+r.module,
       open:()=>this.setState({detailRes:r.id,evidenceFile:''})
     });
+  }
+
+  // ----- learner content helpers -----
+  learnerActiveUser(){ return this.state.users.find(u=>u.id==='u1')||this.state.users.find(u=>u.role==='Learner')||{}; }
+  learnerActivePath(){ return this.state.myPathActive||this.learnerActiveUser().primaryPathId; }
+  learnerLevelForPath(pathId){
+    const u=this.learnerActiveUser();
+    if(pathId===u.primaryPathId) return u.primaryLevel;
+    const sp=(u.secondaryPaths||[]).find(s=>s.pathId===pathId);
+    return sp?sp.level:u.primaryLevel;
+  }
+  learnerPathResources(pathId){
+    const level=this.learnerLevelForPath(pathId);
+    return this.state.resources.filter(r=>r.courseId===pathId&&r.level===level);
   }
 
   // ----- enrollment-style aggregation -----
@@ -1890,6 +1905,10 @@ class Component extends DCLogic {
       mylearning:['My Learning','Pick up where you left off'],
       home:['Home','Tu aprendizaje de hoy'],
       mypaths:['Mis Paths','Todos tus paths asignados'],
+      todo:['ToDo List','Recursos pendientes por empezar'],
+      active:['Active Learning','Lo que estás cursando ahora'],
+      history:['History','Recursos completados'],
+      certificates:['Certificates','Certificados obtenidos'],
       homologar:['Homologar','Solicita crédito por cursos previos'],
       explore:['Explore Courses','Discover courses and grow your skills'],
       course:['Course', S.detailCourse?(this.courseById(S.detailCourse)||{}).name:'']
@@ -1982,9 +2001,19 @@ class Component extends DCLogic {
         item('approvals','Approvals',[['path','M22 11.08V12a10 10 0 1 1-5.93-9.14'],['path','M22 4 12 14.01l-3-3']],totalPending,'')
       ];
     } else {
+      const lActivePath=this.learnerActivePath();
+      const lPathRes=this.learnerPathResources(lActivePath);
+      const lTodoCount=lPathRes.filter(r=>r.status==='not-started').length;
+      const lActiveCount=lPathRes.filter(r=>r.status==='in-progress'||r.status==='waiting').length;
+      const lCertCount=lPathRes.filter(r=>r.status==='completed'&&r.hasCert).length;
       navItems=[
         item('home','Home',[['rect',{x:3,y:3,width:7,height:9}],['rect',{x:14,y:3,width:7,height:5}],['rect',{x:14,y:12,width:7,height:9}],['rect',{x:3,y:16,width:7,height:5}]],0,''),
-        item('mypaths','Mis Paths',[['path','M4 19.5A2.5 2.5 0 0 1 6.5 17H20'],['path','M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z']],0,''),
+        head('Content','lcontent'),
+        item('mypaths','Paths',[['path','M4 19.5A2.5 2.5 0 0 1 6.5 17H20'],['path','M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z']],0,'lcontent'),
+        item('todo','ToDo List',[['line',{x1:8,y1:6,x2:21,y2:6}],['line',{x1:8,y1:12,x2:21,y2:12}],['line',{x1:8,y1:18,x2:21,y2:18}],['line',{x1:3,y1:6,x2:3.01,y2:6}],['line',{x1:3,y1:12,x2:3.01,y2:12}],['line',{x1:3,y1:18,x2:3.01,y2:18}]],lTodoCount,'lcontent'),
+        item('active','Active Learning',[['circle',{cx:12,cy:12,r:10}],['polygon',{points:'10 8 16 12 10 16'}]],lActiveCount,'lcontent'),
+        item('history','History',[['path','M3 3v18h18'],['path','M18 17V9'],['path','M13 17V5'],['path','M8 17v-3']],0,'lcontent'),
+        item('certificates','Certificates',[['circle',{cx:12,cy:8,r:6}],['path','M15.5 13.5 17 22l-5-3-5 3 1.5-8.5']],lCertCount,'lcontent'),
         item('explore','Explorar',[['circle',{cx:12,cy:12,r:10}],['polygon',{points:'16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76'}]],0,''),
         item('homologar','Homologar',[['path','M9 11l3 3L22 4'],['path','M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11']],0,'')
       ];
