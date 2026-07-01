@@ -916,6 +916,30 @@
         </sc-if>
         </sc-if>
 
+        <!-- TODO LIST -->
+        <sc-if value="{{ showTodo }}" hint-placeholder-val="{{ false }}">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 24px;box-shadow:var(--shadow);">
+          <sc-for list="{{ todoModules }}" as="mod" hint-placeholder-count="3">
+            <div style="margin-bottom:14px;">
+              <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);padding:6px 0;border-bottom:1px solid var(--border);margin-bottom:8px;">{{ mod.name }}</div>
+              <sc-for list="{{ mod.resources }}" as="r" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);margin-bottom:6px;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#cbd5e1;flex-shrink:0;"></span>
+                  <button onClick="{{ r.open }}" style="flex:1;min-width:0;text-align:left;background:none;border:none;padding:0;cursor:pointer;">
+                    <div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.title }}</div>
+                    <div style="font-size:11.5px;color:var(--text-3);">{{ r.platform }} · {{ r.duration }}</div>
+                  </button>
+                  <button onClick="{{ r.start }}" style="font-size:12.5px;font-weight:700;color:#fff;background:var(--brand);border:none;padding:8px 15px;border-radius:9px;cursor:pointer;flex-shrink:0;">Empezar →</button>
+                </div>
+              </sc-for>
+            </div>
+          </sc-for>
+          <sc-if value="{{ todoEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:32px;text-align:center;font-size:13px;color:var(--text-3);">No tienes recursos pendientes en este path.</div>
+          </sc-if>
+        </div>
+        </sc-if>
+
       </div>
       </sc-if>
 
@@ -1703,6 +1727,14 @@ class Component extends DCLogic {
       this.pushNotif('Evidence for "'+h.res.title+'" was rejected: '+this.state.rejectNote,'reject');
     }
     this.flash('Rejected — '+h.user.name+' notified','warn');
+  }
+
+  startResource(id){
+    const r=this.state.resources.find(x=>x.id===id); if(!r) return;
+    const resources=this.state.resources.map(x=>x.id===id?{...x,status:'in-progress',progress:x.progress||0,lastActivity:'Hoy'}:x);
+    this.setState({resources});
+    this.flash('"'+r.title+'" en progreso','ok');
+    if(r.link) window.open(r.link,'_blank');
   }
 
   submitEvidence(){
@@ -2549,6 +2581,14 @@ class Component extends DCLogic {
         continueLink:r.link };
     });
 
+    // todo list — grouped by module
+    const todoModuleMap={};
+    heroRes.filter(r=>r.status==='not-started').forEach(r=>{ (todoModuleMap[r.module]=todoModuleMap[r.module]||[]).push(r); });
+    const todoModules=Object.keys(todoModuleMap).map(mod=>({
+      name:mod,
+      resources:todoModuleMap[mod].map(r=>({...this.decorate(r), start:()=>this.startResource(r.id), open:()=>this.setState({detailRes:r.id})}))
+    }));
+
     // explore
     const q=S.search.trim().toLowerCase();
     const assignedPathIds=new Set([learnerUser.primaryPathId,...(learnerUser.secondaryPaths||[]).map(sp=>sp.pathId)].filter(Boolean));
@@ -2592,6 +2632,7 @@ class Component extends DCLogic {
       heroProg, heroCompletedCount:heroCompleted.length, heroTotal, heroPoints, heroAwaiting,
       heroPills,
       activeLearningCards, activeLearningEmpty:activeLearningCards.length===0,
+      todoModules, todoEmpty:todoModules.length===0,
       homePrimaryName:primaryPath?primaryPath.name:'Sin path asignado',
       homePrimaryLevel:learnerUser.primaryLevel||'—',
       homePrimaryProg:primaryProg,
