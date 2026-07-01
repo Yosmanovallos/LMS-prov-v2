@@ -834,49 +834,25 @@
       </div>
       </sc-if>
 
-      <!-- LEARNER: MIS PATHS -->
+      <!-- LEARNER: PATHS (landing) -->
       <sc-if value="{{ showMyPaths }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:1100px;margin:0 auto;">
-
-        <!-- Path selector tabs -->
-        <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
-          <sc-for list="{{ myPathTabs }}" as="t" hint-placeholder-count="3">
-            <button onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}<sc-if value="{{ t.isPrimary }}" hint-placeholder-val="{{ false }}"> 🎯</sc-if></button>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;">
+          <sc-for list="{{ pathLandingCards }}" as="p" hint-placeholder-count="2">
+            <button onClick="{{ p.pick }}" style="text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);cursor:pointer;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                <span style="width:38px;height:38px;border-radius:10px;background:linear-gradient(125deg,{{ p.color }},{{ p.colorDark }});display:flex;align-items:center;justify-content:center;flex-shrink:0;">{{ p.iconWhite }}</span>
+                <span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--brand-soft);color:var(--brand);"><sc-if value="{{ p.isPrimary }}" hint-placeholder-val="{{ true }}">🎯 Principal</sc-if><sc-if value="{{ !p.isPrimary }}" hint-placeholder-val="{{ false }}">📘 Secundario</sc-if></span>
+              </div>
+              <div style="font-size:16px;font-weight:800;color:var(--text);">{{ p.name }}</div>
+              <div style="font-size:13px;color:var(--text-2);margin-top:2px;">{{ p.level }}</div>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:12px;">
+                <div style="flex:1;height:7px;border-radius:6px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ p.prog }}%;background:{{ p.color }};border-radius:6px;"></div></div>
+                <span style="font-size:12px;font-weight:700;color:var(--text-2);">{{ p.prog }}%</span>
+              </div>
+            </button>
           </sc-for>
         </div>
-
-        <!-- Tree: Module > Resources -->
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 24px;box-shadow:var(--shadow);">
-          <div style="margin-bottom:16px;">
-            <div style="font-size:18px;font-weight:800;color:var(--text);">{{ myPathActiveName }}</div>
-            <div style="font-size:13px;color:var(--text-2);margin-top:2px;">{{ myPathActiveLevel }}</div>
-            <div style="display:flex;align-items:center;gap:10px;margin-top:10px;max-width:360px;">
-              <div style="flex:1;height:7px;border-radius:6px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ myPathActiveProg }}%;background:var(--brand);border-radius:6px;"></div></div>
-              <span style="font-size:12px;font-weight:700;color:var(--text-2);">{{ myPathActiveProg }}% completado</span>
-            </div>
-          </div>
-
-          <sc-for list="{{ myPathModules }}" as="mod" hint-placeholder-count="4">
-            <div style="margin-bottom:14px;">
-              <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);padding:6px 0;border-bottom:1px solid var(--border);margin-bottom:8px;">{{ mod.name }}</div>
-              <sc-for list="{{ mod.resources }}" as="r" hint-placeholder-count="3">
-                <button onClick="{{ r.open }}" style="display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);margin-bottom:6px;">
-                  <span style="font-size:16px;flex-shrink:0;">{{ r.statusIcon }}</span>
-                  <div style="flex:1;min-width:0;">
-                    <div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.title }}</div>
-                    <div style="font-size:11.5px;color:var(--text-3);">{{ r.platform }} · {{ r.duration }}</div>
-                  </div>
-                  <span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:{{ r.statusBg }};color:{{ r.statusColor }};">{{ r.statusLabel }}</span>
-                </button>
-              </sc-for>
-            </div>
-          </sc-for>
-
-          <sc-if value="{{ myPathEmpty }}" hint-placeholder-val="{{ false }}">
-            <div style="padding:32px;text-align:center;font-size:13px;color:var(--text-3);">No hay recursos en este path aún.</div>
-          </sc-if>
-        </div>
-
       </div>
       </sc-if>
 
@@ -2470,23 +2446,19 @@ class Component extends DCLogic {
       return {...sp,name:c?c.name:'—',color:c?c.color:'#94a3b8',prog,go:()=>this.setState({screen:'mypaths',detailCourse:sp.pathId})};
     });
 
-    // my paths (path detail tree)
-    const activeMyPath=S.detailCourse||learnerUser.primaryPathId||'qa';
+    // paths landing: cards for every assigned path (primary + secondary)
     const allPaths=[
       {pathId:learnerUser.primaryPathId,level:learnerUser.primaryLevel,isPrimary:true},
       ...(learnerUser.secondaryPaths||[]).map(sp=>({...sp,isPrimary:false}))
     ].filter(p=>p.pathId);
-    const activeMyLevel=(allPaths.find(p=>p.pathId===activeMyPath)||{}).level||learnerUser.primaryLevel||'Senior QA';
-    const myPathResources=S.resources.filter(r=>r.courseId===activeMyPath&&r.level===activeMyLevel);
-    const myPathModuleMap={};
-    myPathResources.forEach(r=>{ (myPathModuleMap[r.module]=myPathModuleMap[r.module]||[]).push(r); });
-    const STATUS_ICON={'completed':'✅','in-progress':'🔵','waiting':'⏳','not-started':'○'};
-    const myPathModules=Object.keys(myPathModuleMap).map(mod=>({
-      name:mod,
-      resources:myPathModuleMap[mod].map(r=>({...this.decorate(r),statusIcon:STATUS_ICON[r.status]||'○',open:()=>this.setState({detailRes:r.id,detailCourse:activeMyPath,evidenceFile:'',screen:'mypaths'})}))
-    }));
-    const myPathProg=myPathResources.length?Math.round(myPathResources.filter(r=>r.status==='completed').length/myPathResources.length*100):0;
-    const activeMyPathObj=this.courseById(activeMyPath)||{};
+    const pathLandingCards=allPaths.map(p=>{
+      const c=this.courseById(p.pathId)||{};
+      const res=this.learnerPathResources(p.pathId);
+      const prog=res.length?Math.round(res.filter(r=>r.status==='completed').length/res.length*100):0;
+      return { pathId:p.pathId, name:c.name||p.pathId, level:p.level, isPrimary:p.isPrimary, prog,
+        color:c.color||'#4A2E80', iconWhite:this.iconEl(c.icon,22,'#fff',2), colorDark:this.dark(c.color||'#4A2E80',28),
+        pick:()=>this.setState({myPathActive:p.pathId,screen:'active'}) };
+    });
 
     // explore
     const q=S.search.trim().toLowerCase();
@@ -2522,16 +2494,7 @@ class Component extends DCLogic {
       showHomologar:isLn&&S.screen==='homologar',
       goMyPaths:()=>this.setState({screen:'mypaths'}),
       goHomologar:()=>this.setState({screen:'homologar'}),
-      myPathTabs: allPaths.map(p=>{
-        const c=this.courseById(p.pathId)||{}; const isActive=p.pathId===activeMyPath;
-        return { label:c.name||p.pathId, isPrimary:p.isPrimary, pick:()=>this.setState({detailCourse:p.pathId,screen:'mypaths'}),
-          style:isActive?'padding:8px 16px;border-radius:20px;border:none;background:var(--brand);color:#fff;font-size:13px;font-weight:700;cursor:pointer;':'padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-size:13px;font-weight:500;cursor:pointer;' };
-      }),
-      myPathActiveName: activeMyPathObj.name||'—',
-      myPathActiveLevel: activeMyLevel,
-      myPathActiveProg: myPathProg,
-      myPathModules,
-      myPathEmpty: myPathModules.length===0,
+      pathLandingCards,
       homePrimaryName:primaryPath?primaryPath.name:'Sin path asignado',
       homePrimaryLevel:learnerUser.primaryLevel||'—',
       homePrimaryProg:primaryProg,
