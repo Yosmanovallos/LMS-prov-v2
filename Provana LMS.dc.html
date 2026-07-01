@@ -1639,9 +1639,15 @@ class Component extends DCLogic {
   openReject(h){ this.setState({ rejectFor:h, rejectNote:'' }); }
   doReject(){
     const h=this.state.rejectFor; if(!this.state.rejectNote.trim()){ this.flash('Add a note explaining why','warn'); return; }
-    const resources=this.state.resources.map(r=>r.id===h.resId?{...r,status:'in-progress',evidence:null}:r);
-    this.setState({ resources, rejectFor:null, rejectNote:'' });
-    this.pushNotif('Evidence for "'+h.res.title+'" was rejected: '+this.state.rejectNote,'reject');
+    if(h.type==='homologation'){
+      const homologRequests=this.state.homologRequests.map(r=>r.id===h.reqId?{...r,status:'rejected',managerNote:this.state.rejectNote}:r);
+      this.setState({ homologRequests, rejectFor:null, rejectNote:'' });
+      this.pushNotif('Homologation request for "'+h.res.title+'" was rejected: '+this.state.rejectNote,'reject');
+    } else {
+      const resources=this.state.resources.map(r=>r.id===h.resId?{...r,status:'in-progress',evidence:null}:r);
+      this.setState({ resources, rejectFor:null, rejectNote:'' });
+      this.pushNotif('Evidence for "'+h.res.title+'" was rejected: '+this.state.rejectNote,'reject');
+    }
     this.flash('Rejected — '+h.user.name+' notified','warn');
   }
 
@@ -2349,7 +2355,7 @@ class Component extends DCLogic {
         submitted:h.submitted, overdue:false, submittedLabel:this.fmtDate(h.submitted), initials:this.initials(u.name), avatarBg:this.avatarBg(u.name),
         type:'homologation', typeBg:this.mix('#7c3aed',12), typeColor:'#7c3aed', typeLabel:'Homologation',
         approve:()=>this.approveHomologRequest(h.id),
-        reject:()=>this.openReject({resId:h.resourceId,res:{title:h.title},user:u}) };
+        reject:()=>this.openReject({type:'homologation',reqId:h.id,res:{title:h.title},user:u}) };
     });
     const approvalRows=[...evidenceRows,...homReqs].sort((a,b)=>a.submitted.localeCompare(b.submitted));
 
