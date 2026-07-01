@@ -748,6 +748,26 @@
       </div>
       </sc-if>
 
+      <!-- MANAGER: ENROLLMENTS -->
+      <sc-if value="{{ showEnrollments }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:1200px;margin:0 auto;">
+        <div style="font-size:13.5px;color:var(--text-2);margin-bottom:16px;">Gestiona el path principal y secundarios de cada miembro de tu equipo.</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);">
+          <div style="display:grid;grid-template-columns:1.6fr 1.4fr 0.8fr 1.6fr 1fr 0.8fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Learner</div><div>Primary Path</div><div>Level</div><div>Secondary Paths</div><div>Progreso</div><div style="text-align:right;">Actions</div></div>
+          <sc-for list="{{ enrollmentRows }}" as="e" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:1.6fr 1.4fr 0.8fr 1.6fr 1fr 0.8fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;">
+              <div style="display:flex;align-items:center;gap:10px;min-width:0;"><div style="width:34px;height:34px;border-radius:50%;background:{{ e.avatarBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11.5px;flex-shrink:0;">{{ e.initials }}</div><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ e.name }}</div></div>
+              <div><span style="font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:{{ e.primaryBg }};color:{{ e.primaryColor }};">{{ e.primaryName }}</span></div>
+              <div style="font-size:12px;color:var(--text-2);">{{ e.primaryLevel }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:5px;"><sc-for list="{{ e.secondaries }}" as="sp" hint-placeholder-count="2"><span style="font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:20px;background:{{ sp.color }}1a;color:{{ sp.color }};">{{ sp.name }}</span></sc-for></div>
+              <div style="display:flex;align-items:center;gap:8px;"><div style="flex:1;height:6px;border-radius:4px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ e.prog }}%;background:var(--brand);border-radius:4px;"></div></div><span style="font-size:11.5px;font-weight:700;color:var(--text-2);">{{ e.prog }}%</span></div>
+              <div style="text-align:right;"><button onClick="{{ e.manage }}" style="font-size:12px;font-weight:700;color:var(--brand);background:var(--brand-soft);border:none;border-radius:8px;padding:7px 16px;cursor:pointer;">Manage</button></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
       <!-- LEARNER: MY LEARNING -->
       <sc-if value="{{ showMyLearning }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:1100px;margin:0 auto;">
@@ -1233,6 +1253,60 @@
   </div>
   </sc-if>
 
+  <!-- ENROLLMENT PANEL MODAL -->
+  <sc-if value="{{ enrollPanelOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeEnrollPanel }}" style="position:fixed;inset:0;background:rgba(23,17,48,.5);z-index:60;display:flex;align-items:center;justify-content:center;padding:30px;animation:ovIn .15s ease;">
+    <div onClick="{{ stopEnrollProp }}" style="width:520px;max-height:88vh;overflow-y:auto;background:var(--surface);border-radius:18px;box-shadow:var(--shadow-lg);animation:shIn .2s ease;">
+      <div style="padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <div><div style="font-size:16px;font-weight:700;">Gestionar Enrollment</div><div style="font-size:12.5px;color:var(--text-3);margin-top:2px;">{{ enrollPanelUser.name }}</div></div>
+        <button onClick="{{ closeEnrollPanel }}" style="background:none;border:none;font-size:20px;color:var(--text-3);cursor:pointer;">×</button>
+      </div>
+      <div style="padding:22px 24px;display:flex;flex-direction:column;gap:20px;">
+        <!-- PRIMARY PATH -->
+        <div style="padding:16px;border-radius:13px;border:1px solid var(--border);background:var(--surface-2);">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;">🎯 Primary Path</div>
+          <div style="display:flex;gap:10px;margin-bottom:10px;">
+            <select value="{{ enrollPanelPrimPath }}" onChange="{{ setEnrollPrimPath }}" style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:13px;color:var(--text);outline:none;">
+              <option value="">Seleccionar path…</option>
+              <sc-for list="{{ programOptions }}" as="o" hint-placeholder-count="10"><option value="{{ o.id }}">{{ o.name }}</option></sc-for>
+            </select>
+            <select value="{{ enrollPanelPrimLevel }}" onChange="{{ setEnrollPrimLevel }}" style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:13px;color:var(--text);outline:none;">
+              <option value="">Seleccionar level…</option>
+              <sc-for list="{{ enrollLevelOptions }}" as="lo" hint-placeholder-count="4"><option value="{{ lo.value }}">{{ lo.label }}</option></sc-for>
+            </select>
+          </div>
+          <button onClick="{{ savePrimaryPath }}" style="width:100%;padding:9px;border-radius:9px;border:none;background:var(--brand);color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Guardar Primary Path</button>
+        </div>
+        <!-- SECONDARY PATHS -->
+        <div style="padding:16px;border-radius:13px;border:1px solid var(--border);background:var(--surface-2);">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px;">📘 Secondary Paths</div>
+          <sc-for list="{{ enrollPanelSecondaries }}" as="sp" hint-placeholder-count="2">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:9px;background:var(--surface);border:1px solid var(--border);margin-bottom:7px;">
+              <span style="font-size:13px;font-weight:600;">{{ sp.name }} › {{ sp.level }}</span>
+              <button onClick="{{ sp.remove }}" style="font-size:13px;color:#dc2626;background:none;border:none;cursor:pointer;font-weight:700;">×</button>
+            </div>
+          </sc-for>
+          <div style="font-size:11.5px;font-weight:600;color:var(--text-3);margin:10px 0 8px;">+ Agregar secondary path</div>
+          <div style="display:flex;gap:10px;margin-bottom:10px;">
+            <select value="{{ enrollPanelAddSecPath }}" onChange="{{ setEnrollSecPath }}" style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:13px;color:var(--text);outline:none;">
+              <option value="">Path…</option>
+              <sc-for list="{{ programOptions }}" as="o" hint-placeholder-count="10"><option value="{{ o.id }}">{{ o.name }}</option></sc-for>
+            </select>
+            <select value="{{ enrollPanelAddSecLevel }}" onChange="{{ setEnrollSecLevel }}" style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:13px;color:var(--text);outline:none;">
+              <option value="">Level…</option>
+              <sc-for list="{{ enrollSecLevelOptions }}" as="lo" hint-placeholder-count="4"><option value="{{ lo.value }}">{{ lo.label }}</option></sc-for>
+            </select>
+          </div>
+          <button onClick="{{ addSecondaryPath }}" style="width:100%;padding:9px;border-radius:9px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;">Agregar Secondary Path</button>
+        </div>
+      </div>
+      <div style="padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
+        <button onClick="{{ closeEnrollPanel }}" style="padding:10px 22px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:13px;font-weight:700;">Cerrar</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:960}}">
@@ -1251,6 +1325,9 @@ class Component extends DCLogic {
     editModuleOpen:false, emf:{key:'',name:'',levelKey:''},
     editResOpen:false, erf:{id:'',title:'',platform:'',homolog:'',duration:'',points:'',skills:[],skillInput:''},
     deleteConfirm:null,
+    enrollPanelOpen:false, enrollPanelUser:null,
+    enrollPanelPrimPath:'', enrollPanelPrimLevel:'',
+    enrollPanelAddSecPath:'', enrollPanelAddSecLevel:'',
     managers:[ {id:'m1',name:'Sarah Perez'}, {id:'m2',name:'John Diaz'}, {id:'m3',name:'Maria Polo'} ],
     notifications:[
       {id:'n1', type:'assign', text:'New course assigned: Performance Testing with JMeter', time:'2h ago', read:false},
@@ -1630,6 +1707,42 @@ class Component extends DCLogic {
   doEnroll(){ const u=this.userById(this.state.enrollUser); if(!u){ this.flash('Pick a user','warn'); return; } const users=this.state.users.map(x=>x.id===u.id?{...x,courseId:this.state.enrollCourse}:x); this.setState({ users, enrollOpen:false }); this.pushNotif('You were enrolled in '+this.courseById(this.state.enrollCourse).name,'assign'); this.flash('Enrolled '+u.name,'ok'); }
   requestAccess(c){ this.pushNotif('Access requested: '+c.name+' (pending admin approval)','assign'); this.flash('Access requested for "'+c.name+'"','ok'); }
 
+  // manager enrollment panel
+  openEnrollPanel(u){ this.setState({enrollPanelOpen:true,enrollPanelUser:u.id,enrollPanelPrimPath:u.primaryPathId||'',enrollPanelPrimLevel:u.primaryLevel||'',enrollPanelAddSecPath:'',enrollPanelAddSecLevel:''}); }
+  closeEnrollPanel(){ this.setState({enrollPanelOpen:false,enrollPanelUser:null}); }
+  savePrimaryPath(){
+    const S=this.state; if(!S.enrollPanelPrimPath||!S.enrollPanelPrimLevel){this.flash('Selecciona path y level','warn');return;}
+    const users=S.users.map(u=>u.id===S.enrollPanelUser?{...u,primaryPathId:S.enrollPanelPrimPath,primaryLevel:S.enrollPanelPrimLevel}:u);
+    this.setState({users}); this.flash('Primary path actualizado','ok');
+  }
+  addSecondaryPath(){
+    const S=this.state; if(!S.enrollPanelAddSecPath||!S.enrollPanelAddSecLevel){this.flash('Selecciona path y level','warn');return;}
+    const users=S.users.map(u=>{
+      if(u.id!==S.enrollPanelUser) return u;
+      const already=(u.secondaryPaths||[]).some(sp=>sp.pathId===S.enrollPanelAddSecPath);
+      if(already){this.flash('Ya tiene ese path secundario','warn');return u;}
+      return {...u,secondaryPaths:[...(u.secondaryPaths||[]),{pathId:S.enrollPanelAddSecPath,level:S.enrollPanelAddSecLevel}]};
+    });
+    this.setState({users,enrollPanelAddSecPath:'',enrollPanelAddSecLevel:''}); this.flash('Secondary path agregado','ok');
+  }
+  removeSecondaryPath(userId,pathId){
+    const users=this.state.users.map(u=>u.id!==userId?u:{...u,secondaryPaths:(u.secondaryPaths||[]).filter(sp=>sp.pathId!==pathId)});
+    this.setState({users}); this.flash('Secondary path removido','ok');
+  }
+  approveEnrollRequest(reqId){
+    const req=this.state.enrollRequests.find(r=>r.id===reqId); if(!req) return;
+    const users=this.state.users.map(u=>{
+      if(u.id!==req.userId) return u;
+      return {...u,secondaryPaths:[...(u.secondaryPaths||[]),{pathId:req.pathId,level:req.level}]};
+    });
+    const enrollRequests=this.state.enrollRequests.map(r=>r.id===reqId?{...r,status:'approved'}:r);
+    this.setState({users,enrollRequests}); this.flash('Acceso aprobado','ok');
+  }
+  rejectEnrollRequest(reqId){
+    const enrollRequests=this.state.enrollRequests.map(r=>r.id===reqId?{...r,status:'rejected'}:r);
+    this.setState({enrollRequests}); this.flash('Solicitud rechazada','ok');
+  }
+
   renderVals(){
     return Object.assign({}, this.vChrome(), this.vNav(), this.vAdmin(), this.vWizard(), this.vManager(), this.vLearner(), this.vModals());
   }
@@ -1734,11 +1847,14 @@ class Component extends DCLogic {
         item('platforms','Platforms',[['line',{x1:4,x2:4,y1:21,y2:14}],['line',{x1:4,x2:4,y1:10,y2:3}],['line',{x1:12,x2:12,y1:21,y2:12}],['line',{x1:12,x2:12,y1:8,y2:3}],['line',{x1:20,x2:20,y1:21,y2:16}],['line',{x1:20,x2:20,y1:12,y2:3}],['line',{x1:2,x2:6,y1:14,y2:14}],['line',{x1:10,x2:14,y1:8,y2:8}],['line',{x1:18,x2:22,y1:16,y2:16}]],0,'settings')
       ];
     } else if(V==='manager'){
+      const homReq=S.homologRequests?S.homologRequests.filter(h=>h.status==='pending').length:0;
+      const totalPending=pendingCount+homReq;
       navItems=[
-        head('My Team'),
-        item('team','Team Overview',[['rect',{x:3,y:3,width:7,height:9}],['rect',{x:14,y:3,width:7,height:5}],['rect',{x:14,y:12,width:7,height:9}],['rect',{x:3,y:16,width:7,height:5}]]),
-        item('progress','Team Progress',[['path','M3 3v18h18'],['path','M18 17V9'],['path','M13 17V5'],['path','M8 17v-3']]),
-        item('approvals','Approvals',[['path','M22 11.08V12a10 10 0 1 1-5.93-9.14'],['path','M22 4 12 14.01l-3-3']],pendingCount)
+        head('My Team',''),
+        item('team','Team Overview',[['rect',{x:3,y:3,width:7,height:9}],['rect',{x:14,y:3,width:7,height:5}],['rect',{x:14,y:12,width:7,height:9}],['rect',{x:3,y:16,width:7,height:5}]],0,''),
+        item('progress','Team Progress',[['path','M3 3v18h18'],['path','M18 17V9'],['path','M13 17V5'],['path','M8 17v-3']],0,''),
+        item('enrollments','Enrollments',[['path','M9 11l3 3L22 4'],['path','M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11']],0,''),
+        item('approvals','Approvals',[['path','M22 11.08V12a10 10 0 1 1-5.93-9.14'],['path','M22 4 12 14.01l-3-3']],totalPending,'')
       ];
     } else {
       navItems=[
@@ -2104,6 +2220,7 @@ class Component extends DCLogic {
     });
     const approvalRows=pending.slice().sort((a,b)=>a.submitted.localeCompare(b.submitted)).map(h=>({ ...h, initials:this.initials(h.user.name), avatarBg:this.avatarBg(h.user.name), approve:()=>this.approve(h), reject:()=>this.openReject(h) }));
 
+    const programOptions=S.courses.map(c=>({id:c.id,name:c.name}));
     return {
       showTeam:isMgr&&S.screen==='team', showProgress:isMgr&&S.screen==='progress', showApprovals:isMgr&&S.screen==='approvals',
       mgrCards:[ {value:team.length,label:'Team learners',color:'var(--text)',flag:false},
@@ -2115,7 +2232,39 @@ class Component extends DCLogic {
       goApprovals:()=>this.go('approvals'),
       teamByCourse,
       progressRows,
-      approvalRows, approvalsEmpty:approvalRows.length===0
+      approvalRows, approvalsEmpty:approvalRows.length===0,
+      showEnrollments: isMgr&&S.screen==='enrollments',
+      enrollmentRows: S.users.filter(u=>u.role==='Learner').map(u=>{
+        const primary=u.primaryPathId?this.courseById(u.primaryPathId):null;
+        const secondaries=(u.secondaryPaths||[]).map(sp=>{const c=this.courseById(sp.pathId);return{...sp,name:c?c.name:'—',color:c?c.color:'#94a3b8'};});
+        const prog=({u1:78,u2:42,u3:18,u4:5,u6:67,u8:88}[u.id]||0);
+        return { ...u, initials:this.initials(u.name), avatarBg:this.avatarBg(u.name),
+          primaryName:primary?primary.name:'Sin asignar', primaryLevel:u.primaryLevel||'—', primaryColor:primary?primary.color:'#94a3b8',
+          primaryBg:this.mix(primary?primary.color:'#94a3b8',12), secondaries, prog,
+          statusLabel:prog===0?'No iniciado':prog>=100?'Completado':'En progreso',
+          statusColor:prog===0?'#64748b':prog>=100?'#15803d':'#2563eb',
+          statusBg:this.mix(prog===0?'#64748b':prog>=100?'#15803d':'#2563eb',12),
+          manage:()=>this.openEnrollPanel(u) };
+      }),
+      enrollPanelOpen: S.enrollPanelOpen,
+      enrollPanelUser: S.enrollPanelUser?S.users.find(u=>u.id===S.enrollPanelUser):null,
+      enrollPanelPrimPath: S.enrollPanelPrimPath,
+      enrollPanelPrimLevel: S.enrollPanelPrimLevel,
+      enrollPanelAddSecPath: S.enrollPanelAddSecPath,
+      enrollPanelAddSecLevel: S.enrollPanelAddSecLevel,
+      enrollPanelSecondaries: S.enrollPanelUser?(S.users.find(u=>u.id===S.enrollPanelUser)||{secondaryPaths:[]}).secondaryPaths.map(sp=>{const c=this.courseById(sp.pathId);return{...sp,name:c?c.name:'—',color:c?c.color:'#94a3b8',remove:()=>this.removeSecondaryPath(S.enrollPanelUser,sp.pathId)};}):[],
+      enrollLevelOptions: S.enrollPanelPrimPath?[...new Set(S.resources.filter(r=>r.courseId===S.enrollPanelPrimPath).map(r=>r.level))].map(l=>({value:l,label:l})):[],
+      enrollSecLevelOptions: S.enrollPanelAddSecPath?[...new Set(S.resources.filter(r=>r.courseId===S.enrollPanelAddSecPath).map(r=>r.level))].map(l=>({value:l,label:l})):[],
+      setEnrollPrimPath:(e)=>this.setState({enrollPanelPrimPath:e.target.value,enrollPanelPrimLevel:''}),
+      setEnrollPrimLevel:(e)=>this.setState({enrollPanelPrimLevel:e.target.value}),
+      setEnrollSecPath:(e)=>this.setState({enrollPanelAddSecPath:e.target.value,enrollPanelAddSecLevel:''}),
+      setEnrollSecLevel:(e)=>this.setState({enrollPanelAddSecLevel:e.target.value}),
+      savePrimaryPath:()=>this.savePrimaryPath(),
+      addSecondaryPath:()=>this.addSecondaryPath(),
+      closeEnrollPanel:()=>this.closeEnrollPanel(),
+      stopEnrollProp:(e)=>e&&e.stopPropagation&&e.stopPropagation(),
+      pendingEnrollRequests: (S.enrollRequests||[]).filter(r=>r.status==='pending').length,
+      programOptions
     };
   }
 
