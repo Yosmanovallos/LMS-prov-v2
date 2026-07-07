@@ -661,8 +661,8 @@
       <!-- MANAGER: TEAM OVERVIEW -->
       <sc-if value="{{ showTeam }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:1200px;margin:0 auto;">
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:18px;">
-          <sc-for list="{{ mgrCards }}" as="m" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px;">
+          <sc-for list="{{ mgrCards }}" as="m" hint-placeholder-count="3">
             <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);"><div style="font-size:30px;font-weight:800;color:{{ m.color }};letter-spacing:-.02em;">{{ m.value }}</div><div style="font-size:12.5px;color:var(--text-2);margin-top:2px;">{{ m.label }}</div></div>
           </sc-for>
         </div>
@@ -2505,7 +2505,6 @@ class Component extends DCLogic {
     const S=this.state, isMgr=S.viewer==='manager';
     const team=S.users.filter(u=>u.role==='Learner');
     const enr=this.enrollments();
-    const avg=enr.length?Math.round(enr.reduce((a,e)=>a+e.prog,0)/enr.length):0;
     const pending=this.homologs();
     const atRisk=enr.filter(e=>e.prog<40&&e.status!=='completed').map(e=>{
       const due=this.state.resources.filter(r=>r.courseId===e.primaryPathId&&r.dueDate).sort((a,b)=>a.dueDate.localeCompare(b.dueDate))[0];
@@ -2544,7 +2543,6 @@ class Component extends DCLogic {
     return {
       showTeam:isMgr&&S.screen==='team', showProgress:isMgr&&S.screen==='progress', showApprovals:isMgr&&S.screen==='approvals',
       mgrCards:[ {value:team.length,label:'Team learners',color:'var(--text)',flag:false},
-        {value:avg+'%',label:'Avg completion',color:'var(--text)',flag:false},
         {value:approvalRows.length,label:'Pending approvals',color:approvalRows.length?'#dc2626':'var(--text)',flag:approvalRows.length>0},
         {value:atRisk.length,label:'At-risk learners',color:atRisk.length?'#b45309':'var(--text)',flag:false} ],
       atRisk, atRiskEmpty:atRisk.length===0,
