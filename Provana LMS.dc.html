@@ -1490,12 +1490,12 @@ class Component extends DCLogic {
     enrollPanelAddSecPath:'', enrollPanelAddSecLevel:'',
     managers:[ {id:'m1',name:'Sarah Perez'}, {id:'m2',name:'John Diaz'}, {id:'m3',name:'Maria Polo'} ],
     notifications:[
-      {id:'n1', type:'assign', text:'New course assigned: Performance Testing with JMeter', time:'2h ago', read:false},
-      {id:'n2', type:'due', text:'Resource "Security Testing Essentials" is due in 3 days', time:'5h ago', read:false},
-      {id:'n3', type:'approved', text:'Your evidence for "Selenium Grid at Scale" was approved', time:'Yesterday', read:false},
-      {id:'n4', type:'level', text:'You completed the Foundational level in Automation', time:'2 days ago', read:true},
-      {id:'n5', type:'cert', text:'Certificate earned: Playwright Fundamentals', time:'3 days ago', read:true},
-      {id:'n6', type:'reject', text:'Evidence for "API Testing with Postman" needs a clearer screenshot', time:'4 days ago', read:true}
+      {id:'n1', type:'due', text:'Resource "Grafana k6 Load Testing" is due in 7 days', time:'2h ago', read:false},
+      {id:'n2', type:'assign', text:'New course assigned: Test Automation in GitHub Actions', time:'5h ago', read:false},
+      {id:'n3', type:'approved', text:'Your homologation of "JavaScript Essentials" was approved', time:'Yesterday', read:false},
+      {id:'n4', type:'cert', text:'Certificate earned: JavaScript Essentials', time:'Yesterday', read:true},
+      {id:'n5', type:'level', text:'You reached 58% completion of your Quality Assurance path', time:'3 days ago', read:true},
+      {id:'n6', type:'reject', text:'Evidence for "Quality Gates with SonarQube" was rejected — see manager note', time:'2 weeks ago', read:true}
     ],
     users:[
       { id:'u1', name:'Yolanda Ortega',    email:'yolanda.ortega@provana.com',    role:'Learner',  status:'Active',   managerId:'m1', primaryPathId:'qa',  primaryLevel:'Senior QA',    secondaryPaths:[{pathId:'dev',level:'Junior Dev'}] },
@@ -1639,7 +1639,10 @@ class Component extends DCLogic {
       { id:'c88', courseId:'pm', path:'Technical Path', level:'Senior PM', module:'Certification', platform:'Pluralsight', title:'PMP Exam Prep', link:'https://www.pluralsight.com/courses/pmp/', status:'not-started', homolog:'required', duration:'12h 0m', points:140, description:'Structured preparation for the PMP certification.', evidence:null, skills:['Project Management'] }
     ],
     homologRequests:[
-      { id:'hreq1', userId:'u1', resourceId:'c7', pathId:'qa', level:'QA Lead', module:'Performance', title:'Performance Testing with JMeter', evidence:'jmeter-prev.pdf', status:'pending', submitted:'2026-06-28', managerNote:'' }
+      { id:'hreq1', userId:'u1', resourceId:'c7', pathId:'qa', level:'QA Lead', module:'Performance', title:'Performance Testing with JMeter', evidence:'jmeter-prev.pdf', status:'pending', submitted:'2026-07-01', managerNote:'' },
+      { id:'hreq2', userId:'u2', resourceId:'c46', pathId:'dev', level:'Junior Dev', module:'Craft', title:'Clean Code Principles', evidence:'cleancode-cert.pdf', status:'pending', submitted:'2026-07-05', managerNote:'' },
+      { id:'hreq3', userId:'u1', resourceId:'c44', pathId:'dev', level:'Junior Dev', module:'Programming', title:'JavaScript Essentials', evidence:'js-essentials-cert.pdf', status:'approved', submitted:'2026-07-02', managerNote:'Valid Udemy certificate — approved.' },
+      { id:'hreq4', userId:'u1', resourceId:'c34', pathId:'qa', level:'Senior QA', module:'CI/CD', title:'Quality Gates with SonarQube', evidence:'sonar-screenshot.png', status:'rejected', submitted:'2026-06-20', managerNote:'Certificate does not cover the SonarQube quality-gates module — please complete the assessment.' }
     ],
     enrollRequests:[],
   };
@@ -1756,21 +1759,20 @@ class Component extends DCLogic {
   enrollments(){
     return this.state.users.filter(u=>u.role==='Learner'&&u.primaryPathId).map(u=>{
       const c=this.courseById(u.primaryPathId);
-      const prog=u.id==='u1'?this.courseProgress('qa'):({u2:42,u3:18,u4:5,u6:67,u8:88}[u.id]||0);
+      const prog=u.id==='u1'?this.courseProgress('qa'):({u2:47,u3:22,u4:6,u6:71,u8:89,u9:55,u10:8}[u.id]||0);
       let status='not-started';
       if(prog>=100) status='completed'; else if(prog>0) status='in-progress';
       const pendingEv=this.state.resources.some(r=>r.courseId===u.primaryPathId&&r.status==='waiting');
       if(pendingEv&&prog>0&&prog<100) status='awaiting';
-      return { ...u, course:c, prog, status, source:(u.id==='u3')?'manual':'auto', since:({u1:'Apr 2026',u2:'Mar 2026',u3:'May 2026',u4:'May 2026',u6:'Feb 2026',u8:'Jan 2026'}[u.id]||'—'), last:({u1:'2 days ago',u2:'Today',u3:'5 days ago',u4:'3 weeks ago',u6:'Yesterday',u8:'Today'}[u.id]||'—') };
+      return { ...u, course:c, prog, status, source:(u.id==='u3')?'manual':'auto', since:({u1:'Apr 2026',u2:'Mar 2026',u3:'May 2026',u4:'May 2026',u6:'Feb 2026',u8:'Jan 2026',u9:'Mar 2026',u10:'Jun 2026'}[u.id]||'—'), last:({u1:'Today',u2:'Today',u3:'5 days ago',u4:'3 weeks ago',u6:'Yesterday',u8:'Today',u9:'2 days ago',u10:'1 week ago'}[u.id]||'—') };
     });
   }
   // homologation queue records (non-youtube waiting resources)
   homologs(){
     const map=[
-      {id:'h1', userId:'u1', resId:'c6', submitted:'2026-06-24'},
-      {id:'h2', userId:'u1', resId:'c9', submitted:'2026-06-19'},
-      {id:'h3', userId:'u6', resId:'c16', submitted:'2026-06-27'},
-      {id:'h4', userId:'u3', resId:'c26', submitted:'2026-06-28'}
+      {id:'h1', userId:'u1', resId:'c6', submitted:'2026-06-30'},
+      {id:'h2', userId:'u1', resId:'c35', submitted:'2026-07-02'},
+      {id:'h3', userId:'u6', resId:'c16', submitted:'2026-07-04'}
     ];
     return map.map(h=>{
       const r=this.state.resources.find(x=>x.id===h.resId);
@@ -2555,7 +2557,7 @@ class Component extends DCLogic {
       enrollmentRows: S.users.filter(u=>u.role==='Learner').map(u=>{
         const primary=u.primaryPathId?this.courseById(u.primaryPathId):null;
         const secondaries=(u.secondaryPaths||[]).map(sp=>{const c=this.courseById(sp.pathId);return{...sp,name:c?c.name:'—',color:c?c.color:'#94a3b8'};});
-        const prog=({u1:78,u2:42,u3:18,u4:5,u6:67,u8:88}[u.id]||0);
+        const prog=({u1:58,u2:47,u3:22,u4:6,u6:71,u8:89,u9:55,u10:8}[u.id]||0);
         return { ...u, initials:this.initials(u.name), avatarBg:this.avatarBg(u.name),
           primaryName:primary?primary.name:'Sin asignar', primaryLevel:u.primaryLevel||'—', primaryColor:primary?primary.color:'#94a3b8',
           primaryBg:this.mix(primary?primary.color:'#94a3b8',12), secondaries, prog,
@@ -2604,7 +2606,7 @@ class Component extends DCLogic {
     const primaryPath=learnerUser.primaryPathId?this.courseById(learnerUser.primaryPathId):null;
     const primaryProg=this.courseProgress(learnerUser.primaryPathId||'qa');
     const homeSecondaries=(learnerUser.secondaryPaths||[]).map(sp=>{
-      const c=this.courseById(sp.pathId); const prog=({qa:35,ba:20,bi:60,rpa:45,dev:50}[sp.pathId]||0);
+      const c=this.courseById(sp.pathId); const prog=({qa:35,ba:20,bi:60,rpa:45,dev:14}[sp.pathId]||0);
       return {...sp,name:c?c.name:'—',color:c?c.color:'#94a3b8',prog,go:()=>this.setState({screen:'active',myPathActive:sp.pathId})};
     });
 
