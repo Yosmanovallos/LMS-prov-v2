@@ -907,28 +907,39 @@
       <!-- LEARNER: PATH DETAIL -->
       <sc-if value="{{ showPathDetail }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:1000px;margin:0 auto;">
-        <button onClick="{{ pd_back }}" style="display:flex;align-items:center;gap:7px;background:none;border:none;color:var(--text-2);font-size:13px;font-weight:600;cursor:pointer;margin-bottom:14px;padding:0;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>All paths</button>
+        <button onClick="{{ pd_back }}" style="display:flex;align-items:center;gap:7px;background:none;border:none;color:var(--text-2);font-size:13px;font-weight:600;cursor:pointer;margin-bottom:14px;padding:0;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>{{ pd_backLabel }}</button>
 
         <div style="border-radius:20px;background:linear-gradient(125deg,{{ pd_color }},{{ pd_colorDark }});padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow-lg);color:#fff;">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;">
             <div style="display:flex;align-items:center;gap:14px;min-width:0;">
               <span style="width:48px;height:48px;border-radius:13px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;">{{ pd_icon }}</span>
               <div style="min-width:0;">
-                <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.8;"><sc-if value="{{ pd_isPrimary }}" hint-placeholder-val="{{ true }}">🎯 Primary path</sc-if><sc-if value="{{ !pd_isPrimary }}" hint-placeholder-val="{{ false }}">📘 Secondary path</sc-if></div>
+                <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.8;"><sc-if value="{{ pd_isPrimary }}" hint-placeholder-val="{{ true }}">🎯 Primary path</sc-if><sc-if value="{{ pd_isSecondary }}" hint-placeholder-val="{{ false }}">📘 Secondary path</sc-if><sc-if value="{{ pd_isPreview }}" hint-placeholder-val="{{ false }}">🔍 Course preview</sc-if></div>
                 <div style="font-size:20px;font-weight:800;">{{ pd_name }}</div>
-                <div style="font-size:12.5px;opacity:.85;">Your level: {{ pd_myLevel }}</div>
+                <div style="font-size:12.5px;opacity:.85;"><sc-if value="{{ pd_assigned }}" hint-placeholder-val="{{ true }}">Your level: {{ pd_myLevel }}</sc-if><sc-if value="{{ pd_isPreview }}" hint-placeholder-val="{{ false }}">{{ pd_desc }}</sc-if></div>
               </div>
             </div>
             <div style="text-align:right;flex-shrink:0;">
-              <div style="font-size:26px;font-weight:800;">{{ pd_prog }}%</div>
-              <div style="font-size:11.5px;opacity:.8;">total progress</div>
+              <sc-if value="{{ pd_assigned }}" hint-placeholder-val="{{ true }}">
+                <div style="font-size:26px;font-weight:800;">{{ pd_prog }}%</div>
+                <div style="font-size:11.5px;opacity:.8;">total progress</div>
+              </sc-if>
+              <sc-if value="{{ pd_isPreview }}" hint-placeholder-val="{{ false }}">
+                <sc-if value="{{ !pd_pending }}" hint-placeholder-val="{{ true }}"><button onClick="{{ pd_request }}" style="padding:11px 22px;border-radius:11px;border:none;background:#fff;color:#1c1830;font-size:13.5px;font-weight:700;cursor:pointer;">Request access</button></sc-if>
+                <sc-if value="{{ pd_pending }}" hint-placeholder-val="{{ false }}"><span style="display:inline-block;font-size:12px;font-weight:700;padding:9px 18px;border-radius:20px;background:rgba(255,255,255,.22);color:#fff;">⏳ Request pending</span></sc-if>
+              </sc-if>
             </div>
           </div>
           <div style="display:flex;gap:24px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.25);">
             <div><div style="font-size:16px;font-weight:800;">{{ pd_levelCount }}</div><div style="font-size:11px;opacity:.8;">levels</div></div>
             <div><div style="font-size:16px;font-weight:800;">{{ pd_resCount }}</div><div style="font-size:11px;opacity:.8;">resources</div></div>
-            <div><div style="font-size:16px;font-weight:800;">{{ pd_inProgressCount }}</div><div style="font-size:11px;opacity:.8;">in progress</div></div>
-            <div><div style="font-size:16px;font-weight:800;">{{ pd_doneCount }}</div><div style="font-size:11px;opacity:.8;">completed</div></div>
+            <sc-if value="{{ pd_assigned }}" hint-placeholder-val="{{ true }}">
+              <div><div style="font-size:16px;font-weight:800;">{{ pd_inProgressCount }}</div><div style="font-size:11px;opacity:.8;">in progress</div></div>
+              <div><div style="font-size:16px;font-weight:800;">{{ pd_doneCount }}</div><div style="font-size:11px;opacity:.8;">completed</div></div>
+            </sc-if>
+            <sc-if value="{{ pd_isPreview }}" hint-placeholder-val="{{ false }}">
+              <div><div style="font-size:16px;font-weight:800;">{{ pd_skillCount }}</div><div style="font-size:11px;opacity:.8;">skills</div></div>
+            </sc-if>
           </div>
         </div>
 
@@ -944,9 +955,12 @@
               <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
                 <span style="font-size:14.5px;font-weight:800;color:var(--text);">{{ lv.level }}</span>
                 <sc-if value="{{ lv.isMyLevel }}" hint-placeholder-val="{{ false }}"><span style="font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:20px;background:var(--brand-soft);color:var(--brand);">Your level</span></sc-if>
-                <span style="margin-left:auto;font-size:12px;font-weight:700;color:var(--text-2);">{{ lv.done }}/{{ lv.total }} completed</span>
+                <span style="margin-left:auto;font-size:12px;font-weight:700;color:var(--text-2);"><sc-if value="{{ pd_assigned }}" hint-placeholder-val="{{ true }}">{{ lv.done }}/{{ lv.total }} completed</sc-if><sc-if value="{{ pd_isPreview }}" hint-placeholder-val="{{ false }}">{{ lv.total }} resources</sc-if></span>
               </div>
+              <sc-if value="{{ pd_assigned }}" hint-placeholder-val="{{ true }}">
               <div style="height:6px;border-radius:4px;background:var(--border);overflow:hidden;margin-bottom:14px;"><div style="height:100%;width:{{ lv.prog }}%;background:{{ pd_color }};border-radius:4px;"></div></div>
+              </sc-if>
+              <sc-if value="{{ pd_isPreview }}" hint-placeholder-val="{{ false }}"><div style="height:8px;"></div></sc-if>
               <sc-for list="{{ lv.modules }}" as="mod" hint-placeholder-count="2">
                 <div style="margin-bottom:10px;">
                   <div style="font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);padding:5px 0;border-bottom:1px solid var(--border);margin-bottom:7px;">{{ mod.module }} · {{ mod.count }} resources</div>
@@ -954,8 +968,9 @@
                     <button onClick="{{ r.go }}" style="display:flex;align-items:center;gap:11px;width:100%;text-align:left;padding:9px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);margin-bottom:6px;cursor:pointer;">
                       <span style="width:8px;height:8px;border-radius:50%;background:{{ r.platColor }};flex-shrink:0;"></span>
                       <span style="flex:1;min-width:0;"><span style="display:block;font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.title }}</span><span style="display:block;font-size:11px;color:var(--text-3);">{{ r.platform }} · {{ r.duration }}</span></span>
-                      <span style="font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:20px;background:{{ r.statusBg }};color:{{ r.statusColor }};flex-shrink:0;">{{ r.statusLabel }}</span>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2.2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+                      <sc-if value="{{ pd_assigned }}" hint-placeholder-val="{{ true }}"><span style="font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:20px;background:{{ r.statusBg }};color:{{ r.statusColor }};flex-shrink:0;">{{ r.statusLabel }}</span></sc-if>
+                      <sc-if value="{{ pd_isPreview }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;font-weight:700;color:var(--text-3);flex-shrink:0;">{{ r.points }} pts</span></sc-if>
+                      <sc-if value="{{ pd_assigned }}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2.2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></sc-if>
                     </button>
                   </sc-for>
                 </div>
@@ -1239,36 +1254,6 @@
         <select value="{{ enrollCourseVal }}" onChange="{{ setEnrollCourse }}" style="width:100%;margin:6px 0 0;padding:11px 13px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);font-size:13.5px;color:var(--text);outline:none;"><sc-for list="{{ enrollCourses }}" as="c" hint-placeholder-count="4"><option value="{{ c.id }}">{{ c.name }}</option></sc-for></select>
       </div>
       <div style="display:flex;justify-content:flex-end;gap:10px;padding:16px 24px;border-top:1px solid var(--border);"><button onClick="{{ closeEnroll }}" style="padding:10px 18px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:13px;font-weight:700;">Cancel</button><button onClick="{{ doEnroll }}" style="padding:10px 22px;border-radius:10px;border:none;background:var(--brand);color:#fff;font-size:13px;font-weight:700;">Enroll</button></div>
-    </div>
-  </div>
-  </sc-if>
-
-  <!-- COURSE PREVIEW MODAL -->
-  <sc-if value="{{ previewOpen }}" hint-placeholder-val="{{ false }}">
-  <div onClick="{{ closePreview }}" style="position:fixed;inset:0;background:rgba(23,17,48,.5);z-index:60;display:flex;align-items:center;justify-content:center;padding:30px;animation:ovIn .15s ease;">
-    <div onClick="{{ stop }}" style="width:560px;max-height:88vh;overflow-y:auto;background:var(--surface);border-radius:18px;box-shadow:var(--shadow-lg);animation:shIn .2s ease;">
-      <div style="height:90px;background:linear-gradient(125deg,{{ pv_color }},{{ pv_colorDark }});padding:18px 24px;display:flex;align-items:center;gap:14px;"><span style="width:48px;height:48px;border-radius:13px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;">{{ pv_icon }}</span><div style="color:#fff;"><div style="font-size:18px;font-weight:800;">{{ pv_name }}</div><div style="font-size:12.5px;opacity:.85;">{{ pv_desc }}</div></div></div>
-      <div style="padding:20px 24px;">
-        <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;">Course structure · resources unlock once enrolled</div>
-        <sc-for list="{{ pv_tree }}" as="p" hint-placeholder-count="2">
-          <div style="margin-bottom:14px;"><div style="font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:6px;">{{ p.path }}</div>
-            <sc-for list="{{ p.levels }}" as="l" hint-placeholder-count="2">
-              <div style="padding-left:10px;margin-bottom:8px;"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);margin-bottom:4px;">{{ l.level }}</div>
-                <sc-for list="{{ l.modules }}" as="m" hint-placeholder-count="2">
-                  <div style="padding-left:8px;margin-bottom:5px;"><div style="font-size:12.5px;font-weight:600;color:var(--text-2);">{{ m.module }}</div>
-                    <sc-for list="{{ m.resources }}" as="r" hint-placeholder-count="2"><div style="display:flex;align-items:center;gap:8px;padding:4px 0;opacity:.55;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span style="font-size:12px;color:var(--text-2);">{{ r.title }}</span></div></sc-for>
-                  </div>
-                </sc-for>
-              </div>
-            </sc-for>
-          </div>
-        </sc-for>
-      </div>
-      <div style="display:flex;justify-content:flex-end;gap:10px;padding:16px 24px;border-top:1px solid var(--border);position:sticky;bottom:0;background:var(--surface);">
-        <button onClick="{{ closePreview }}" style="padding:10px 18px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:13px;font-weight:700;">Close</button>
-        <sc-if value="{{ pv_assigned }}" hint-placeholder-val="{{ false }}"><button onClick="{{ pv_open }}" style="padding:10px 22px;border-radius:10px;border:none;background:var(--brand);color:#fff;font-size:13px;font-weight:700;">Open course</button></sc-if>
-        <sc-if value="{{ pv_assigned }}" hint-placeholder-val="{{ true }}"><button onClick="{{ pv_request }}" style="padding:10px 22px;border-radius:10px;border:none;background:var(--brand);color:#fff;font-size:13px;font-weight:700;">Request Access</button></sc-if>
-      </div>
     </div>
   </div>
   </sc-if>
@@ -1581,7 +1566,7 @@ class Component extends DCLogic {
     detailRes:null, learnerTab:'overview', evidenceFile:'',
     myPathActive:null, pathDetail:null, mgrLearnerDetail:null,
     homologFormPath:'', homologFormResource:'', homologFormEvidence:'', homologFormNote:'',
-    wizard:null, rejectFor:null, rejectNote:'', enrollOpen:false, enrollUser:'', enrollCourse:'', previewCourse:null, certView:null,
+    wizard:null, rejectFor:null, rejectNote:'', enrollOpen:false, enrollUser:'', enrollCourse:'', certView:null,
     filterPath:null, filterLevel:null, filterModule:null,
     newPathOpen:false, newLevelOpen:false, newModuleOpen:false,
     npf:{name:'',courseId:'',rule:'All modules'}, nlf:{name:'',courseKey:'',rule:'All modules'}, nmf:{name:'',levelKey:''},
@@ -2067,7 +2052,6 @@ class Component extends DCLogic {
   // enroll / preview / cert
   openEnroll(){ this.setState({ enrollOpen:true, enrollUser:'', enrollCourse:this.state.courses[0].id }); }
   doEnroll(){ const u=this.userById(this.state.enrollUser); if(!u){ this.flash('Pick a user','warn'); return; } const users=this.state.users.map(x=>x.id===u.id?{...x,courseId:this.state.enrollCourse}:x); this.setState({ users, enrollOpen:false }); this.pushNotif('You were enrolled in '+this.courseById(this.state.enrollCourse).name,'assign'); this.flash('Enrolled '+u.name,'ok'); }
-  requestAccess(c){ this.pushNotif('Access requested: '+c.name+' (pending admin approval)','assign'); this.flash('Access requested for "'+c.name+'"','ok'); }
 
   // manager enrollment panel
   openEnrollPanel(u){ this.setState({enrollPanelOpen:true,enrollPanelUser:u.id,enrollPanelPrimPath:u.primaryPathId||'',enrollPanelPrimLevel:u.primaryLevel||'',enrollPanelAddSecPath:'',enrollPanelAddSecLevel:''}); }
@@ -2230,7 +2214,9 @@ class Component extends DCLogic {
     const pendingCount=this.homologs().length;
     const coll=S.navCollapsed||{};
     const chev=(collapsed)=>this.svg([['path',collapsed?'M9 18l6-6-6-6':'M18 15l-6-6-6 6']],12,'var(--text-3)',2);
-    const item=(key,label,paths,badge,grp)=>({ isItem:true, isHeading:false, label, icon:I(paths), go:()=>this.go(key), style:(S.screen===key||(key==='mypaths'&&S.screen==='pathdetail')||(key==='progress'&&S.screen==='learnerdetail'))?on:off, hasBadge:!!badge&&badge>0, badge, visible:!coll[grp] });
+    const navU=this.learnerActiveUser();
+    const pdNavAssigned=!!S.pathDetail&&(S.pathDetail===navU.primaryPathId||(navU.secondaryPaths||[]).some(sp=>sp.pathId===S.pathDetail));
+    const item=(key,label,paths,badge,grp)=>({ isItem:true, isHeading:false, label, icon:I(paths), go:()=>this.go(key), style:(S.screen===key||(key==='mypaths'&&S.screen==='pathdetail'&&pdNavAssigned)||(key==='explore'&&S.screen==='pathdetail'&&!pdNavAssigned)||(key==='progress'&&S.screen==='learnerdetail'))?on:off, hasBadge:!!badge&&badge>0, badge, visible:!coll[grp] });
     const head=(label,key)=>({ isHeading:true, isItem:false, label, key, toggle:()=>this.toggleNav(key), chevron:chev(coll[key]) });
     let navItems=[];
     if(V==='admin'){
@@ -2758,13 +2744,15 @@ class Component extends DCLogic {
         pick:()=>this.setState({pathDetail:p.pathId,screen:'pathdetail'}) };
     });
 
-    // path detail (drill-down desde Paths landing)
+    // path detail (drill-down desde Paths landing o preview desde Explore)
     const pdId=S.pathDetail;
     const pdCourse=pdId?this.courseById(pdId):null;
+    const pdAssigned=!!pdId&&allPaths.some(p=>p.pathId===pdId);
     const pdAllRes=pdId?S.resources.filter(r=>r.courseId===pdId):[];
     const pdDone=pdAllRes.filter(r=>r.status==='completed').length;
-    const pdMyLevel=pdId?this.learnerLevelForPath(pdId):'—';
-    const pdGo=(r)=>{ const target=(r.status==='in-progress'||r.status==='waiting')?'active':(r.status==='completed'?'history':'todo'); this.setState({myPathActive:pdId,screen:target,detailRes:null}); };
+    const pdMyLevel=(pdId&&pdAssigned)?this.learnerLevelForPath(pdId):'—';
+    const pdPending=!!pdId&&(S.enrollRequests||[]).some(r=>r.userId===learnerUser.id&&r.pathId===pdId&&r.status==='pending');
+    const pdGo=(r)=>{ if(!pdAssigned){ this.flash('Request access to start learning in this path','warn'); return; } const target=(r.status==='in-progress'||r.status==='waiting')?'active':(r.status==='completed'?'history':'todo'); this.setState({myPathActive:pdId,screen:target,detailRes:null}); };
     const pdLevelMap={};
     pdAllRes.forEach(r=>{ (pdLevelMap[r.level]=pdLevelMap[r.level]||{}); (pdLevelMap[r.level][r.module]=pdLevelMap[r.level][r.module]||[]).push(r); });
     const pdRank=(l)=>/junior/i.test(l)?0:/mid/i.test(l)?1:/senior/i.test(l)?2:/lead|architect|principal/i.test(l)?3:1.5;
@@ -2777,7 +2765,8 @@ class Component extends DCLogic {
         modules:Object.keys(mods).map(m=>({ module:m, count:mods[m].length,
           resources:mods[m].map(r=>({ ...this.decorate(r), go:()=>pdGo(r) })) })) };
     });
-    const pdSkills=[...new Set(pdAllRes.flatMap(r=>r.skills||[]))].slice(0,8);
+    const pdSkillsAll=[...new Set(pdAllRes.flatMap(r=>r.skills||[]))];
+    const pdSkills=pdSkillsAll.slice(0,8);
 
     // shared hero + path pills (used by todo/active/history/certificates)
     const heroPathId=this.learnerActivePath();
@@ -2839,7 +2828,7 @@ class Component extends DCLogic {
         levelCount:levels.size||levels.length, resCount:rs.length,
         skills:[...new Set(rs.flatMap(r=>r.skills||[]))].slice(0,4),
         pending, assigned:false,
-        preview:()=>this.setState({previewCourse:c.id,previewOpen:true}),
+        preview:()=>this.setState({screen:'pathdetail',pathDetail:c.id}),
         request:()=>this.requestSecondaryPath(c.id,levels[0]||'Junior') };
     });
 
@@ -2865,16 +2854,22 @@ class Component extends DCLogic {
       pathLandingCards,
       showPathDetail:isLn&&S.screen==='pathdetail'&&!!pdCourse,
       pd_name:pdCourse?pdCourse.name:'', pd_myLevel:pdMyLevel,
+      pd_desc:pdCourse?(pdCourse.desc||''):'',
       pd_color:(pdCourse&&pdCourse.color)||'#4A2E80', pd_colorDark:this.dark((pdCourse&&pdCourse.color)||'#4A2E80',30),
       pd_icon:pdCourse?this.iconEl(pdCourse.icon,22,'#fff',2):null,
-      pd_isPrimary:!!pdId&&pdId===learnerUser.primaryPathId,
+      pd_assigned:pdAssigned, pd_isPreview:!pdAssigned,
+      pd_isPrimary:pdAssigned&&pdId===learnerUser.primaryPathId,
+      pd_isSecondary:pdAssigned&&pdId!==learnerUser.primaryPathId,
+      pd_pending:pdPending,
+      pd_request:()=>{ if(pdId&&pdLevels.length) this.requestSecondaryPath(pdId,pdLevels[0].level); },
       pd_prog:pdAllRes.length?Math.round(pdDone/pdAllRes.length*100):0,
       pd_levelCount:pdLevels.length, pd_resCount:pdAllRes.length,
       pd_inProgressCount:pdAllRes.filter(r=>r.status==='in-progress'||r.status==='waiting').length,
-      pd_doneCount:pdDone,
+      pd_doneCount:pdDone, pd_skillCount:pdSkillsAll.length,
       pd_skills:pdSkills, pd_hasSkills:pdSkills.length>0,
       pd_levels:pdLevels,
-      pd_back:()=>this.setState({screen:'mypaths',pathDetail:null}),
+      pd_backLabel:pdAssigned?'All paths':'Explore courses',
+      pd_back:()=>this.setState({screen:pdAssigned?'mypaths':'explore',pathDetail:null}),
       showTodo:isLn&&S.screen==='todo', showActive:isLn&&S.screen==='active',
       showHistory:isLn&&S.screen==='history', showCertificates:isLn&&S.screen==='certificates',
       showContentHero: isLn&&['todo','active','history','certificates'].includes(S.screen),
@@ -2933,10 +2928,6 @@ class Component extends DCLogic {
     // enroll modal
     const enrollUsers=S.users.filter(u=>u.role==='Learner').map(u=>({id:u.id,name:u.name}));
     const enrollCourses=S.courses.map(c=>({id:c.id,name:c.name}));
-    // preview modal
-    const pc=S.previewCourse?this.courseById(S.previewCourse):null;
-    const previewTree=pc?this.tree(pc.id).map(p=>({ path:p.path, levels:p.levels.map(l=>({ level:l.level, modules:l.modules.map(m=>({ module:m.module, count:m.resources.length, resources:m.resources.map(r=>({title:r.title,platform:r.platform,platColor:this.platColor(r.platform)})) })) })) })):[];
-    const pcAssigned=pc&&pc.id==='qa';
     // cert modal
     const cv=S.certView?this.state.resources.find(r=>r.id===S.certView):null;
     const cvCourse=cv?this.courseById(cv.courseId):null;
@@ -2947,11 +2938,6 @@ class Component extends DCLogic {
       enrollModalOpen:S.enrollOpen, closeEnroll:()=>this.setState({enrollOpen:false}),
       enrollUsers, enrollCourses, enrollUserVal:S.enrollUser, enrollCourseVal:S.enrollCourse,
       setEnrollUser:(e)=>this.setState({enrollUser:e.target.value}), setEnrollCourse:(e)=>this.setState({enrollCourse:e.target.value}), doEnroll:()=>this.doEnroll(),
-      previewOpen:!!pc, closePreview:()=>this.setState({previewCourse:null}),
-      pv_name:pc?pc.name:'', pv_desc:pc?pc.desc:'', pv_color:pc?pc.color:'#000', pv_colorDark:pc?this.dark(pc.color,28):'#000', pv_icon:pc?this.iconEl(pc.icon,26,'#fff',2):null,
-      pv_tree:previewTree, pv_assigned:pcAssigned,
-      pv_request:()=>{ if(pc) this.requestAccess(pc); this.setState({previewCourse:null}); },
-      pv_open:()=>{ if(pc){ this.setState({myPathActive:pc.id,screen:'active',previewCourse:null,detailRes:null}); } },
       certOpen:!!cv, closeCert:()=>this.setState({certView:null}),
       cv_title:cv?cv.title:'', cv_course:cvCourse?cvCourse.name:'', cv_date:cv?this.fmtDate(cv.completedDate):'', cv_learner:'Yolanda Ortega',
       cv_color:cvCourse?cvCourse.color:'#4A2E80'
