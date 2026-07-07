@@ -751,9 +751,9 @@
       <!-- MANAGER: ENROLLMENTS -->
       <sc-if value="{{ showEnrollments }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:1200px;margin:0 auto;">
-        <div style="font-size:13.5px;color:var(--text-2);margin-bottom:16px;">Gestiona el path principal y secundarios de cada miembro de tu equipo.</div>
+        <div style="font-size:13.5px;color:var(--text-2);margin-bottom:16px;">Manage each team member's primary and secondary paths.</div>
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);">
-          <div style="display:grid;grid-template-columns:1.6fr 1.4fr 0.8fr 1.6fr 1fr 0.8fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Learner</div><div>Primary Path</div><div>Level</div><div>Secondary Paths</div><div>Progreso</div><div style="text-align:right;">Actions</div></div>
+          <div style="display:grid;grid-template-columns:1.6fr 1.4fr 0.8fr 1.6fr 1fr 0.8fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Learner</div><div>Primary Path</div><div>Level</div><div>Secondary Paths</div><div>Progress</div><div style="text-align:right;">Actions</div></div>
           <sc-for list="{{ enrollmentRows }}" as="e" hint-placeholder-count="5">
             <div style="display:grid;grid-template-columns:1.6fr 1.4fr 0.8fr 1.6fr 1fr 0.8fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;">
               <div style="display:flex;align-items:center;gap:10px;min-width:0;"><div style="width:34px;height:34px;border-radius:50%;background:{{ e.avatarBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11.5px;flex-shrink:0;">{{ e.initials }}</div><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ e.name }}</div></div>
@@ -777,7 +777,7 @@
         <div style="border-radius:20px;overflow:hidden;background:linear-gradient(125deg,{{ cl_color }},{{ cl_colorDark }});padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow-lg);">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;">
             <div style="min-width:0;color:#fff;">
-              <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-bottom:7px;">Continuar donde dejé</div>
+              <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-bottom:7px;">Continue where I left off</div>
               <div style="font-size:22px;font-weight:800;letter-spacing:-.01em;">{{ cl_title }}</div>
               <div style="font-size:12.5px;opacity:.85;margin-top:4px;">{{ cl_breadcrumb }}</div>
               <div style="display:flex;align-items:center;gap:12px;margin-top:14px;max-width:380px;">
@@ -785,7 +785,7 @@
                 <span style="font-size:13px;font-weight:700;color:#fff;">{{ cl_progress }}%</span>
               </div>
             </div>
-            <button onClick="{{ cl_continue }}" style="display:flex;align-items:center;gap:9px;padding:13px 24px;border-radius:13px;border:none;background:#fff;color:#1c1830;font-size:14px;font-weight:700;flex-shrink:0;">Continuar<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            <button onClick="{{ cl_continue }}" style="display:flex;align-items:center;gap:9px;padding:13px 24px;border-radius:13px;border:none;background:#fff;color:#1c1830;font-size:14px;font-weight:700;flex-shrink:0;">Continue<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
           </div>
         </div>
         </sc-if>
@@ -793,8 +793,8 @@
         <!-- Primary Path card -->
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);margin-bottom:16px;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);">🎯 Mi Path Principal</div>
-            <button onClick="{{ goMyPaths }}" style="font-size:12px;font-weight:700;color:var(--brand);background:none;border:none;cursor:pointer;">Ver path →</button>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);">🎯 My Primary Path</div>
+            <button onClick="{{ goMyPaths }}" style="font-size:12px;font-weight:700;color:var(--brand);background:none;border:none;cursor:pointer;">View path →</button>
           </div>
           <div style="display:flex;align-items:center;gap:14px;">
             <div style="flex:1;">
@@ -811,14 +811,14 @@
         <!-- Secondary Paths -->
         <sc-if value="{{ homeHasSecondary }}" hint-placeholder-val="{{ false }}">
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);margin-bottom:16px;">
-          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;">📘 Paths Secundarios</div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;">📘 Secondary Paths</div>
           <div style="display:flex;flex-direction:column;gap:10px;">
             <sc-for list="{{ homeSecondaries }}" as="sp" hint-placeholder-count="2">
               <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:11px;background:var(--surface-2);border:1px solid var(--border);">
                 <div style="width:8px;height:8px;border-radius:50%;background:{{ sp.color }};flex-shrink:0;"></div>
                 <div style="flex:1;"><div style="font-size:13px;font-weight:600;">{{ sp.name }}</div><div style="font-size:11.5px;color:var(--text-3);">{{ sp.level }}</div></div>
                 <div style="display:flex;align-items:center;gap:8px;width:120px;"><div style="flex:1;height:5px;border-radius:4px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ sp.prog }}%;background:{{ sp.color }};border-radius:4px;"></div></div><span style="font-size:11px;font-weight:700;color:var(--text-2);">{{ sp.prog }}%</span></div>
-                <button onClick="{{ sp.go }}" style="font-size:12px;font-weight:700;color:var(--brand);background:none;border:none;cursor:pointer;">Ver →</button>
+                <button onClick="{{ sp.go }}" style="font-size:12px;font-weight:700;color:var(--brand);background:none;border:none;cursor:pointer;">View →</button>
               </div>
             </sc-for>
           </div>
@@ -827,8 +827,8 @@
 
         <!-- Quick actions -->
         <div style="display:flex;gap:12px;margin-bottom:16px;">
-          <button onClick="{{ goMyPaths }}" style="flex:1;padding:13px;border-radius:13px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13.5px;font-weight:700;cursor:pointer;">📚 Ver mis paths</button>
-          <button onClick="{{ goHomologar }}" style="flex:1;padding:13px;border-radius:13px;border:none;background:var(--brand-soft);color:var(--brand);font-size:13.5px;font-weight:700;cursor:pointer;">✅ Homologar curso previo</button>
+          <button onClick="{{ goMyPaths }}" style="flex:1;padding:13px;border-radius:13px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13.5px;font-weight:700;cursor:pointer;">📚 View my paths</button>
+          <button onClick="{{ goHomologar }}" style="flex:1;padding:13px;border-radius:13px;border:none;background:var(--brand-soft);color:var(--brand);font-size:13.5px;font-weight:700;cursor:pointer;">✅ Homologate a previous course</button>
         </div>
 
       </div>
@@ -842,7 +842,7 @@
             <button onClick="{{ p.pick }}" style="text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);cursor:pointer;">
               <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
                 <span style="width:38px;height:38px;border-radius:10px;background:linear-gradient(125deg,{{ p.color }},{{ p.colorDark }});display:flex;align-items:center;justify-content:center;flex-shrink:0;">{{ p.iconWhite }}</span>
-                <span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--brand-soft);color:var(--brand);"><sc-if value="{{ p.isPrimary }}" hint-placeholder-val="{{ true }}">🎯 Principal</sc-if><sc-if value="{{ !p.isPrimary }}" hint-placeholder-val="{{ false }}">📘 Secundario</sc-if></span>
+                <span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--brand-soft);color:var(--brand);"><sc-if value="{{ p.isPrimary }}" hint-placeholder-val="{{ true }}">🎯 Primary</sc-if><sc-if value="{{ !p.isPrimary }}" hint-placeholder-val="{{ false }}">📘 Secondary</sc-if></span>
               </div>
               <div style="font-size:16px;font-weight:800;color:var(--text);">{{ p.name }}</div>
               <div style="font-size:13px;color:var(--text-2);margin-top:2px;">{{ p.level }}</div>
@@ -864,7 +864,7 @@
             <div style="display:flex;align-items:center;gap:14px;min-width:0;">
               <span style="width:48px;height:48px;border-radius:13px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;">{{ heroIcon }}</span>
               <div style="min-width:0;">
-                <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.8;">Tu path asignado</div>
+                <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.8;">Your assigned path</div>
                 <div style="font-size:20px;font-weight:800;">{{ heroName }}</div>
                 <div style="font-size:12.5px;opacity:.85;">{{ heroLevel }}</div>
                 <div style="font-size:11.5px;opacity:.75;margin-top:2px;">{{ heroDesc }}</div>
@@ -872,12 +872,12 @@
             </div>
             <div style="text-align:right;flex-shrink:0;">
               <div style="font-size:26px;font-weight:800;">{{ heroProg }}%</div>
-              <div style="font-size:11.5px;opacity:.8;">completado</div>
+              <div style="font-size:11.5px;opacity:.8;">completed</div>
             </div>
           </div>
           <div style="display:flex;gap:24px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.25);">
-            <div><div style="font-size:16px;font-weight:800;">{{ heroCompletedCount }}/{{ heroTotal }}</div><div style="font-size:11px;opacity:.8;">homologados</div></div>
-            <div><div style="font-size:16px;font-weight:800;">{{ heroPoints }}</div><div style="font-size:11px;opacity:.8;">puntos</div></div>
+            <div><div style="font-size:16px;font-weight:800;">{{ heroCompletedCount }}/{{ heroTotal }}</div><div style="font-size:11px;opacity:.8;">homologated</div></div>
+            <div><div style="font-size:16px;font-weight:800;">{{ heroPoints }}</div><div style="font-size:11px;opacity:.8;">points</div></div>
             <div><div style="font-size:16px;font-weight:800;">{{ heroAwaiting }}</div><div style="font-size:11px;opacity:.8;">awaiting homologation</div></div>
           </div>
         </div>
@@ -913,7 +913,7 @@
           </sc-for>
         </div>
         <sc-if value="{{ activeLearningEmpty }}" hint-placeholder-val="{{ false }}">
-          <div style="padding:32px;text-align:center;font-size:13px;color:var(--text-3);">No tienes recursos en progreso en este path.</div>
+          <div style="padding:32px;text-align:center;font-size:13px;color:var(--text-3);">No resources in progress in this path.</div>
         </sc-if>
         </sc-if>
 
@@ -936,7 +936,7 @@
             </div>
           </sc-for>
           <sc-if value="{{ todoEmpty }}" hint-placeholder-val="{{ false }}">
-            <div style="padding:32px;text-align:center;font-size:13px;color:var(--text-3);">No tienes recursos pendientes en este path.</div>
+            <div style="padding:32px;text-align:center;font-size:13px;color:var(--text-3);">No pending resources in this path.</div>
           </sc-if>
         </div>
         </sc-if>
@@ -954,7 +954,7 @@
             </button>
           </sc-for>
           <sc-if value="{{ historyEmpty }}" hint-placeholder-val="{{ false }}">
-            <div style="padding:32px;text-align:center;font-size:13px;color:var(--text-3);">Aún no completas recursos en este path.</div>
+            <div style="padding:32px;text-align:center;font-size:13px;color:var(--text-3);">No completed resources in this path yet.</div>
           </sc-if>
         </div>
         </sc-if>
@@ -977,7 +977,7 @@
           </sc-for>
         </div>
         <sc-if value="{{ certificatesEmpty }}" hint-placeholder-val="{{ false }}">
-          <div style="padding:32px;text-align:center;font-size:13px;color:var(--text-3);">Aún no tienes certificados en este path.</div>
+          <div style="padding:32px;text-align:center;font-size:13px;color:var(--text-3);">No certificates in this path yet.</div>
         </sc-if>
         </sc-if>
 
@@ -999,10 +999,10 @@
                 <div style="display:flex;gap:8px;margin-top:14px;">
   <button onClick="{{ c.preview }}" style="flex:1;padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:12.5px;font-weight:700;">Preview</button>
   <sc-if value="{{ c.pending }}" hint-placeholder-val="{{ false }}">
-    <button style="padding:10px 14px;border-radius:10px;border:none;background:var(--surface-2);color:var(--text-3);font-size:12.5px;font-weight:700;" disabled>Solicitud enviada</button>
+    <button style="padding:10px 14px;border-radius:10px;border:none;background:var(--surface-2);color:var(--text-3);font-size:12.5px;font-weight:700;" disabled>Request sent</button>
   </sc-if>
   <sc-if value="{{ !c.pending }}" hint-placeholder-val="{{ true }}">
-    <button onClick="{{ c.request }}" style="padding:10px 14px;border-radius:10px;border:none;background:var(--brand);color:#fff;font-size:12.5px;font-weight:700;cursor:pointer;">Solicitar acceso</button>
+    <button onClick="{{ c.request }}" style="padding:10px 14px;border-radius:10px;border:none;background:var(--brand);color:#fff;font-size:12.5px;font-weight:700;cursor:pointer;">Request access</button>
   </sc-if>
                 </div>
               </div>
@@ -1018,19 +1018,19 @@
 
         <!-- Form -->
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 26px;box-shadow:var(--shadow);margin-bottom:20px;">
-          <div style="font-size:16px;font-weight:700;margin-bottom:4px;">Solicitar homologación</div>
-          <div style="font-size:13px;color:var(--text-3);margin-bottom:20px;">Declara que ya completaste un recurso fuera de la plataforma y sube tu evidencia. Tu manager lo revisará.</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:4px;">Request homologation</div>
+          <div style="font-size:13px;color:var(--text-3);margin-bottom:20px;">Declare a resource you already completed outside the platform and upload your evidence. Your manager will review it.</div>
 
           <!-- Step 1: Select resource -->
           <div style="margin-bottom:16px;">
-            <label style="font-size:12px;font-weight:700;color:var(--text-2);display:block;margin-bottom:6px;">1. Seleccionar recurso</label>
+            <label style="font-size:12px;font-weight:700;color:var(--text-2);display:block;margin-bottom:6px;">1. Select resource</label>
             <div style="display:flex;gap:10px;">
               <select value="{{ homologFormPath }}" onChange="{{ setHomologPath }}" style="flex:1;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);font-size:13px;color:var(--text);outline:none;">
-                <option value="">Seleccionar path…</option>
+                <option value="">Select path…</option>
                 <sc-for list="{{ homologPathOptions }}" as="po" hint-placeholder-count="3"><option value="{{ po.id }}">{{ po.name }}</option></sc-for>
               </select>
               <select value="{{ homologFormResource }}" onChange="{{ setHomologResource }}" style="flex:1.6;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);font-size:13px;color:var(--text);outline:none;">
-                <option value="">Seleccionar recurso…</option>
+                <option value="">Select resource…</option>
                 <sc-for list="{{ homologResourceOptions }}" as="ro" hint-placeholder-count="4"><option value="{{ ro.id }}">{{ ro.label }}</option></sc-for>
               </select>
             </div>
@@ -1038,7 +1038,7 @@
 
           <!-- Step 2: Evidence -->
           <div style="margin-bottom:16px;">
-            <label style="font-size:12px;font-weight:700;color:var(--text-2);display:block;margin-bottom:6px;">2. Subir evidencia</label>
+            <label style="font-size:12px;font-weight:700;color:var(--text-2);display:block;margin-bottom:6px;">2. Upload evidence</label>
             <button onClick="{{ pickHomologEvidence }}" style="display:flex;align-items:center;gap:10px;width:100%;padding:12px 14px;border-radius:11px;border:1.5px dashed var(--border);background:var(--surface-2);color:{{ homologEvidenceColor }};font-size:13px;font-weight:600;text-align:left;cursor:pointer;">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8 12 3 7 8"/><path d="M12 3v12"/></svg>
               {{ homologEvidenceLabel }}
@@ -1047,24 +1047,24 @@
 
           <!-- Step 3: Note + Submit -->
           <div style="margin-bottom:16px;">
-            <label style="font-size:12px;font-weight:700;color:var(--text-2);display:block;margin-bottom:6px;">3. Nota adicional <span style="font-weight:400;color:var(--text-3);">(opcional)</span></label>
-            <textarea value="{{ homologFormNote }}" onInput="{{ setHomologNote }}" placeholder="Contexto adicional para tu manager…" style="width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);font-size:13px;color:var(--text);outline:none;min-height:72px;resize:vertical;"></textarea>
+            <label style="font-size:12px;font-weight:700;color:var(--text-2);display:block;margin-bottom:6px;">3. Additional note <span style="font-weight:400;color:var(--text-3);">(optional)</span></label>
+            <textarea value="{{ homologFormNote }}" onInput="{{ setHomologNote }}" placeholder="Additional context for your manager…" style="width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);font-size:13px;color:var(--text);outline:none;min-height:72px;resize:vertical;"></textarea>
           </div>
 
-          <button onClick="{{ submitHomologRequest }}" style="width:100%;padding:13px;border-radius:11px;border:none;background:var(--brand);color:#fff;font-size:14px;font-weight:700;cursor:pointer;">Enviar solicitud al manager</button>
+          <button onClick="{{ submitHomologRequest }}" style="width:100%;padding:13px;border-radius:11px;border:none;background:var(--brand);color:#fff;font-size:14px;font-weight:700;cursor:pointer;">Send request to manager</button>
         </div>
 
         <!-- History -->
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 24px;box-shadow:var(--shadow);">
-          <div style="font-size:14px;font-weight:700;margin-bottom:14px;">Historial de solicitudes</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:14px;">Request history</div>
           <sc-if value="{{ homologHistoryEmpty }}" hint-placeholder-val="{{ false }}">
-            <div style="padding:20px;text-align:center;font-size:13px;color:var(--text-3);">No has enviado solicitudes aún.</div>
+            <div style="padding:20px;text-align:center;font-size:13px;color:var(--text-3);">You haven't submitted any requests yet.</div>
           </sc-if>
           <sc-for list="{{ homologHistory }}" as="h" hint-placeholder-count="2">
             <div style="display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);">
               <div style="flex:1;min-width:0;">
                 <div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ h.title }}</div>
-                <div style="font-size:11.5px;color:var(--text-3);margin-top:2px;">Enviado {{ h.submittedLabel }}<sc-if value="{{ h.managerNote }}" hint-placeholder-val="{{ false }}"> · {{ h.managerNote }}</sc-if></div>
+                <div style="font-size:11.5px;color:var(--text-3);margin-top:2px;">Submitted {{ h.submittedLabel }}<sc-if value="{{ h.managerNote }}" hint-placeholder-val="{{ false }}"> · {{ h.managerNote }}</sc-if></div>
               </div>
               <span style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:{{ h.statusBg }};color:{{ h.statusColor }};white-space:nowrap;">{{ h.statusLabel }}</span>
             </div>
@@ -1416,7 +1416,7 @@
   <div onClick="{{ closeEnrollPanel }}" style="position:fixed;inset:0;background:rgba(23,17,48,.5);z-index:60;display:flex;align-items:center;justify-content:center;padding:30px;animation:ovIn .15s ease;">
     <div onClick="{{ stopEnrollProp }}" style="width:520px;max-height:88vh;overflow-y:auto;background:var(--surface);border-radius:18px;box-shadow:var(--shadow-lg);animation:shIn .2s ease;">
       <div style="padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-        <div><div style="font-size:16px;font-weight:700;">Gestionar Enrollment</div><div style="font-size:12.5px;color:var(--text-3);margin-top:2px;">{{ enrollPanelUser.name }}</div></div>
+        <div><div style="font-size:16px;font-weight:700;">Manage Enrollment</div><div style="font-size:12.5px;color:var(--text-3);margin-top:2px;">{{ enrollPanelUser.name }}</div></div>
         <button onClick="{{ closeEnrollPanel }}" style="background:none;border:none;font-size:20px;color:var(--text-3);cursor:pointer;">×</button>
       </div>
       <div style="padding:22px 24px;display:flex;flex-direction:column;gap:20px;">
@@ -1425,15 +1425,15 @@
           <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;">🎯 Primary Path</div>
           <div style="display:flex;gap:10px;margin-bottom:10px;">
             <select value="{{ enrollPanelPrimPath }}" onChange="{{ setEnrollPrimPath }}" style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:13px;color:var(--text);outline:none;">
-              <option value="">Seleccionar path…</option>
+              <option value="">Select path…</option>
               <sc-for list="{{ programOptions }}" as="o" hint-placeholder-count="10"><option value="{{ o.id }}">{{ o.name }}</option></sc-for>
             </select>
             <select value="{{ enrollPanelPrimLevel }}" onChange="{{ setEnrollPrimLevel }}" style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:13px;color:var(--text);outline:none;">
-              <option value="">Seleccionar level…</option>
+              <option value="">Select level…</option>
               <sc-for list="{{ enrollLevelOptions }}" as="lo" hint-placeholder-count="4"><option value="{{ lo.value }}">{{ lo.label }}</option></sc-for>
             </select>
           </div>
-          <button onClick="{{ savePrimaryPath }}" style="width:100%;padding:9px;border-radius:9px;border:none;background:var(--brand);color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Guardar Primary Path</button>
+          <button onClick="{{ savePrimaryPath }}" style="width:100%;padding:9px;border-radius:9px;border:none;background:var(--brand);color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Save Primary Path</button>
         </div>
         <!-- SECONDARY PATHS -->
         <div style="padding:16px;border-radius:13px;border:1px solid var(--border);background:var(--surface-2);">
@@ -1444,7 +1444,7 @@
               <button onClick="{{ sp.remove }}" style="font-size:13px;color:#dc2626;background:none;border:none;cursor:pointer;font-weight:700;">×</button>
             </div>
           </sc-for>
-          <div style="font-size:11.5px;font-weight:600;color:var(--text-3);margin:10px 0 8px;">+ Agregar secondary path</div>
+          <div style="font-size:11.5px;font-weight:600;color:var(--text-3);margin:10px 0 8px;">+ Add secondary path</div>
           <div style="display:flex;gap:10px;margin-bottom:10px;">
             <select value="{{ enrollPanelAddSecPath }}" onChange="{{ setEnrollSecPath }}" style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:13px;color:var(--text);outline:none;">
               <option value="">Path…</option>
@@ -1455,11 +1455,11 @@
               <sc-for list="{{ enrollSecLevelOptions }}" as="lo" hint-placeholder-count="4"><option value="{{ lo.value }}">{{ lo.label }}</option></sc-for>
             </select>
           </div>
-          <button onClick="{{ addSecondaryPath }}" style="width:100%;padding:9px;border-radius:9px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;">Agregar Secondary Path</button>
+          <button onClick="{{ addSecondaryPath }}" style="width:100%;padding:9px;border-radius:9px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;">Add Secondary Path</button>
         </div>
       </div>
       <div style="padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
-        <button onClick="{{ closeEnrollPanel }}" style="padding:10px 22px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:13px;font-weight:700;">Cerrar</button>
+        <button onClick="{{ closeEnrollPanel }}" style="padding:10px 22px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:13px;font-weight:700;">Close</button>
       </div>
     </div>
   </div>
@@ -1815,7 +1815,7 @@ class Component extends DCLogic {
     const r=this.state.resources.find(x=>x.id===id); if(!r) return;
     const resources=this.state.resources.map(x=>x.id===id?{...x,status:'in-progress',progress:x.progress||0,lastActivity:'Hoy'}:x);
     this.setState({resources});
-    this.flash('"'+r.title+'" en progreso','ok');
+    this.flash('"'+r.title+'" in progress','ok');
     if(r.link) window.open(r.link,'_blank');
   }
 
@@ -1966,23 +1966,23 @@ class Component extends DCLogic {
   openEnrollPanel(u){ this.setState({enrollPanelOpen:true,enrollPanelUser:u.id,enrollPanelPrimPath:u.primaryPathId||'',enrollPanelPrimLevel:u.primaryLevel||'',enrollPanelAddSecPath:'',enrollPanelAddSecLevel:''}); }
   closeEnrollPanel(){ this.setState({enrollPanelOpen:false,enrollPanelUser:null}); }
   savePrimaryPath(){
-    const S=this.state; if(!S.enrollPanelPrimPath||!S.enrollPanelPrimLevel){this.flash('Selecciona path y level','warn');return;}
+    const S=this.state; if(!S.enrollPanelPrimPath||!S.enrollPanelPrimLevel){this.flash('Select a path and level','warn');return;}
     const users=S.users.map(u=>u.id===S.enrollPanelUser?{...u,primaryPathId:S.enrollPanelPrimPath,primaryLevel:S.enrollPanelPrimLevel}:u);
-    this.setState({users}); this.flash('Primary path actualizado','ok');
+    this.setState({users}); this.flash('Primary path updated','ok');
   }
   addSecondaryPath(){
-    const S=this.state; if(!S.enrollPanelAddSecPath||!S.enrollPanelAddSecLevel){this.flash('Selecciona path y level','warn');return;}
+    const S=this.state; if(!S.enrollPanelAddSecPath||!S.enrollPanelAddSecLevel){this.flash('Select a path and level','warn');return;}
     const users=S.users.map(u=>{
       if(u.id!==S.enrollPanelUser) return u;
       const already=(u.secondaryPaths||[]).some(sp=>sp.pathId===S.enrollPanelAddSecPath);
-      if(already){this.flash('Ya tiene ese path secundario','warn');return u;}
+      if(already){this.flash('Already has that secondary path','warn');return u;}
       return {...u,secondaryPaths:[...(u.secondaryPaths||[]),{pathId:S.enrollPanelAddSecPath,level:S.enrollPanelAddSecLevel}]};
     });
-    this.setState({users,enrollPanelAddSecPath:'',enrollPanelAddSecLevel:''}); this.flash('Secondary path agregado','ok');
+    this.setState({users,enrollPanelAddSecPath:'',enrollPanelAddSecLevel:''}); this.flash('Secondary path added','ok');
   }
   removeSecondaryPath(userId,pathId){
     const users=this.state.users.map(u=>u.id!==userId?u:{...u,secondaryPaths:(u.secondaryPaths||[]).filter(sp=>sp.pathId!==pathId)});
-    this.setState({users}); this.flash('Secondary path removido','ok');
+    this.setState({users}); this.flash('Secondary path removed','ok');
   }
   approveEnrollRequest(reqId){
     const req=this.state.enrollRequests.find(r=>r.id===reqId); if(!req) return;
@@ -1991,36 +1991,36 @@ class Component extends DCLogic {
       return {...u,secondaryPaths:[...(u.secondaryPaths||[]),{pathId:req.pathId,level:req.level}]};
     });
     const enrollRequests=this.state.enrollRequests.map(r=>r.id===reqId?{...r,status:'approved'}:r);
-    this.setState({users,enrollRequests}); this.flash('Acceso aprobado','ok');
+    this.setState({users,enrollRequests}); this.flash('Access approved','ok');
   }
   rejectEnrollRequest(reqId){
     const enrollRequests=this.state.enrollRequests.map(r=>r.id===reqId?{...r,status:'rejected'}:r);
-    this.setState({enrollRequests}); this.flash('Solicitud rechazada','ok');
+    this.setState({enrollRequests}); this.flash('Request rejected','ok');
   }
   requestSecondaryPath(pathId,level){
     const S=this.state; const learner=S.users.find(u=>u.id==='u1');
     const alreadyReq=(S.enrollRequests||[]).some(r=>r.userId==='u1'&&r.pathId===pathId&&r.status==='pending');
-    if(alreadyReq){this.flash('Ya enviaste una solicitud para este path','warn');return;}
+    if(alreadyReq){this.flash('You already submitted a request for this path','warn');return;}
     const req={id:'ereq'+Date.now(),userId:'u1',pathId,level,status:'pending',submitted:this.TODAY};
     const c=this.courseById(pathId);
     this.setState({enrollRequests:[...(S.enrollRequests||[]),req]});
-    this.pushNotif('Solicitud de acceso enviada: '+( c?c.name:pathId),'assign');
-    this.flash('Solicitud enviada al manager','ok');
+    this.pushNotif('Access request sent: '+( c?c.name:pathId),'assign');
+    this.flash('Request sent to manager','ok');
   }
 
   submitHomologRequest(){
     const S=this.state;
-    if(!S.homologFormPath||!S.homologFormResource){this.flash('Selecciona un path y un recurso','warn');return;}
-    if(!S.homologFormEvidence){this.flash('Adjunta una evidencia','warn');return;}
+    if(!S.homologFormPath||!S.homologFormResource){this.flash('Select a path and a resource','warn');return;}
+    if(!S.homologFormEvidence){this.flash('Attach an evidence file','warn');return;}
     const alreadyReq=(S.homologRequests||[]).some(r=>r.userId==='u1'&&r.resourceId===S.homologFormResource&&r.status==='pending');
-    if(alreadyReq){this.flash('Ya enviaste una solicitud para este recurso','warn');return;}
+    if(alreadyReq){this.flash('You already submitted a request for this resource','warn');return;}
     const res=S.resources.find(r=>r.id===S.homologFormResource);
     const req={id:'hreq'+Date.now(),userId:'u1',resourceId:S.homologFormResource,pathId:S.homologFormPath,
       level:res?res.level:'',module:res?res.module:'',title:res?res.title:'',
       evidence:S.homologFormEvidence,note:S.homologFormNote,status:'pending',submitted:this.TODAY,managerNote:''};
     this.setState({homologRequests:[...S.homologRequests,req],homologFormPath:'',homologFormResource:'',homologFormEvidence:'',homologFormNote:''});
-    this.pushNotif('Solicitud de homologación enviada al manager','assign');
-    this.flash('Solicitud enviada al manager','ok');
+    this.pushNotif('Homologation request sent to manager','assign');
+    this.flash('Request sent to manager','ok');
   }
   pickHomologEvidence(){ this.setState({homologFormEvidence:'certificado-'+Date.now()+'.pdf'}); }
 
@@ -2029,8 +2029,8 @@ class Component extends DCLogic {
     const resources=this.state.resources.map(r=>r.id===req.resourceId?{...r,status:'completed',hasCert:true,score:90,completedDate:this.TODAY}:r);
     const homologRequests=this.state.homologRequests.map(r=>r.id===reqId?{...r,status:'approved'}:r);
     this.setState({resources,homologRequests});
-    this.pushNotif('Homologación aprobada: "'+req.title+'"','approved');
-    this.flash('Homologación aprobada — recurso marcado como completado','ok');
+    this.pushNotif('Homologation approved: "'+req.title+'"','approved');
+    this.flash('Homologation approved — resource marked as completed','ok');
   }
 
   renderVals(){
@@ -2056,13 +2056,13 @@ class Component extends DCLogic {
       progress:['Team Progress','Individual learner progress'],
       approvals:['Approvals','Evidence review for your team'],
       mylearning:['My Learning','Pick up where you left off'],
-      home:['Home','Tu aprendizaje de hoy'],
-      mypaths:['Paths','Todos tus paths asignados'],
-      todo:['ToDo List','Recursos pendientes por empezar'],
-      active:['Active Learning','Lo que estás cursando ahora'],
-      history:['History','Recursos completados'],
-      certificates:['Certificates','Certificados obtenidos'],
-      homologar:['Homologar','Solicita crédito por cursos previos'],
+      home:['Home','Your learning today'],
+      mypaths:['Paths','All your assigned paths'],
+      todo:['ToDo List','Resources waiting to be started'],
+      active:['Active Learning','What you are working on right now'],
+      history:['History','Completed resources'],
+      certificates:['Certificates','Certificates earned'],
+      homologar:['Homologation','Request credit for previous courses'],
       explore:['Explore Courses','Discover courses and grow your skills']
     };
     const scr = S.screen==='builder'?'builder':S.screen;
@@ -2166,8 +2166,8 @@ class Component extends DCLogic {
         item('active','Active Learning',[['circle',{cx:12,cy:12,r:10}],['polygon',{points:'10 8 16 12 10 16'}]],lActiveCount,'lcontent'),
         item('history','History',[['path','M3 3v18h18'],['path','M18 17V9'],['path','M13 17V5'],['path','M8 17v-3']],0,'lcontent'),
         item('certificates','Certificates',[['circle',{cx:12,cy:8,r:6}],['path','M15.5 13.5 17 22l-5-3-5 3 1.5-8.5']],lCertCount,'lcontent'),
-        item('explore','Explorar',[['circle',{cx:12,cy:12,r:10}],['polygon',{points:'16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76'}]],0,''),
-        item('homologar','Homologar',[['path','M9 11l3 3L22 4'],['path','M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11']],0,'')
+        item('explore','Explore',[['circle',{cx:12,cy:12,r:10}],['polygon',{points:'16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76'}]],0,''),
+        item('homologar','Homologation',[['path','M9 11l3 3L22 4'],['path','M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11']],0,'')
       ];
     }
     return { navItems };
@@ -2532,7 +2532,7 @@ class Component extends DCLogic {
     }));
     const homReqs=(S.homologRequests||[]).filter(h=>h.status==='pending').map(h=>{
       const u=this.userById(h.userId); const res=S.resources.find(r=>r.id===h.resourceId)||{title:h.title,platform:'—'};
-      return { id:h.id, res:{...res,title:h.title||res.title,evidence:h.evidence||'evidencia.pdf'}, user:u,
+      return { id:h.id, res:{...res,title:h.title||res.title,evidence:h.evidence||'evidence.pdf'}, user:u,
         submitted:h.submitted, overdue:false, submittedLabel:this.fmtDate(h.submitted), initials:this.initials(u.name), avatarBg:this.avatarBg(u.name),
         type:'homologation', typeBg:this.mix('#7c3aed',12), typeColor:'#7c3aed', typeLabel:'Homologation',
         approve:()=>this.approveHomologRequest(h.id),
@@ -2695,7 +2695,7 @@ class Component extends DCLogic {
     ].filter(p=>p.id);
     const homologResourceOptions=S.homologFormPath?S.resources.filter(r=>r.courseId===S.homologFormPath&&r.status!=='completed').map(r=>({id:r.id,label:r.title+' ('+r.level+' · '+r.module+')'})):[];
     const homologHistory=(S.homologRequests||[]).filter(h=>h.userId==='u1').map(h=>({
-      ...h, statusLabel:h.status==='pending'?'Pendiente':h.status==='approved'?'Aprobado':'Rechazado',
+      ...h, statusLabel:h.status==='pending'?'Pending':h.status==='approved'?'Approved':'Rejected',
       statusColor:h.status==='pending'?'#b45309':h.status==='approved'?'#15803d':'#dc2626',
       statusBg:this.mix(h.status==='pending'?'#b45309':h.status==='approved'?'#15803d':'#dc2626',12),
       submittedLabel:this.fmtDate(h.submitted)
@@ -2732,7 +2732,7 @@ class Component extends DCLogic {
       rd_pickEvidence:()=>{ const n=['certificate.pdf','completion-screenshot.png','badge.png','transcript.pdf'][Math.floor(Math.random()*4)]; this.setState({evidenceFile:n}); },
       rd_submitEvidence:()=>this.submitEvidence(), rd_markDone:()=>{ if(selRes) this.markResourceDone(selRes.id); this.setState({detailRes:null,evidenceFile:''}); },
       rd_close:()=>this.setState({detailRes:null,evidenceFile:''}),
-      homePrimaryName:primaryPath?primaryPath.name:'Sin path asignado',
+      homePrimaryName:primaryPath?primaryPath.name:'No path assigned',
       homePrimaryLevel:learnerUser.primaryLevel||'—',
       homePrimaryProg:primaryProg,
       homeHasSecondary:homeSecondaries.length>0,
@@ -2748,7 +2748,7 @@ class Component extends DCLogic {
       homologPathOptions, homologResourceOptions,
       homologFormPath:S.homologFormPath, homologFormResource:S.homologFormResource,
       homologFormEvidence:S.homologFormEvidence, homologFormNote:S.homologFormNote,
-      homologEvidenceLabel:S.homologFormEvidence||'Adjuntar certificado o captura…',
+      homologEvidenceLabel:S.homologFormEvidence||'Attach certificate or screenshot…',
       homologEvidenceColor:S.homologFormEvidence?'var(--brand)':'var(--text-3)',
       homologHistory, homologHistoryEmpty:homologHistory.length===0,
       setHomologPath:(e)=>this.setState({homologFormPath:e.target.value,homologFormResource:''}),
