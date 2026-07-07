@@ -710,35 +710,64 @@
       <sc-if value="{{ showProgress }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:1200px;margin:0 auto;">
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);">
-          <div style="display:grid;grid-template-columns:1.4fr 1.8fr 1.8fr 0.9fr 0.9fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Learner</div><div>Primary Path</div><div>Secondary Paths</div><div>Last Active</div><div>Status</div></div>
+          <div style="display:grid;grid-template-columns:1.6fr 1.3fr 1.5fr 0.9fr 0.9fr 22px;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Learner</div><div>Primary Path</div><div>Secondary Paths</div><div>Last Active</div><div>Status</div><div></div></div>
           <sc-for list="{{ progressRows }}" as="p" hint-placeholder-count="6">
-            <div style="display:grid;grid-template-columns:1.4fr 1.8fr 1.8fr 0.9fr 0.9fr;gap:14px;padding:16px 22px;border-bottom:1px solid var(--border);align-items:center;">
-              <div style="display:flex;align-items:center;gap:10px;min-width:0;"><div style="width:34px;height:34px;border-radius:50%;background:{{ p.avatarBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11.5px;flex-shrink:0;">{{ p.initials }}</div><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ p.name }}</div></div>
-              <div style="min-width:0;padding-right:14px;">
-                <div style="display:flex;align-items:center;gap:8px;min-width:0;">
-                  <span style="width:8px;height:8px;border-radius:3px;background:{{ p.courseColor }};flex-shrink:0;"></span>
-                  <span style="font-size:12.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ p.courseName }}</span>
-                  <span style="margin-left:auto;font-size:12px;font-weight:700;color:var(--text);flex-shrink:0;">{{ p.prog }}%</span>
-                </div>
-                <div style="font-size:11px;color:var(--text-3);margin:2px 0 0 16px;">{{ p.level }}</div>
-                <div style="height:5px;border-radius:4px;background:var(--border);overflow:hidden;margin-top:7px;"><div style="height:100%;width:{{ p.prog }}%;background:{{ p.courseColor }};border-radius:4px;"></div></div>
+            <button onClick="{{ p.open }}" style="display:grid;grid-template-columns:1.6fr 1.3fr 1.5fr 0.9fr 0.9fr 22px;gap:14px;padding:14px 22px;border:none;border-bottom:1px solid var(--border);align-items:center;width:100%;text-align:left;background:none;cursor:pointer;">
+              <div style="display:flex;align-items:center;gap:10px;min-width:0;"><div style="width:34px;height:34px;border-radius:50%;background:{{ p.avatarBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11.5px;flex-shrink:0;">{{ p.initials }}</div><div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ p.name }}</div></div>
+              <div style="min-width:0;">
+                <span style="font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:{{ p.primaryBg }};color:{{ p.courseColor }};">{{ p.courseName }}</span>
+                <div style="font-size:11px;color:var(--text-3);margin-top:5px;">{{ p.level }}</div>
               </div>
-              <div style="display:flex;flex-direction:column;gap:12px;min-width:0;padding-right:14px;">
-                <sc-for list="{{ p.secondaries }}" as="sp" hint-placeholder-count="1">
-                  <div style="min-width:0;">
-                    <div style="display:flex;align-items:center;gap:8px;min-width:0;">
-                      <span style="width:8px;height:8px;border-radius:3px;background:{{ sp.color }};flex-shrink:0;"></span>
-                      <span style="font-size:12.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ sp.name }}</span>
-                      <span style="margin-left:auto;font-size:12px;font-weight:700;color:var(--text);flex-shrink:0;">{{ sp.prog }}%</span>
-                    </div>
-                    <div style="font-size:11px;color:var(--text-3);margin:2px 0 0 16px;">{{ sp.level }}</div>
-                    <div style="height:5px;border-radius:4px;background:var(--border);overflow:hidden;margin-top:7px;"><div style="height:100%;width:{{ sp.prog }}%;background:{{ sp.color }};border-radius:4px;"></div></div>
-                  </div>
-                </sc-for>
+              <div style="display:flex;flex-wrap:wrap;gap:5px;align-items:center;">
+                <sc-for list="{{ p.secondaries }}" as="sp" hint-placeholder-count="1"><span style="font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:20px;background:{{ sp.color }}1a;color:{{ sp.color }};">{{ sp.name }}</span></sc-for>
                 <sc-if value="{{ p.noSecondaries }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:var(--text-3);">—</span></sc-if>
               </div>
               <div style="font-size:12px;color:var(--text-3);">{{ p.last }}</div>
               <div><span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;background:{{ p.statusBg }};color:{{ p.statusColor }};">{{ p.statusLabel }}</span></div>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2.2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- MANAGER: LEARNER DETAIL -->
+      <sc-if value="{{ showLearnerDetail }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:900px;margin:0 auto;">
+        <button onClick="{{ ld_back }}" style="display:flex;align-items:center;gap:7px;background:none;border:none;color:var(--text-2);font-size:13px;font-weight:600;cursor:pointer;margin-bottom:14px;padding:0;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Team Progress</button>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:52px;height:52px;border-radius:50%;background:{{ ld_avatarBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;flex-shrink:0;">{{ ld_initials }}</div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:18px;font-weight:800;color:var(--text);">{{ ld_name }}</div>
+              <div style="font-size:12.5px;color:var(--text-3);">{{ ld_email }}</div>
+            </div>
+            <div style="text-align:right;flex-shrink:0;">
+              <span style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:{{ ld_statusBg }};color:{{ ld_statusColor }};">{{ ld_statusLabel }}</span>
+              <div style="font-size:11.5px;color:var(--text-3);margin-top:7px;">Last active · {{ ld_last }}</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:28px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">
+            <div><div style="font-size:16px;font-weight:800;color:var(--text);">{{ ld_pathCount }}</div><div style="font-size:11px;color:var(--text-3);">paths assigned</div></div>
+            <div><div style="font-size:16px;font-weight:800;color:var(--text);">{{ ld_avg }}%</div><div style="font-size:11px;color:var(--text-3);">avg progress</div></div>
+            <div><div style="font-size:16px;font-weight:800;color:var(--text);">{{ ld_level }}</div><div style="font-size:11px;color:var(--text-3);">current level</div></div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <sc-for list="{{ ld_paths }}" as="p" hint-placeholder-count="2">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:var(--shadow);">
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span style="width:40px;height:40px;border-radius:11px;background:linear-gradient(125deg,{{ p.color }},{{ p.colorDark }});display:flex;align-items:center;justify-content:center;flex-shrink:0;">{{ p.icon }}</span>
+                <div style="flex:1;min-width:0;">
+                  <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:15px;font-weight:700;color:var(--text);">{{ p.name }}</span><sc-if value="{{ p.isPrimary }}" hint-placeholder-val="{{ true }}"><span style="font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:20px;background:var(--brand-soft);color:var(--brand);">🎯 Primary</span></sc-if><sc-if value="{{ !p.isPrimary }}" hint-placeholder-val="{{ false }}"><span style="font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:20px;background:{{ p.color }}1a;color:{{ p.color }};">📘 Secondary</span></sc-if></div>
+                  <div style="font-size:12px;color:var(--text-3);margin-top:1px;">{{ p.level }}</div>
+                </div>
+                <div style="font-size:22px;font-weight:800;color:var(--text);flex-shrink:0;">{{ p.prog }}%</div>
+              </div>
+              <div style="height:7px;border-radius:5px;background:var(--border);overflow:hidden;margin-top:13px;"><div style="height:100%;width:{{ p.prog }}%;background:{{ p.color }};border-radius:5px;"></div></div>
+              <div style="font-size:12px;color:var(--text-2);margin-top:9px;"><strong style="color:var(--text);">{{ p.done }}</strong> of {{ p.total }} resources completed at this level</div>
             </div>
           </sc-for>
         </div>
@@ -1550,7 +1579,7 @@ class Component extends DCLogic {
   state = {
     theme:'light', viewer:'admin', screen:'paths', search:'', searchOpen:false, notifOpen:false,
     detailRes:null, learnerTab:'overview', evidenceFile:'',
-    myPathActive:null, pathDetail:null,
+    myPathActive:null, pathDetail:null, mgrLearnerDetail:null,
     homologFormPath:'', homologFormResource:'', homologFormEvidence:'', homologFormNote:'',
     wizard:null, rejectFor:null, rejectNote:'', enrollOpen:false, enrollUser:'', enrollCourse:'', previewCourse:null, certView:null,
     filterPath:null, filterLevel:null, filterModule:null,
@@ -2132,6 +2161,7 @@ class Component extends DCLogic {
       platforms:['Platforms','Source registry and homologation modes'],
       team:['Team Overview','Your team at a glance'],
       progress:['Team Progress','Individual learner progress'],
+      learnerdetail:['Learner Progress','Complete progress for this team member'],
       approvals:['Approvals','Evidence review for your team'],
       mylearning:['My Learning','Pick up where you left off'],
       home:['Home','Your learning today'],
@@ -2200,7 +2230,7 @@ class Component extends DCLogic {
     const pendingCount=this.homologs().length;
     const coll=S.navCollapsed||{};
     const chev=(collapsed)=>this.svg([['path',collapsed?'M9 18l6-6-6-6':'M18 15l-6-6-6 6']],12,'var(--text-3)',2);
-    const item=(key,label,paths,badge,grp)=>({ isItem:true, isHeading:false, label, icon:I(paths), go:()=>this.go(key), style:(S.screen===key||(key==='mypaths'&&S.screen==='pathdetail'))?on:off, hasBadge:!!badge&&badge>0, badge, visible:!coll[grp] });
+    const item=(key,label,paths,badge,grp)=>({ isItem:true, isHeading:false, label, icon:I(paths), go:()=>this.go(key), style:(S.screen===key||(key==='mypaths'&&S.screen==='pathdetail')||(key==='progress'&&S.screen==='learnerdetail'))?on:off, hasBadge:!!badge&&badge>0, badge, visible:!coll[grp] });
     const head=(label,key)=>({ isHeading:true, isItem:false, label, key, toggle:()=>this.toggleNav(key), chevron:chev(coll[key]) });
     let navItems=[];
     if(V==='admin'){
@@ -2602,10 +2632,27 @@ class Component extends DCLogic {
         return { name:c?c.name:'—', color:c?c.color:'#94a3b8', level:sp.level, prog:(secProgMap[e.id]||{})[sp.pathId]||0 };
       });
       return { id:e.id, name:e.name, initials:this.initials(e.name), avatarBg:this.avatarBg(e.name), email:e.email,
-        courseName:e.course?e.course.name:'—', courseColor:e.course?e.course.color:'#64748b', level:e.primaryLevel||'—', prog:e.prog, last:e.last,
+        courseName:e.course?e.course.name:'—', courseColor:e.course?e.course.color:'#64748b',
+        primaryBg:this.mix(e.course?e.course.color:'#64748b',12), level:e.primaryLevel||'—', prog:e.prog, last:e.last,
         secondaries, noSecondaries:secondaries.length===0,
+        open:()=>this.setState({screen:'learnerdetail',mgrLearnerDetail:e.id}),
         statusLabel:st[0], statusColor:st[1], statusBg:this.mix(st[1],14) };
     });
+
+    // learner detail (drill-down desde Team Progress)
+    const ldUser=S.mgrLearnerDetail?enr.find(x=>x.id===S.mgrLearnerDetail):null;
+    const ldPaths=ldUser?[
+      {pathId:ldUser.primaryPathId,level:ldUser.primaryLevel,prog:ldUser.prog,isPrimary:true},
+      ...(ldUser.secondaryPaths||[]).map(sp=>({pathId:sp.pathId,level:sp.level,prog:(secProgMap[ldUser.id]||{})[sp.pathId]||0,isPrimary:false}))
+    ].map(p=>{
+      const c=this.courseById(p.pathId)||{};
+      const total=S.resources.filter(r=>r.courseId===p.pathId&&r.level===p.level).length;
+      const done=total?Math.round(p.prog/100*total):0;
+      return { ...p, name:c.name||'—', color:c.color||'#94a3b8', colorDark:this.dark(c.color||'#94a3b8',28),
+        icon:this.iconEl(c.icon,20,'#fff',2), total, done };
+    }):[];
+    const ldAvg=ldPaths.length?Math.round(ldPaths.reduce((a,p)=>a+p.prog,0)/ldPaths.length):0;
+    const ldSt=ldUser?(ldUser.prog<10?['Inactive','#94a3b8']:(ldUser.prog>=100?['Completed','#15803d']:(ldUser.prog<40?['Behind','#b45309']:['On Track','#2563eb']))):['','#94a3b8'];
     const evidenceRows=pending.map(h=>({
       ...h, initials:this.initials(h.user.name), avatarBg:this.avatarBg(h.user.name),
       type:'evidence', typeBg:this.mix('#2563eb',12), typeColor:'#2563eb', typeLabel:'Evidence',
@@ -2624,6 +2671,13 @@ class Component extends DCLogic {
     const programOptions=S.courses.map(c=>({id:c.id,name:c.name}));
     return {
       showTeam:isMgr&&S.screen==='team', showProgress:isMgr&&S.screen==='progress', showApprovals:isMgr&&S.screen==='approvals',
+      showLearnerDetail:isMgr&&S.screen==='learnerdetail'&&!!ldUser,
+      ld_name:ldUser?ldUser.name:'', ld_email:ldUser?ldUser.email:'',
+      ld_initials:ldUser?this.initials(ldUser.name):'', ld_avatarBg:ldUser?this.avatarBg(ldUser.name):'#94a3b8',
+      ld_last:ldUser?ldUser.last:'', ld_level:ldUser?(ldUser.primaryLevel||'—'):'',
+      ld_statusLabel:ldSt[0], ld_statusColor:ldSt[1], ld_statusBg:this.mix(ldSt[1],14),
+      ld_pathCount:ldPaths.length, ld_avg:ldAvg, ld_paths:ldPaths,
+      ld_back:()=>this.setState({screen:'progress',mgrLearnerDetail:null}),
       mgrCards:[ {value:team.length,label:'Team learners',color:'var(--text)',flag:false},
         {value:approvalRows.length,label:'Pending approvals',color:approvalRows.length?'#dc2626':'var(--text)',flag:approvalRows.length>0},
         {value:atRisk.length,label:'At-risk learners',color:atRisk.length?'#b45309':'var(--text)',flag:false} ],
