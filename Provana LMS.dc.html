@@ -206,16 +206,16 @@
           <sc-for list="{{ pathCards }}" as="p" hint-placeholder-count="6">
             <div style="background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);">
               <div style="height:84px;background:linear-gradient(125deg,{{ p.color }},{{ p.colorDark }});padding:15px;display:flex;align-items:flex-start;justify-content:space-between;">
-                <span style="width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;">{{ p.icon }}</span>
+                <span style="width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;">{{ p.iconWhite }}</span>
                 <span style="font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.22);color:#fff;">{{ p.statusLabel }}</span>
               </div>
               <div style="padding:14px 18px 18px;">
-                <div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:{{ p.progBg }};color:{{ p.progColor }};">{{ p.programName }}</span></div>
+                <div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--brand-soft);color:var(--brand);">{{ p.learnerCount }} learners</span></div>
                 <div style="font-size:16px;font-weight:700;color:var(--text);">{{ p.name }}</div>
                 <div style="display:flex;gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
                   <div><div style="font-size:16px;font-weight:700;color:var(--text);">{{ p.levelCount }}</div><div style="font-size:11px;color:var(--text-3);">Levels</div></div>
-                  <div><div style="font-size:16px;font-weight:700;color:var(--text);">{{ p.moduleCount }}</div><div style="font-size:11px;color:var(--text-3);">Modules</div></div>
                   <div><div style="font-size:16px;font-weight:700;color:var(--text);">{{ p.resCount }}</div><div style="font-size:11px;color:var(--text-3);">Resources</div></div>
+                  <div><div style="font-size:16px;font-weight:700;color:var(--text);">{{ p.learnerCount }}</div><div style="font-size:11px;color:var(--text-3);">Learners</div></div>
                 </div>
                 <div style="display:flex;gap:8px;margin-top:14px;">
                   <button onClick="{{ p.edit }}" style="flex:1;padding:9px;border-radius:9px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:12.5px;font-weight:700;cursor:pointer;">Edit</button>
@@ -251,13 +251,11 @@
           </select>
         </div>
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);">
-          <div style="display:grid;grid-template-columns:1.6fr 1.4fr 1.2fr 1.2fr 0.7fr 0.7fr 1.2fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Level</div><div>Path</div><div>Program</div><div>Completion Rule</div><div>Modules</div><div>Resources</div><div style="text-align:right;">Actions</div></div>
+          <div style="display:grid;grid-template-columns:1.6fr 1.4fr 0.7fr 0.7fr 1.2fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Level</div><div>Path</div><div>Modules</div><div>Resources</div><div style="text-align:right;">Actions</div></div>
           <sc-for list="{{ levelRows }}" as="l" hint-placeholder-count="6">
-            <div style="display:grid;grid-template-columns:1.6fr 1.4fr 1.2fr 1.2fr 0.7fr 0.7fr 1.2fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;">
+            <div style="display:grid;grid-template-columns:1.6fr 1.4fr 0.7fr 0.7fr 1.2fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;">
               <div style="font-size:13.5px;font-weight:600;color:var(--text);">{{ l.name }}</div>
               <div><button onClick="{{ l.goPath }}" style="font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:20px;border:none;background:{{ l.progBg }};color:{{ l.progColor }};cursor:pointer;">{{ l.pathName }}</button></div>
-              <div style="font-size:12.5px;color:var(--text-2);">{{ l.programName }}</div>
-              <div><span style="font-size:11.5px;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--brand-soft);color:var(--brand);">{{ l.rule }}</span></div>
               <div><button onClick="{{ l.viewModules }}" style="font-size:13.5px;font-weight:700;color:var(--brand);background:none;border:none;padding:0;cursor:pointer;">{{ l.moduleCount }}</button></div>
               <div style="font-size:13px;color:var(--text-2);">{{ l.resCount }}</div>
               <div style="display:flex;gap:6px;justify-content:flex-end;">
@@ -295,14 +293,13 @@
           </select>
         </div>
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);">
-          <div style="display:grid;grid-template-columns:1.6fr 1fr 1.3fr 0.6fr 2fr 1.1fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Module</div><div>Level</div><div>Path</div><div>Resources</div><div>Skills</div><div style="text-align:right;">Actions</div></div>
+          <div style="display:grid;grid-template-columns:1.6fr 1fr 1.3fr 0.6fr 1.1fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Module</div><div>Level</div><div>Path</div><div>Resources</div><div style="text-align:right;">Actions</div></div>
           <sc-for list="{{ moduleRows }}" as="m" hint-placeholder-count="8">
-            <div style="display:grid;grid-template-columns:1.6fr 1fr 1.3fr 0.6fr 2fr 1.1fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;">
+            <div style="display:grid;grid-template-columns:1.6fr 1fr 1.3fr 0.6fr 1.1fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;">
               <div style="font-size:13.5px;font-weight:600;color:var(--text);">{{ m.name }}</div>
               <div><button onClick="{{ m.goLevel }}" style="font-size:11.5px;font-weight:600;color:var(--text-2);background:var(--surface-2);border:1px solid var(--border);border-radius:20px;padding:4px 11px;cursor:pointer;">{{ m.levelName }}</button></div>
               <div><button onClick="{{ m.goPath }}" style="font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:20px;border:none;background:{{ m.progBg }};color:{{ m.progColor }};cursor:pointer;">{{ m.pathName }}</button></div>
               <div><button onClick="{{ m.viewResources }}" style="font-size:13.5px;font-weight:700;color:var(--brand);background:none;border:none;padding:0;cursor:pointer;">{{ m.resCount }}</button></div>
-              <div style="display:flex;flex-wrap:wrap;gap:5px;"><sc-for list="{{ m.skills }}" as="s" hint-placeholder-count="3"><span style="font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;background:var(--brand-soft);color:var(--brand);">{{ s }}</span></sc-for></div>
               <div style="display:flex;gap:6px;justify-content:flex-end;">
                 <button onClick="{{ m.edit }}" style="font-size:12px;font-weight:600;color:var(--text-2);background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:6px 12px;cursor:pointer;">Edit</button>
                 <button onClick="{{ m.viewResources }}" style="font-size:12px;font-weight:700;color:var(--brand);background:var(--brand-soft);border:none;border-radius:8px;padding:6px 13px;cursor:pointer;">Resources →</button>
@@ -551,11 +548,12 @@
       <sc-if value="{{ showUsers }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:1200px;margin:0 auto;">
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);">
-          <div style="display:grid;grid-template-columns:2fr 1fr 0.9fr 1.2fr 0.8fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--text-3);text-transform:uppercase;"><div>User</div><div>Role</div><div>Status</div><div>Manager</div><div style="text-align:right;">Actions</div></div>
+          <div style="display:grid;grid-template-columns:1.8fr 0.9fr 1.4fr 0.8fr 1.1fr 0.8fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--text-3);text-transform:uppercase;"><div>User</div><div>Role</div><div>Primary Path</div><div>Status</div><div>Manager</div><div style="text-align:right;">Actions</div></div>
           <sc-for list="{{ userRows }}" as="u" hint-placeholder-count="8">
-            <div style="display:grid;grid-template-columns:2fr 1fr 0.9fr 1.2fr 0.8fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;">
+            <div style="display:grid;grid-template-columns:1.8fr 0.9fr 1.4fr 0.8fr 1.1fr 0.8fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;">
               <div style="display:flex;align-items:center;gap:12px;min-width:0;"><div style="width:38px;height:38px;border-radius:50%;background:{{ u.avatarBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12.5px;flex-shrink:0;">{{ u.initials }}</div><div style="min-width:0;"><div style="font-size:13.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ u.name }}</div><div style="font-size:11.5px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ u.email }}</div></div></div>
               <div><span style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:{{ u.roleBg }};color:{{ u.roleColor }};text-transform:uppercase;letter-spacing:.04em;">{{ u.role }}</span></div>
+              <div><span style="font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:{{ u.primaryBg }};color:{{ u.primaryColor }};">{{ u.primaryLabel }}</span></div>
               <div><span style="font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:20px;background:{{ u.statusBg }};color:{{ u.statusColor }};">{{ u.status }}</span></div>
               <div style="font-size:12.5px;color:var(--text-2);">{{ u.managerName }}</div>
               <div style="text-align:right;"><button style="font-size:12px;font-weight:600;color:var(--brand);background:var(--brand-soft);border:none;border-radius:8px;padding:7px 16px;">Edit</button></div>
@@ -737,7 +735,7 @@
               <div style="display:flex;align-items:flex-start;gap:14px;">
                 <div style="width:40px;height:40px;border-radius:50%;background:{{ h.avatarBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0;">{{ h.initials }}</div>
                 <div style="flex:1;min-width:0;">
-                  <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:14.5px;font-weight:700;">{{ h.res.title }}</span><sc-if value="{{ h.overdue }}" hint-placeholder-val="{{ false }}"><span style="font-size:10.5px;font-weight:700;color:#dc2626;background:color-mix(in srgb,#dc2626 12%,var(--surface));padding:2px 9px;border-radius:20px;">OVERDUE</span></sc-if></div>
+                  <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:14.5px;font-weight:700;">{{ h.res.title }}</span><span style="font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:20px;background:{{ h.typeBg }};color:{{ h.typeColor }};">{{ h.typeLabel }}</span><sc-if value="{{ h.overdue }}" hint-placeholder-val="{{ false }}"><span style="font-size:10.5px;font-weight:700;color:#dc2626;background:color-mix(in srgb,#dc2626 12%,var(--surface));padding:2px 9px;border-radius:20px;">OVERDUE</span></sc-if></div>
                   <div style="font-size:12.5px;color:var(--text-2);margin-top:2px;">{{ h.user.name }} · {{ h.res.platform }} · submitted {{ h.submittedLabel }}</div>
                   <div style="display:flex;align-items:center;gap:10px;margin-top:12px;padding:11px 14px;border-radius:11px;background:var(--surface-2);border:1px solid var(--border);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5z"/><path d="M14 2v6h6"/></svg><span style="flex:1;font-size:13px;font-weight:600;">{{ h.res.evidence }}</span></div>
                 </div>
@@ -750,102 +748,239 @@
       </div>
       </sc-if>
 
-      <!-- LEARNER: MY LEARNING -->
-      <sc-if value="{{ showMyLearning }}" hint-placeholder-val="{{ false }}">
-      <div style="max-width:1100px;margin:0 auto;">
+      <!-- MANAGER: ENROLLMENTS -->
+      <sc-if value="{{ showEnrollments }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:1200px;margin:0 auto;">
+        <div style="font-size:13.5px;color:var(--text-2);margin-bottom:16px;">Gestiona el path principal y secundarios de cada miembro de tu equipo.</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);">
+          <div style="display:grid;grid-template-columns:1.6fr 1.4fr 0.8fr 1.6fr 1fr 0.8fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Learner</div><div>Primary Path</div><div>Level</div><div>Secondary Paths</div><div>Progreso</div><div style="text-align:right;">Actions</div></div>
+          <sc-for list="{{ enrollmentRows }}" as="e" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:1.6fr 1.4fr 0.8fr 1.6fr 1fr 0.8fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;">
+              <div style="display:flex;align-items:center;gap:10px;min-width:0;"><div style="width:34px;height:34px;border-radius:50%;background:{{ e.avatarBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11.5px;flex-shrink:0;">{{ e.initials }}</div><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ e.name }}</div></div>
+              <div><span style="font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:{{ e.primaryBg }};color:{{ e.primaryColor }};">{{ e.primaryName }}</span></div>
+              <div style="font-size:12px;color:var(--text-2);">{{ e.primaryLevel }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:5px;"><sc-for list="{{ e.secondaries }}" as="sp" hint-placeholder-count="2"><span style="font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:20px;background:{{ sp.color }}1a;color:{{ sp.color }};">{{ sp.name }}</span></sc-for></div>
+              <div style="display:flex;align-items:center;gap:8px;"><div style="flex:1;height:6px;border-radius:4px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ e.prog }}%;background:var(--brand);border-radius:4px;"></div></div><span style="font-size:11.5px;font-weight:700;color:var(--text-2);">{{ e.prog }}%</span></div>
+              <div style="text-align:right;"><button onClick="{{ e.manage }}" style="font-size:12px;font-weight:700;color:var(--brand);background:var(--brand-soft);border:none;border-radius:8px;padding:7px 16px;cursor:pointer;">Manage</button></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- LEARNER: HOME -->
+      <sc-if value="{{ showHome }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:1000px;margin:0 auto;">
+
+        <!-- Continue hero -->
         <sc-if value="{{ hasContinue }}" hint-placeholder-val="{{ true }}">
-        <div style="border-radius:20px;overflow:hidden;background:linear-gradient(125deg,{{ cl_color }},{{ cl_colorDark }});padding:26px 28px;margin-bottom:22px;box-shadow:var(--shadow-lg);">
+        <div style="border-radius:20px;overflow:hidden;background:linear-gradient(125deg,{{ cl_color }},{{ cl_colorDark }});padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow-lg);">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;">
             <div style="min-width:0;color:#fff;">
-              <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-bottom:8px;">Continue where you left off</div>
-              <div style="font-size:24px;font-weight:800;letter-spacing:-.01em;">{{ cl_title }}</div>
-              <div style="font-size:13px;opacity:.85;margin-top:5px;">{{ cl_breadcrumb }}</div>
-              <div style="display:flex;align-items:center;gap:14px;margin-top:16px;max-width:440px;">
-                <div style="flex:1;height:8px;border-radius:6px;background:rgba(255,255,255,.25);overflow:hidden;"><div style="height:100%;width:{{ cl_progress }}%;background:#fff;border-radius:6px;"></div></div>
+              <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-bottom:7px;">Continuar donde dejé</div>
+              <div style="font-size:22px;font-weight:800;letter-spacing:-.01em;">{{ cl_title }}</div>
+              <div style="font-size:12.5px;opacity:.85;margin-top:4px;">{{ cl_breadcrumb }}</div>
+              <div style="display:flex;align-items:center;gap:12px;margin-top:14px;max-width:380px;">
+                <div style="flex:1;height:7px;border-radius:6px;background:rgba(255,255,255,.25);overflow:hidden;"><div style="height:100%;width:{{ cl_progress }}%;background:#fff;border-radius:6px;"></div></div>
                 <span style="font-size:13px;font-weight:700;color:#fff;">{{ cl_progress }}%</span>
               </div>
-              <div style="display:flex;align-items:center;gap:14px;margin-top:12px;font-size:12.5px;color:#fff;opacity:.85;"><span style="display:inline-flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:3px;background:#fff;"></span>{{ cl_platform }}</span><span>{{ cl_remaining }}</span></div>
             </div>
-            <button onClick="{{ cl_continue }}" style="display:flex;align-items:center;gap:9px;padding:14px 26px;border-radius:13px;border:none;background:#fff;color:#1c1830;font-size:15px;font-weight:700;flex-shrink:0;">Continue<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            <button onClick="{{ cl_continue }}" style="display:flex;align-items:center;gap:9px;padding:13px 24px;border-radius:13px;border:none;background:#fff;color:#1c1830;font-size:14px;font-weight:700;flex-shrink:0;">Continuar<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
           </div>
         </div>
         </sc-if>
 
-        <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:18px;margin-bottom:22px;">
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);">
-            <div style="font-size:14px;font-weight:700;margin-bottom:14px;">Required Learning</div>
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <sc-for list="{{ required }}" as="r" hint-placeholder-count="3">
-                <button onClick="{{ r.go }}" style="display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 14px;border-radius:11px;border:1px solid var(--border);background:var(--surface-2);">
-                  <span style="width:9px;height:9px;border-radius:3px;background:{{ r.platColor }};flex-shrink:0;"></span>
-                  <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.title }}</div><div style="font-size:11.5px;color:var(--text-3);">{{ r.platform }} · {{ r.duration }}</div></div>
-                  <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;background:{{ r.statusBg }};color:{{ r.statusColor }};">{{ r.statusLabel }}</span>
-                  <sc-if value="{{ r.dueLabel }}" hint-placeholder-val="{{ false }}"><span style="font-size:11.5px;color:#b45309;font-weight:600;">{{ r.dueLabel }}</span></sc-if>
-                </button>
-              </sc-for>
-              <sc-if value="{{ requiredEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:18px;text-align:center;font-size:13px;color:var(--text-3);">No required items pending.</div></sc-if>
-            </div>
+        <!-- Primary Path card -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);margin-bottom:16px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);">🎯 Mi Path Principal</div>
+            <button onClick="{{ goMyPaths }}" style="font-size:12px;font-weight:700;color:var(--brand);background:none;border:none;cursor:pointer;">Ver path →</button>
           </div>
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);">
-            <div style="font-size:14px;font-weight:700;margin-bottom:14px;">My Progress</div>
-            <div style="display:flex;flex-direction:column;gap:13px;">
-              <sc-for list="{{ pathProgress }}" as="p" hint-placeholder-count="3">
-                <div><div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="font-size:12.5px;font-weight:600;color:var(--text);">{{ p.name }}</span><span style="font-size:11.5px;color:var(--text-3);">{{ p.done }}/{{ p.total }}</span></div><div style="height:8px;border-radius:6px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ p.pct }}%;background:{{ p.color }};border-radius:6px;"></div></div></div>
-              </sc-for>
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="flex:1;">
+              <div style="font-size:17px;font-weight:800;color:var(--text);">{{ homePrimaryName }}</div>
+              <div style="font-size:13px;color:var(--text-2);margin-top:2px;">{{ homePrimaryLevel }}</div>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:12px;">
+                <div style="flex:1;height:8px;border-radius:6px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ homePrimaryProg }}%;background:var(--brand);border-radius:6px;"></div></div>
+                <span style="font-size:12.5px;font-weight:700;color:var(--text-2);">{{ homePrimaryProg }}%</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);margin-bottom:22px;">
-          <div style="font-size:14px;font-weight:700;margin-bottom:14px;">Skills Gained</div>
-          <div style="display:flex;flex-wrap:wrap;gap:9px;">
-            <sc-for list="{{ skillChips }}" as="s" hint-placeholder-count="5">
-              <span style="display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;padding:7px 13px;border-radius:20px;{{ s.css }}">{{ s.name }}</span>
-            </sc-for>
-            <sc-if value="{{ skillChipsEmpty }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:var(--text-3);">Complete resources to start gaining skills.</div></sc-if>
-          </div>
-        </div>
-
-        <div style="border-bottom:1px solid var(--border);display:flex;gap:24px;margin-bottom:18px;overflow-x:auto;">
-          <sc-for list="{{ learnerTabs }}" as="t" hint-placeholder-count="6"><button onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}<sc-if value="{{ t.hasCount }}" hint-placeholder-val="{{ false }}"> ({{ t.count }})</sc-if></button></sc-for>
-        </div>
-
-        <sc-if value="{{ tab_skills }}" hint-placeholder-val="{{ false }}">
-          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
-            <sc-for list="{{ skillsFull }}" as="s" hint-placeholder-count="6">
-              <div style="background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:14px 16px;box-shadow:var(--shadow);"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><span style="font-size:13.5px;font-weight:700;">{{ s.name }}</span><span style="font-size:11px;font-weight:700;color:{{ s.stateColor }};">{{ s.state }}</span></div><div style="height:7px;border-radius:6px;background:var(--border);overflow:hidden;margin-bottom:7px;"><div style="height:100%;width:{{ s.pct }}%;background:{{ s.barColor }};border-radius:6px;"></div></div><div style="font-size:11.5px;color:var(--text-3);">from {{ s.source }}</div></div>
+        <!-- Secondary Paths -->
+        <sc-if value="{{ homeHasSecondary }}" hint-placeholder-val="{{ false }}">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);margin-bottom:16px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;">📘 Paths Secundarios</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <sc-for list="{{ homeSecondaries }}" as="sp" hint-placeholder-count="2">
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:11px;background:var(--surface-2);border:1px solid var(--border);">
+                <div style="width:8px;height:8px;border-radius:50%;background:{{ sp.color }};flex-shrink:0;"></div>
+                <div style="flex:1;"><div style="font-size:13px;font-weight:600;">{{ sp.name }}</div><div style="font-size:11.5px;color:var(--text-3);">{{ sp.level }}</div></div>
+                <div style="display:flex;align-items:center;gap:8px;width:120px;"><div style="flex:1;height:5px;border-radius:4px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ sp.prog }}%;background:{{ sp.color }};border-radius:4px;"></div></div><span style="font-size:11px;font-weight:700;color:var(--text-2);">{{ sp.prog }}%</span></div>
+                <button onClick="{{ sp.go }}" style="font-size:12px;font-weight:700;color:var(--brand);background:none;border:none;cursor:pointer;">Ver →</button>
+              </div>
             </sc-for>
           </div>
+        </div>
         </sc-if>
-        <sc-if value="{{ tab_certs }}" hint-placeholder-val="{{ false }}">
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
-            <sc-for list="{{ certList }}" as="c" hint-placeholder-count="3"><button onClick="{{ c.view }}" style="text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);"><div style="width:40px;height:40px;border-radius:11px;background:var(--brand-soft);display:flex;align-items:center;justify-content:center;margin-bottom:11px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/></svg></div><div style="font-size:13.5px;font-weight:700;color:var(--text);">{{ c.title }}</div><div style="font-size:11.5px;color:var(--text-3);margin-top:3px;">Earned {{ c.completedLabel }}</div></button></sc-for>
-            <sc-if value="{{ certEmpty }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:var(--text-3);">No certificates yet.</div></sc-if>
+
+        <!-- Quick actions -->
+        <div style="display:flex;gap:12px;margin-bottom:16px;">
+          <button onClick="{{ goMyPaths }}" style="flex:1;padding:13px;border-radius:13px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13.5px;font-weight:700;cursor:pointer;">📚 Ver mis paths</button>
+          <button onClick="{{ goHomologar }}" style="flex:1;padding:13px;border-radius:13px;border:none;background:var(--brand-soft);color:var(--brand);font-size:13.5px;font-weight:700;cursor:pointer;">✅ Homologar curso previo</button>
+        </div>
+
+      </div>
+      </sc-if>
+
+      <!-- LEARNER: PATHS (landing) -->
+      <sc-if value="{{ showMyPaths }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:1100px;margin:0 auto;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;">
+          <sc-for list="{{ pathLandingCards }}" as="p" hint-placeholder-count="2">
+            <button onClick="{{ p.pick }}" style="text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);cursor:pointer;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                <span style="width:38px;height:38px;border-radius:10px;background:linear-gradient(125deg,{{ p.color }},{{ p.colorDark }});display:flex;align-items:center;justify-content:center;flex-shrink:0;">{{ p.iconWhite }}</span>
+                <span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--brand-soft);color:var(--brand);"><sc-if value="{{ p.isPrimary }}" hint-placeholder-val="{{ true }}">🎯 Principal</sc-if><sc-if value="{{ !p.isPrimary }}" hint-placeholder-val="{{ false }}">📘 Secundario</sc-if></span>
+              </div>
+              <div style="font-size:16px;font-weight:800;color:var(--text);">{{ p.name }}</div>
+              <div style="font-size:13px;color:var(--text-2);margin-top:2px;">{{ p.level }}</div>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:12px;">
+                <div style="flex:1;height:7px;border-radius:6px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ p.prog }}%;background:{{ p.color }};border-radius:6px;"></div></div>
+                <span style="font-size:12px;font-weight:700;color:var(--text-2);">{{ p.prog }}%</span>
+              </div>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- LEARNER: CONTENT HERO (shared) -->
+      <sc-if value="{{ showContentHero }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:1100px;margin:0 auto;">
+        <div style="border-radius:20px;overflow:hidden;background:linear-gradient(125deg,{{ heroColor }},{{ heroColorDark }});padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow-lg);color:#fff;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;">
+            <div style="display:flex;align-items:center;gap:14px;min-width:0;">
+              <span style="width:48px;height:48px;border-radius:13px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;">{{ heroIcon }}</span>
+              <div style="min-width:0;">
+                <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.8;">Tu path asignado</div>
+                <div style="font-size:20px;font-weight:800;">{{ heroName }}</div>
+                <div style="font-size:12.5px;opacity:.85;">{{ heroLevel }}</div>
+                <div style="font-size:11.5px;opacity:.75;margin-top:2px;">{{ heroDesc }}</div>
+              </div>
+            </div>
+            <div style="text-align:right;flex-shrink:0;">
+              <div style="font-size:26px;font-weight:800;">{{ heroProg }}%</div>
+              <div style="font-size:11.5px;opacity:.8;">completado</div>
+            </div>
           </div>
-        </sc-if>
-        <sc-if value="{{ tab_history }}" hint-placeholder-val="{{ false }}">
-          <div style="display:flex;flex-direction:column;gap:9px;">
-            <sc-for list="{{ historyList }}" as="r" hint-placeholder-count="4"><button onClick="{{ r.open }}" style="display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface);"><span style="width:32px;height:32px;border-radius:9px;background:color-mix(in srgb,#15803d 13%,var(--surface));display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.4" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span><div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;">{{ r.title }}</div><div style="font-size:11.5px;color:var(--text-3);">{{ r.platform }} · completed {{ r.completedLabel }}</div></div><span style="font-size:12px;font-weight:700;color:var(--text-2);">{{ r.points }} pts</span></button></sc-for>
-            <sc-if value="{{ historyEmpty }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:var(--text-3);">Nothing completed yet.</div></sc-if>
+          <div style="display:flex;gap:24px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.25);">
+            <div><div style="font-size:16px;font-weight:800;">{{ heroCompletedCount }}/{{ heroTotal }}</div><div style="font-size:11px;opacity:.8;">homologados</div></div>
+            <div><div style="font-size:16px;font-weight:800;">{{ heroPoints }}</div><div style="font-size:11px;opacity:.8;">puntos</div></div>
+            <div><div style="font-size:16px;font-weight:800;">{{ heroAwaiting }}</div><div style="font-size:11px;opacity:.8;">awaiting homologation</div></div>
           </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+          <sc-for list="{{ heroPills }}" as="hp" hint-placeholder-count="2">
+            <button onClick="{{ hp.pick }}" style="{{ hp.style }}">{{ hp.label }}<sc-if value="{{ hp.isPrimary }}" hint-placeholder-val="{{ false }}"> 🎯</sc-if></button>
+          </sc-for>
+        </div>
+
+        <!-- ACTIVE LEARNING -->
+        <sc-if value="{{ showActive }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+          <sc-for list="{{ activeLearningCards }}" as="c" hint-placeholder-count="3">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <button onClick="{{ c.open }}" style="text-align:left;background:none;border:none;padding:0;cursor:pointer;font-size:14.5px;font-weight:700;color:var(--text);">{{ c.title }}</button>
+                <span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:{{ c.platColor }}1a;color:{{ c.platColor }};flex-shrink:0;">{{ c.platform }}</span>
+              </div>
+              <sc-if value="{{ !c.isWaiting }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                  <div style="flex:1;height:6px;border-radius:4px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ c.progressVal }}%;background:var(--brand);border-radius:4px;"></div></div>
+                  <span style="font-size:12px;font-weight:700;color:var(--text-2);">{{ c.progressVal }}%</span>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <span style="font-size:11.5px;color:var(--text-3);">Last activity · {{ c.lastActivity }}</span>
+                  <a href="{{ c.continueLink }}" target="_blank" style="font-size:12.5px;font-weight:700;color:#fff;background:var(--brand);padding:7px 14px;border-radius:9px;text-decoration:none;">Continue →</a>
+                </div>
+              </sc-if>
+              <sc-if value="{{ c.isWaiting }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:color-mix(in srgb,#b45309 12%,var(--surface));color:#b45309;">Awaiting approval</span>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ activeLearningEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:32px;text-align:center;font-size:13px;color:var(--text-3);">No tienes recursos en progreso en este path.</div>
         </sc-if>
-        <sc-if value="{{ tab_todo }}" hint-placeholder-val="{{ false }}">
-          <div style="display:flex;flex-direction:column;gap:9px;">
-            <sc-for list="{{ todoList }}" as="r" hint-placeholder-count="4"><button onClick="{{ r.open }}" style="display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface);"><span style="width:9px;height:9px;border-radius:3px;background:{{ r.platColor }};flex-shrink:0;"></span><div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;">{{ r.title }}</div><div style="font-size:11.5px;color:var(--text-3);">{{ r.breadcrumb }}</div></div><span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;background:{{ r.statusBg }};color:{{ r.statusColor }};">{{ r.statusLabel }}</span></button></sc-for>
-            <sc-if value="{{ todoEmpty }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:var(--text-3);">Your to-do list is empty.</div></sc-if>
-          </div>
         </sc-if>
-        <sc-if value="{{ tab_progress }}" hint-placeholder-val="{{ false }}">
-          <div style="display:flex;flex-direction:column;gap:9px;">
-            <sc-for list="{{ progList }}" as="r" hint-placeholder-count="3"><button onClick="{{ r.open }}" style="display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface);"><div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;">{{ r.title }}</div><div style="font-size:11.5px;color:var(--text-3);">{{ r.platform }} · {{ r.remainingLabel }}</div></div><div style="width:90px;height:7px;border-radius:6px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ r.progressVal }}%;background:#2563eb;border-radius:6px;"></div></div><span style="font-size:12px;font-weight:700;color:var(--text-2);">{{ r.progressVal }}%</span></button></sc-for>
-            <sc-if value="{{ progEmpty }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:var(--text-3);">Nothing in progress.</div></sc-if>
-          </div>
+
+        <!-- TODO LIST -->
+        <sc-if value="{{ showTodo }}" hint-placeholder-val="{{ false }}">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 24px;box-shadow:var(--shadow);">
+          <sc-for list="{{ todoModules }}" as="mod" hint-placeholder-count="3">
+            <div style="margin-bottom:14px;">
+              <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);padding:6px 0;border-bottom:1px solid var(--border);margin-bottom:8px;">{{ mod.name }}</div>
+              <sc-for list="{{ mod.resources }}" as="r" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);margin-bottom:6px;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#cbd5e1;flex-shrink:0;"></span>
+                  <button onClick="{{ r.open }}" style="flex:1;min-width:0;text-align:left;background:none;border:none;padding:0;cursor:pointer;">
+                    <div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.title }}</div>
+                    <div style="font-size:11.5px;color:var(--text-3);">{{ r.platform }} · {{ r.duration }}</div>
+                  </button>
+                  <button onClick="{{ r.start }}" style="font-size:12.5px;font-weight:700;color:#fff;background:var(--brand);border:none;padding:8px 15px;border-radius:9px;cursor:pointer;flex-shrink:0;">Empezar →</button>
+                </div>
+              </sc-for>
+            </div>
+          </sc-for>
+          <sc-if value="{{ todoEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:32px;text-align:center;font-size:13px;color:var(--text-3);">No tienes recursos pendientes en este path.</div>
+          </sc-if>
+        </div>
         </sc-if>
-        <sc-if value="{{ tab_overview }}" hint-placeholder-val="{{ true }}">
-          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
-            <sc-for list="{{ progList }}" as="r" hint-placeholder-count="2"><button onClick="{{ r.open }}" style="text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:15px 17px;box-shadow:var(--shadow);"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="width:8px;height:8px;border-radius:3px;background:{{ r.platColor }};"></span><span style="font-size:11.5px;color:var(--text-3);font-weight:600;">{{ r.platform }}</span></div><div style="font-size:14px;font-weight:700;">{{ r.title }}</div><div style="font-size:11.5px;color:var(--text-3);margin:8px 0 6px;">{{ r.breadcrumb }}</div><div style="height:7px;border-radius:6px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ r.progressVal }}%;background:#2563eb;border-radius:6px;"></div></div></button></sc-for>
-          </div>
+
+        <!-- HISTORY -->
+        <sc-if value="{{ showHistory }}" hint-placeholder-val="{{ false }}">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);">
+          <div style="display:grid;grid-template-columns:2fr 1fr 0.8fr 1.1fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Course</div><div>Completed</div><div>Score</div><div>Homologation</div></div>
+          <sc-for list="{{ historyRows }}" as="r" hint-placeholder-count="4">
+            <button onClick="{{ r.open }}" style="display:grid;grid-template-columns:2fr 1fr 0.8fr 1.1fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;width:100%;text-align:left;background:none;border-left:none;border-right:none;border-top:none;cursor:pointer;">
+              <div style="display:flex;align-items:center;gap:10px;min-width:0;"><span style="width:7px;height:7px;border-radius:50%;background:{{ r.dotColor }};flex-shrink:0;"></span><div style="min-width:0;"><div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.title }}</div><div style="font-size:11px;color:var(--text-3);">{{ r.platform }}</div></div></div>
+              <div style="font-size:12.5px;color:var(--text-2);">{{ r.completedLabel }}</div>
+              <div style="font-size:13px;font-weight:700;color:var(--text);">{{ r.score }}%</div>
+              <div><span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:color-mix(in srgb,#15803d 12%,var(--surface));color:#15803d;">{{ r.homogLabel }}</span></div>
+            </button>
+          </sc-for>
+          <sc-if value="{{ historyEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:32px;text-align:center;font-size:13px;color:var(--text-3);">Aún no completas recursos en este path.</div>
+          </sc-if>
+        </div>
         </sc-if>
+
+        <!-- CERTIFICATES -->
+        <sc-if value="{{ showCertificates }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;">
+          <sc-for list="{{ certificateCards }}" as="c" hint-placeholder-count="3">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);">
+              <button onClick="{{ c.view }}" style="width:100%;display:block;height:110px;background:linear-gradient(125deg,{{ heroColor }},{{ heroColorDark }});border:none;cursor:pointer;padding:0;position:relative;">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;top:14px;left:16px;"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/></svg>
+                <span style="position:absolute;bottom:12px;left:16px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;opacity:.85;">Certificate of Completion</span>
+              </button>
+              <div style="padding:14px 16px 16px;">
+                <div style="font-size:13.5px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ c.title }}</div>
+                <div style="font-size:11.5px;color:var(--text-3);margin-top:2px;">{{ c.platform }} · {{ c.completedLabel }}</div>
+                <button onClick="{{ c.view }}" style="width:100%;margin-top:12px;padding:9px;border-radius:9px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:12.5px;font-weight:700;cursor:pointer;">↓ Download</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ certificatesEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:32px;text-align:center;font-size:13px;color:var(--text-3);">Aún no tienes certificados en este path.</div>
+        </sc-if>
+        </sc-if>
+
       </div>
       </sc-if>
 
@@ -860,10 +995,15 @@
                 <div style="font-size:16px;font-weight:700;color:var(--text);">{{ c.name }}</div>
                 <div style="font-size:12.5px;color:var(--text-2);margin-top:4px;line-height:1.5;min-height:38px;">{{ c.desc }}</div>
                 <div style="display:flex;flex-wrap:wrap;gap:5px;margin:10px 0;"><sc-for list="{{ c.skills }}" as="s" hint-placeholder-count="3"><span style="font-size:10.5px;font-weight:600;padding:2px 9px;border-radius:20px;background:var(--brand-soft);color:var(--brand);">{{ s }}</span></sc-for></div>
-                <div style="display:flex;gap:14px;font-size:11.5px;color:var(--text-3);padding-top:8px;border-top:1px solid var(--border);"><span><strong style="color:var(--text);">{{ c.pathCount }}</strong> paths</span><span><strong style="color:var(--text);">{{ c.resCount }}</strong> resources</span></div>
+                <div style="display:flex;gap:14px;font-size:11.5px;color:var(--text-3);padding-top:8px;border-top:1px solid var(--border);"><span><strong style="color:var(--text);">{{ c.levelCount }}</strong> levels</span><span><strong style="color:var(--text);">{{ c.resCount }}</strong> resources</span></div>
                 <div style="display:flex;gap:8px;margin-top:14px;">
-                  <sc-if value="{{ c.assigned }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.open }}" style="flex:1;padding:10px;border-radius:10px;border:none;background:var(--brand);color:#fff;font-size:12.5px;font-weight:700;">View Course</button></sc-if>
-                  <sc-if value="{{ c.assigned }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.preview }}" style="flex:1;padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:12.5px;font-weight:700;">Preview</button><button onClick="{{ c.request }}" style="padding:10px 14px;border-radius:10px;border:none;background:var(--brand);color:#fff;font-size:12.5px;font-weight:700;">Request</button></sc-if>
+  <button onClick="{{ c.preview }}" style="flex:1;padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:12.5px;font-weight:700;">Preview</button>
+  <sc-if value="{{ c.pending }}" hint-placeholder-val="{{ false }}">
+    <button style="padding:10px 14px;border-radius:10px;border:none;background:var(--surface-2);color:var(--text-3);font-size:12.5px;font-weight:700;" disabled>Solicitud enviada</button>
+  </sc-if>
+  <sc-if value="{{ !c.pending }}" hint-placeholder-val="{{ true }}">
+    <button onClick="{{ c.request }}" style="padding:10px 14px;border-radius:10px;border:none;background:var(--brand);color:#fff;font-size:12.5px;font-weight:700;cursor:pointer;">Solicitar acceso</button>
+  </sc-if>
                 </div>
               </div>
             </div>
@@ -872,62 +1012,67 @@
       </div>
       </sc-if>
 
-      <!-- LEARNER: COURSE PAGE -->
-      <sc-if value="{{ showCoursePage }}" hint-placeholder-val="{{ false }}">
-      <div style="max-width:1200px;margin:0 auto;">
-        <button onClick="{{ cp_back }}" style="display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--text-3);background:none;border:none;margin-bottom:14px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>All courses</button>
-        <div style="display:grid;grid-template-columns:330px 1fr;gap:20px;align-items:start;">
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow);">
-            <div style="font-size:14px;font-weight:700;padding:4px 8px 12px;">{{ cp_courseName }}</div>
-            <sc-for list="{{ cp_tree }}" as="p" hint-placeholder-count="2">
-              <div style="margin-bottom:6px;">
-                <button onClick="{{ p.toggle }}" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;padding:8px;border:none;background:transparent;color:var(--text);font-size:13px;font-weight:700;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="{{ p.chev }}"><path d="m9 18 6-6-6-6"/></svg>{{ p.path }}</button>
-                <sc-if value="{{ p.open }}" hint-placeholder-val="{{ true }}">
-                  <div style="padding-left:12px;">
-                    <sc-for list="{{ p.levels }}" as="l" hint-placeholder-count="2">
-                      <div style="margin:4px 0;"><div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-3);padding:5px 8px;">{{ l.level }}</div>
-                        <sc-for list="{{ l.modules }}" as="m" hint-placeholder-count="2">
-                          <div style="padding-left:6px;"><div style="font-size:11.5px;font-weight:600;color:var(--text-2);padding:3px 8px;">{{ m.module }}</div>
-                            <sc-for list="{{ m.resources }}" as="r" hint-placeholder-count="2"><button onClick="{{ r.pick }}" style="{{ r.style }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.dot }};flex-shrink:0;"></span><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.title }}</span></button></sc-for>
-                          </div>
-                        </sc-for>
-                      </div>
-                    </sc-for>
-                  </div>
-                </sc-if>
-              </div>
-            </sc-for>
-          </div>
-          <sc-if value="{{ cp_hasSel }}" hint-placeholder-val="{{ true }}">
-          <div>
-            <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 26px;box-shadow:var(--shadow);">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#fff;background:{{ cp_platColor }};padding:4px 11px;border-radius:20px;">{{ cp_platform }}</span><span style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:{{ cp_statusBg }};color:{{ cp_statusColor }};">{{ cp_statusLabel }}</span><span style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:{{ cp_homBg }};color:{{ cp_homColor }};">{{ cp_homLabel }}</span></div>
-              <div style="font-size:22px;font-weight:800;letter-spacing:-.01em;margin-bottom:8px;">{{ cp_title }}</div>
-              <sc-if value="{{ cp_hasDesc }}" hint-placeholder-val="{{ true }}"><div style="font-size:13.5px;color:var(--text-2);line-height:1.6;margin-bottom:16px;">{{ cp_desc }}</div></sc-if>
-              <div style="display:flex;gap:24px;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:16px;"><div><div style="font-size:11px;color:var(--text-3);">Duration</div><div style="font-size:14px;font-weight:700;">{{ cp_duration }}</div></div><div><div style="font-size:11px;color:var(--text-3);">Points</div><div style="font-size:14px;font-weight:700;">{{ cp_points }}</div></div></div>
-              <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px;">Skills you'll develop</div>
-              <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;"><sc-for list="{{ cp_skills }}" as="s" hint-placeholder-count="2"><span style="font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;background:var(--brand-soft);color:var(--brand);">{{ s }}</span></sc-for></div>
-              <a href="{{ cp_link }}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:11px;background:var(--brand);color:#fff;font-size:13.5px;font-weight:700;text-decoration:none;">Open on Platform<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+      <!-- LEARNER: HOMOLOGAR -->
+      <sc-if value="{{ showHomologar }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:720px;margin:0 auto;">
+
+        <!-- Form -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 26px;box-shadow:var(--shadow);margin-bottom:20px;">
+          <div style="font-size:16px;font-weight:700;margin-bottom:4px;">Solicitar homologación</div>
+          <div style="font-size:13px;color:var(--text-3);margin-bottom:20px;">Declara que ya completaste un recurso fuera de la plataforma y sube tu evidencia. Tu manager lo revisará.</div>
+
+          <!-- Step 1: Select resource -->
+          <div style="margin-bottom:16px;">
+            <label style="font-size:12px;font-weight:700;color:var(--text-2);display:block;margin-bottom:6px;">1. Seleccionar recurso</label>
+            <div style="display:flex;gap:10px;">
+              <select value="{{ homologFormPath }}" onChange="{{ setHomologPath }}" style="flex:1;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);font-size:13px;color:var(--text);outline:none;">
+                <option value="">Seleccionar path…</option>
+                <sc-for list="{{ homologPathOptions }}" as="po" hint-placeholder-count="3"><option value="{{ po.id }}">{{ po.name }}</option></sc-for>
+              </select>
+              <select value="{{ homologFormResource }}" onChange="{{ setHomologResource }}" style="flex:1.6;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);font-size:13px;color:var(--text);outline:none;">
+                <option value="">Seleccionar recurso…</option>
+                <sc-for list="{{ homologResourceOptions }}" as="ro" hint-placeholder-count="4"><option value="{{ ro.id }}">{{ ro.label }}</option></sc-for>
+              </select>
             </div>
-            <sc-if value="{{ cp_canSubmit }}" hint-placeholder-val="{{ false }}">
-            <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 24px;box-shadow:var(--shadow);margin-top:16px;">
-              <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Submit evidence for homologation</div>
-              <div style="font-size:12.5px;color:var(--text-3);margin-bottom:14px;">This resource requires manager validation. Upload your certificate or proof of completion.</div>
-              <div style="display:flex;gap:10px;"><button onClick="{{ pickEvidence }}" style="flex:1;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:11px;border:1.5px dashed var(--border);background:var(--surface-2);color:{{ cp_fileColor }};font-size:13px;font-weight:600;text-align:left;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8 12 3 7 8"/><path d="M12 3v12"/></svg>{{ cp_fileLabel }}</button><button onClick="{{ submitEvidence }}" style="padding:12px 22px;border-radius:11px;border:none;background:var(--brand);color:#fff;font-size:13px;font-weight:700;">Submit</button></div>
-            </div>
-            </sc-if>
-            <sc-if value="{{ cp_isAuto }}" hint-placeholder-val="{{ false }}">
-            <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-radius:14px;background:color-mix(in srgb,#15803d 9%,var(--surface));border:1px solid color-mix(in srgb,#15803d 22%,var(--surface));margin-top:16px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg><span style="font-size:13px;color:var(--text-2);font-weight:600;">Auto-validated — no evidence needed. Marking this complete validates it instantly.</span><button onClick="{{ markDone }}" style="margin-left:auto;padding:8px 16px;border-radius:9px;border:none;background:#15803d;color:#fff;font-size:12.5px;font-weight:700;">Mark complete</button></div>
-            </sc-if>
-            <sc-if value="{{ cp_isWaiting }}" hint-placeholder-val="{{ false }}">
-            <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-radius:14px;background:color-mix(in srgb,#b45309 9%,var(--surface));border:1px solid color-mix(in srgb,#b45309 22%,var(--surface));margin-top:16px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span style="font-size:13px;color:var(--text-2);font-weight:600;">Evidence submitted — awaiting your manager's validation.</span></div>
-            </sc-if>
           </div>
-          </sc-if>
+
+          <!-- Step 2: Evidence -->
+          <div style="margin-bottom:16px;">
+            <label style="font-size:12px;font-weight:700;color:var(--text-2);display:block;margin-bottom:6px;">2. Subir evidencia</label>
+            <button onClick="{{ pickHomologEvidence }}" style="display:flex;align-items:center;gap:10px;width:100%;padding:12px 14px;border-radius:11px;border:1.5px dashed var(--border);background:var(--surface-2);color:{{ homologEvidenceColor }};font-size:13px;font-weight:600;text-align:left;cursor:pointer;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8 12 3 7 8"/><path d="M12 3v12"/></svg>
+              {{ homologEvidenceLabel }}
+            </button>
+          </div>
+
+          <!-- Step 3: Note + Submit -->
+          <div style="margin-bottom:16px;">
+            <label style="font-size:12px;font-weight:700;color:var(--text-2);display:block;margin-bottom:6px;">3. Nota adicional <span style="font-weight:400;color:var(--text-3);">(opcional)</span></label>
+            <textarea value="{{ homologFormNote }}" onInput="{{ setHomologNote }}" placeholder="Contexto adicional para tu manager…" style="width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);font-size:13px;color:var(--text);outline:none;min-height:72px;resize:vertical;"></textarea>
+          </div>
+
+          <button onClick="{{ submitHomologRequest }}" style="width:100%;padding:13px;border-radius:11px;border:none;background:var(--brand);color:#fff;font-size:14px;font-weight:700;cursor:pointer;">Enviar solicitud al manager</button>
         </div>
+
+        <!-- History -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 24px;box-shadow:var(--shadow);">
+          <div style="font-size:14px;font-weight:700;margin-bottom:14px;">Historial de solicitudes</div>
+          <sc-if value="{{ homologHistoryEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:20px;text-align:center;font-size:13px;color:var(--text-3);">No has enviado solicitudes aún.</div>
+          </sc-if>
+          <sc-for list="{{ homologHistory }}" as="h" hint-placeholder-count="2">
+            <div style="display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);">
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ h.title }}</div>
+                <div style="font-size:11.5px;color:var(--text-3);margin-top:2px;">Enviado {{ h.submittedLabel }}<sc-if value="{{ h.managerNote }}" hint-placeholder-val="{{ false }}"> · {{ h.managerNote }}</sc-if></div>
+              </div>
+              <span style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:{{ h.statusBg }};color:{{ h.statusColor }};white-space:nowrap;">{{ h.statusLabel }}</span>
+            </div>
+          </sc-for>
+        </div>
+
       </div>
       </sc-if>
-
 
     </div>
   </main>
@@ -1017,6 +1162,37 @@
         <sc-if value="{{ pv_assigned }}" hint-placeholder-val="{{ false }}"><button onClick="{{ pv_open }}" style="padding:10px 22px;border-radius:10px;border:none;background:var(--brand);color:#fff;font-size:13px;font-weight:700;">Open course</button></sc-if>
         <sc-if value="{{ pv_assigned }}" hint-placeholder-val="{{ true }}"><button onClick="{{ pv_request }}" style="padding:10px 22px;border-radius:10px;border:none;background:var(--brand);color:#fff;font-size:13px;font-weight:700;">Request Access</button></sc-if>
       </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- RESOURCE DETAIL MODAL -->
+  <sc-if value="{{ rd_open }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ rd_close }}" style="position:fixed;inset:0;background:rgba(23,17,48,.5);z-index:60;display:flex;align-items:center;justify-content:center;padding:30px;animation:ovIn .15s ease;">
+    <div onClick="{{ stop }}" style="width:560px;max-height:88vh;overflow-y:auto;background:var(--surface);border-radius:18px;box-shadow:var(--shadow-lg);animation:shIn .2s ease;">
+      <div style="padding:24px 26px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#fff;background:{{ rd_platColor }};padding:4px 11px;border-radius:20px;">{{ rd_platform }}</span><span style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:{{ rd_statusBg }};color:{{ rd_statusColor }};">{{ rd_statusLabel }}</span><span style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:{{ rd_homBg }};color:{{ rd_homColor }};">{{ rd_homLabel }}</span></div>
+        <div style="font-size:20px;font-weight:800;letter-spacing:-.01em;margin-bottom:8px;">{{ rd_title }}</div>
+        <sc-if value="{{ rd_hasDesc }}" hint-placeholder-val="{{ true }}"><div style="font-size:13.5px;color:var(--text-2);line-height:1.6;margin-bottom:16px;">{{ rd_desc }}</div></sc-if>
+        <div style="display:flex;gap:24px;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:16px;"><div><div style="font-size:11px;color:var(--text-3);">Duration</div><div style="font-size:14px;font-weight:700;">{{ rd_duration }}</div></div><div><div style="font-size:11px;color:var(--text-3);">Points</div><div style="font-size:14px;font-weight:700;">{{ rd_points }}</div></div></div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px;">Skills you'll develop</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;"><sc-for list="{{ rd_skills }}" as="s" hint-placeholder-count="2"><span style="font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;background:var(--brand-soft);color:var(--brand);">{{ s }}</span></sc-for></div>
+        <a href="{{ rd_link }}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:11px;background:var(--brand);color:#fff;font-size:13.5px;font-weight:700;text-decoration:none;">Open on Platform<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        <sc-if value="{{ rd_canSubmit }}" hint-placeholder-val="{{ false }}">
+        <div style="border-top:1px solid var(--border);margin-top:18px;padding-top:16px;">
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Submit evidence for homologation</div>
+          <div style="font-size:12.5px;color:var(--text-3);margin-bottom:14px;">This resource requires manager validation. Upload your certificate or proof of completion.</div>
+          <div style="display:flex;gap:10px;"><button onClick="{{ rd_pickEvidence }}" style="flex:1;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:11px;border:1.5px dashed var(--border);background:var(--surface-2);color:{{ rd_fileColor }};font-size:13px;font-weight:600;text-align:left;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8 12 3 7 8"/><path d="M12 3v12"/></svg>{{ rd_fileLabel }}</button><button onClick="{{ rd_submitEvidence }}" style="padding:12px 22px;border-radius:11px;border:none;background:var(--brand);color:#fff;font-size:13px;font-weight:700;">Submit</button></div>
+        </div>
+        </sc-if>
+        <sc-if value="{{ rd_isAuto }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-radius:14px;background:color-mix(in srgb,#15803d 9%,var(--surface));border:1px solid color-mix(in srgb,#15803d 22%,var(--surface));margin-top:16px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg><span style="font-size:13px;color:var(--text-2);font-weight:600;">Auto-validated — no evidence needed. Marking this complete validates it instantly.</span><button onClick="{{ rd_markDone }}" style="margin-left:auto;padding:8px 16px;border-radius:9px;border:none;background:#15803d;color:#fff;font-size:12.5px;font-weight:700;">Mark complete</button></div>
+        </sc-if>
+        <sc-if value="{{ rd_isWaiting }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-radius:14px;background:color-mix(in srgb,#b45309 9%,var(--surface));border:1px solid color-mix(in srgb,#b45309 22%,var(--surface));margin-top:16px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span style="font-size:13px;color:var(--text-2);font-weight:600;">Evidence submitted — awaiting your manager's validation.</span></div>
+        </sc-if>
+      </div>
+      <div style="display:flex;justify-content:flex-end;padding:16px 26px;border-top:1px solid var(--border);"><button onClick="{{ rd_close }}" style="padding:10px 18px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:13px;font-weight:700;">Close</button></div>
     </div>
   </div>
   </sc-if>
@@ -1235,13 +1411,69 @@
   </div>
   </sc-if>
 
+  <!-- ENROLLMENT PANEL MODAL -->
+  <sc-if value="{{ enrollPanelOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeEnrollPanel }}" style="position:fixed;inset:0;background:rgba(23,17,48,.5);z-index:60;display:flex;align-items:center;justify-content:center;padding:30px;animation:ovIn .15s ease;">
+    <div onClick="{{ stopEnrollProp }}" style="width:520px;max-height:88vh;overflow-y:auto;background:var(--surface);border-radius:18px;box-shadow:var(--shadow-lg);animation:shIn .2s ease;">
+      <div style="padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <div><div style="font-size:16px;font-weight:700;">Gestionar Enrollment</div><div style="font-size:12.5px;color:var(--text-3);margin-top:2px;">{{ enrollPanelUser.name }}</div></div>
+        <button onClick="{{ closeEnrollPanel }}" style="background:none;border:none;font-size:20px;color:var(--text-3);cursor:pointer;">×</button>
+      </div>
+      <div style="padding:22px 24px;display:flex;flex-direction:column;gap:20px;">
+        <!-- PRIMARY PATH -->
+        <div style="padding:16px;border-radius:13px;border:1px solid var(--border);background:var(--surface-2);">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;">🎯 Primary Path</div>
+          <div style="display:flex;gap:10px;margin-bottom:10px;">
+            <select value="{{ enrollPanelPrimPath }}" onChange="{{ setEnrollPrimPath }}" style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:13px;color:var(--text);outline:none;">
+              <option value="">Seleccionar path…</option>
+              <sc-for list="{{ programOptions }}" as="o" hint-placeholder-count="10"><option value="{{ o.id }}">{{ o.name }}</option></sc-for>
+            </select>
+            <select value="{{ enrollPanelPrimLevel }}" onChange="{{ setEnrollPrimLevel }}" style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:13px;color:var(--text);outline:none;">
+              <option value="">Seleccionar level…</option>
+              <sc-for list="{{ enrollLevelOptions }}" as="lo" hint-placeholder-count="4"><option value="{{ lo.value }}">{{ lo.label }}</option></sc-for>
+            </select>
+          </div>
+          <button onClick="{{ savePrimaryPath }}" style="width:100%;padding:9px;border-radius:9px;border:none;background:var(--brand);color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Guardar Primary Path</button>
+        </div>
+        <!-- SECONDARY PATHS -->
+        <div style="padding:16px;border-radius:13px;border:1px solid var(--border);background:var(--surface-2);">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px;">📘 Secondary Paths</div>
+          <sc-for list="{{ enrollPanelSecondaries }}" as="sp" hint-placeholder-count="2">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:9px;background:var(--surface);border:1px solid var(--border);margin-bottom:7px;">
+              <span style="font-size:13px;font-weight:600;">{{ sp.name }} › {{ sp.level }}</span>
+              <button onClick="{{ sp.remove }}" style="font-size:13px;color:#dc2626;background:none;border:none;cursor:pointer;font-weight:700;">×</button>
+            </div>
+          </sc-for>
+          <div style="font-size:11.5px;font-weight:600;color:var(--text-3);margin:10px 0 8px;">+ Agregar secondary path</div>
+          <div style="display:flex;gap:10px;margin-bottom:10px;">
+            <select value="{{ enrollPanelAddSecPath }}" onChange="{{ setEnrollSecPath }}" style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:13px;color:var(--text);outline:none;">
+              <option value="">Path…</option>
+              <sc-for list="{{ programOptions }}" as="o" hint-placeholder-count="10"><option value="{{ o.id }}">{{ o.name }}</option></sc-for>
+            </select>
+            <select value="{{ enrollPanelAddSecLevel }}" onChange="{{ setEnrollSecLevel }}" style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:13px;color:var(--text);outline:none;">
+              <option value="">Level…</option>
+              <sc-for list="{{ enrollSecLevelOptions }}" as="lo" hint-placeholder-count="4"><option value="{{ lo.value }}">{{ lo.label }}</option></sc-for>
+            </select>
+          </div>
+          <button onClick="{{ addSecondaryPath }}" style="width:100%;padding:9px;border-radius:9px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;">Agregar Secondary Path</button>
+        </div>
+      </div>
+      <div style="padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
+        <button onClick="{{ closeEnrollPanel }}" style="padding:10px 22px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:13px;font-weight:700;">Cerrar</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:960}}">
 class Component extends DCLogic {
   state = {
     theme:'light', viewer:'admin', screen:'paths', search:'', searchOpen:false, notifOpen:false,
-    detailCourse:'sr-qa', detailRes:null, learnerTab:'overview', learnerOpenPath:{}, evidenceFile:'',
+    detailRes:null, learnerTab:'overview', evidenceFile:'',
+    myPathActive:null,
+    homologFormPath:'', homologFormResource:'', homologFormEvidence:'', homologFormNote:'',
     wizard:null, rejectFor:null, rejectNote:'', enrollOpen:false, enrollUser:'', enrollCourse:'', previewCourse:null, certView:null,
     filterPath:null, filterLevel:null, filterModule:null,
     newPathOpen:false, newLevelOpen:false, newModuleOpen:false,
@@ -1253,6 +1485,9 @@ class Component extends DCLogic {
     editModuleOpen:false, emf:{key:'',name:'',levelKey:''},
     editResOpen:false, erf:{id:'',title:'',platform:'',homolog:'',duration:'',points:'',skills:[],skillInput:''},
     deleteConfirm:null,
+    enrollPanelOpen:false, enrollPanelUser:null,
+    enrollPanelPrimPath:'', enrollPanelPrimLevel:'',
+    enrollPanelAddSecPath:'', enrollPanelAddSecLevel:'',
     managers:[ {id:'m1',name:'Sarah Perez'}, {id:'m2',name:'John Diaz'}, {id:'m3',name:'Maria Polo'} ],
     notifications:[
       {id:'n1', type:'assign', text:'New course assigned: Performance Testing with JMeter', time:'2h ago', read:false},
@@ -1263,23 +1498,26 @@ class Component extends DCLogic {
       {id:'n6', type:'reject', text:'Evidence for "API Testing with Postman" needs a clearer screenshot', time:'4 days ago', read:true}
     ],
     users:[
-      { id:'u1', name:'Yolanda Ortega', email:'yolanda.ortega@provana.com', role:'Learner', status:'Active', managerId:'m1', courseId:'sr-qa' },
-      { id:'u2', name:'Mateo Castro', email:'mateo.castro@provana.com', role:'Learner', status:'Active', managerId:'m2', courseId:'automation' },
-      { id:'u3', name:'Sofia Herrera', email:'sofia.herrera@provana.com', role:'Learner', status:'Active', managerId:'m1', courseId:'ba' },
-      { id:'u4', name:'Diego Ramirez', email:'diego.ramirez@provana.com', role:'Learner', status:'Inactive', managerId:'m3', courseId:'rpa' },
-      { id:'u5', name:'Carlos Mendez', email:'carlos.mendez@provana.com', role:'Manager', status:'Active', managerId:null, courseId:'qa-lead' },
-      { id:'u6', name:'Lucia Fernandez', email:'lucia.fernandez@provana.com', role:'Learner', status:'Active', managerId:'m2', courseId:'mid-qa' },
-      { id:'u7', name:'Patricia Lozano', email:'patricia.lozano@provana.com', role:'Admin', status:'Active', managerId:null, courseId:null },
-      { id:'u8', name:'Andres Vargas', email:'andres.vargas@provana.com', role:'Learner', status:'Active', managerId:'m3', courseId:'jr-qa' }
+      { id:'u1', name:'Yolanda Ortega',    email:'yolanda.ortega@provana.com',    role:'Learner',  status:'Active',   managerId:'m1', primaryPathId:'qa',  primaryLevel:'Senior QA',    secondaryPaths:[] },
+      { id:'u2', name:'Mateo Castro',      email:'mateo.castro@provana.com',      role:'Learner',  status:'Active',   managerId:'m2', primaryPathId:'dev', primaryLevel:'Junior Dev',    secondaryPaths:[{pathId:'qa',level:'Junior QA'}] },
+      { id:'u3', name:'Sofia Herrera',     email:'sofia.herrera@provana.com',     role:'Learner',  status:'Active',   managerId:'m1', primaryPathId:'ba',  primaryLevel:'Junior BA',     secondaryPaths:[] },
+      { id:'u4', name:'Diego Ramirez',     email:'diego.ramirez@provana.com',     role:'Learner',  status:'Inactive', managerId:'m3', primaryPathId:'rpa', primaryLevel:'Junior RPA',    secondaryPaths:[] },
+      { id:'u5', name:'Carlos Mendez',     email:'carlos.mendez@provana.com',     role:'Manager',  status:'Active',   managerId:null,  primaryPathId:null,  primaryLevel:null,            secondaryPaths:[] },
+      { id:'u6', name:'Lucia Fernandez',   email:'lucia.fernandez@provana.com',   role:'Learner',  status:'Active',   managerId:'m2', primaryPathId:'qa',  primaryLevel:'Mid-Level QA',  secondaryPaths:[{pathId:'bi',level:'BI Analyst'}] },
+      { id:'u7', name:'Patricia Lozano',   email:'patricia.lozano@provana.com',   role:'Admin',    status:'Active',   managerId:null,  primaryPathId:null,  primaryLevel:null,            secondaryPaths:[] },
+      { id:'u8', name:'Andres Vargas',     email:'andres.vargas@provana.com',     role:'Learner',  status:'Active',   managerId:'m3', primaryPathId:'qa',  primaryLevel:'Junior QA',     secondaryPaths:[] }
     ],
     courses:[
-      { id:'jr-qa', name:'Junior QA', desc:'Foundations of manual testing and QA fundamentals.', icon:'flask', color:'#2A6FDB', jobRole:'QA Engineer I', status:'published', learners:14 },
-      { id:'mid-qa', name:'Mid-Level QA', desc:'Test design, automation basics and data validation.', icon:'flask', color:'#7C3AED', jobRole:'QA Engineer II', status:'published', learners:9 },
-      { id:'sr-qa', name:'Senior QA', desc:'Advanced automation, performance and QA strategy.', icon:'flask', color:'#D99A00', jobRole:'Senior QA Engineer', status:'published', learners:6 },
-      { id:'qa-lead', name:'QA Lead', desc:'Quality leadership, mentoring and delivery oversight.', icon:'shield', color:'#0EA5A0', jobRole:'QA Lead', status:'published', learners:3 },
-      { id:'automation', name:'Automation Engineer', desc:'Frameworks, CI pipelines and tooling at scale.', icon:'cpu', color:'#1F8A5B', jobRole:'SDET', status:'published', learners:7 },
-      { id:'ba', name:'Business Analyst', desc:'Requirements gathering and process analysis.', icon:'chart', color:'#E0457B', jobRole:'Business Analyst', status:'published', learners:5 },
-      { id:'rpa', name:'RPA Developer', desc:'Robotic process automation and orchestration.', icon:'rocket', color:'#E2662C', jobRole:'RPA Developer', status:'draft', learners:0 }
+      { id:'qa',    name:'Quality Assurance',    desc:'Testing, automation and quality assurance.',              icon:'flask',     color:'#2A6FDB', status:'published', learners:29 },
+      { id:'ba',    name:'Business Analyst',     desc:'Requirements gathering and process analysis.',            icon:'chart',     color:'#E0457B', status:'published', learners:5  },
+      { id:'bi',    name:'Business Intelligence',desc:'Data analysis, reporting and BI tooling.',               icon:'database',  color:'#0EA5A0', status:'published', learners:3  },
+      { id:'rpa',   name:'RPA Developer',        desc:'Robotic process automation and orchestration.',          icon:'rocket',    color:'#E2662C', status:'published', learners:4  },
+      { id:'dev',   name:'Developer',            desc:'Software development and engineering.',                  icon:'code',      color:'#1F8A5B', status:'published', learners:7  },
+      { id:'arch',  name:'Architect',            desc:'System and enterprise architecture design.',             icon:'globe',     color:'#7C3AED', status:'published', learners:2  },
+      { id:'it',    name:'IT',                   desc:'Infrastructure, support and IT operations.',             icon:'cpu',       color:'#475569', status:'published', learners:4  },
+      { id:'cm',    name:'Case Manager',         desc:'Case management and client services.',                   icon:'clipboard', color:'#D99A00', status:'published', learners:6  },
+      { id:'legal', name:'Legal System',         desc:'Legal processes, compliance and documentation.',         icon:'shield',    color:'#DC2626', status:'published', learners:3  },
+      { id:'pm',    name:'Project Manager',      desc:'Project planning, delivery and stakeholder management.', icon:'briefcase', color:'#4A2E80', status:'published', learners:8  }
     ],
     skills:[
       {id:'sk1',name:'Test Automation'},{id:'sk2',name:'Playwright'},{id:'sk3',name:'Cypress'},{id:'sk4',name:'Selenium'},
@@ -1304,37 +1542,41 @@ class Component extends DCLogic {
       { id:'rule4', scope:'Internal courses', requirement:'No evidence needed', approver:'System (auto)' }
     ],
     resources:[
-      { id:'c1', courseId:'sr-qa', path:'Technical Path', level:'Foundational', module:'Playwright', platform:'Udemy', title:'Playwright Fundamentals', link:'https://www.udemy.com/course/playwright/', status:'completed', homolog:'required', duration:'6h 0m', points:100, description:'Modern end-to-end browser automation with Playwright.', evidence:'playwright-cert.pdf', skills:['Test Automation','Playwright'], score:94, completedDate:'2026-04-12', hasCert:true },
-      { id:'c2', courseId:'sr-qa', path:'Technical Path', level:'Intermediate', module:'Playwright', platform:'Udemy', title:'Playwright Advanced Patterns', link:'https://www.udemy.com/course/playwright-adv/', status:'in-progress', homolog:'optional', duration:'7h 0m', points:110, description:'Fixtures, sharding and visual testing at scale.', evidence:null, skills:['Playwright','Test Automation'], progress:60, lastActivity:'2 days ago', remaining:'3h left' },
-      { id:'c3', courseId:'sr-qa', path:'Technical Path', level:'Intermediate', module:'Cypress', platform:'Coursera', title:'Cypress Advanced', link:'https://www.coursera.org/learn/cypress-adv/', status:'in-progress', homolog:'optional', duration:'8h 0m', points:110, description:'Component testing, network stubbing and CI integration.', evidence:null, skills:['Cypress','Test Automation'], progress:35, lastActivity:'Yesterday', remaining:'5h left' },
-      { id:'c4', courseId:'sr-qa', path:'Technical Path', level:'Foundational', module:'Cypress', platform:'Udemy', title:'Cypress Fundamentals', link:'https://www.udemy.com/course/cypress/', status:'completed', homolog:'optional', duration:'5h 0m', points:80, description:'Getting started with Cypress for component and e2e tests.', evidence:'cypress-badge.png', skills:['Cypress'], score:86, completedDate:'2026-02-05', hasCert:true },
-      { id:'c5', courseId:'sr-qa', path:'Technical Path', level:'Advanced', module:'Selenium', platform:'Pluralsight', title:'Selenium Grid at Scale', link:'https://www.pluralsight.com/courses/selenium-grid/', status:'completed', homolog:'required', duration:'6h 0m', points:90, description:'Running distributed Selenium suites with Grid.', evidence:'selenium-grid.pdf', skills:['Selenium','Test Automation'], score:88, completedDate:'2026-03-02', hasCert:true },
-      { id:'c6', courseId:'sr-qa', path:'Technical Path', level:'Intermediate', module:'REST APIs', platform:'Coursera', title:'API Testing with Postman', link:'https://www.coursera.org/learn/api-testing/', status:'waiting', homolog:'required', duration:'5h 0m', points:80, description:'Design, run and automate REST API test collections.', evidence:'postman-completion.pdf', skills:['API Testing'], progress:100, lastActivity:'4 days ago' },
-      { id:'c7', courseId:'sr-qa', path:'Technical Path', level:'Advanced', module:'Performance', platform:'Udemy', title:'Performance Testing with JMeter', link:'https://www.udemy.com/course/jmeter/', status:'not-started', homolog:'required', duration:'9h 0m', points:120, description:'Load and stress testing fundamentals with Apache JMeter.', evidence:null, skills:['Performance Testing'], progress:0, dueDate:'2026-07-04' },
-      { id:'c8', courseId:'sr-qa', path:'Technical Path', level:'Intermediate', module:'Databases', platform:'LinkedIn Learning', title:'Advanced SQL for QA', link:'https://www.linkedin.com/learning/sql-qa/', status:'completed', homolog:'optional', duration:'4h 0m', points:70, description:'Validating data and writing complex test queries.', evidence:'sql-badge.png', skills:['SQL'], score:91, completedDate:'2026-02-18', hasCert:true },
-      { id:'c9', courseId:'sr-qa', path:'Compliance Path', level:'Advanced', module:'ISTQB', platform:'Internal', title:'ISTQB Advanced Test Analyst', link:'#', status:'waiting', homolog:'required', duration:'12h 0m', points:140, description:'Advanced-level certification track for senior test analysts.', evidence:'istqb-advanced.pdf', skills:['QA Strategy'], progress:100, lastActivity:'1 week ago' },
-      { id:'c10', courseId:'sr-qa', path:'Compliance Path', level:'Foundational', module:'Security', platform:'Microsoft Learn', title:'Security Testing Essentials', link:'https://learn.microsoft.com/security-testing/', status:'not-started', homolog:'optional', duration:'5h 0m', points:80, description:'OWASP basics and security testing for QA engineers.', evidence:null, skills:['Security Testing'], progress:0, dueDate:'2026-07-15' },
-      { id:'c11', courseId:'sr-qa', path:'Leadership Path', level:'Foundational', module:'Mentoring', platform:'YouTube', title:'Coaching Junior Testers (talk)', link:'https://www.youtube.com/watch?v=coaching', status:'completed', homolog:'auto', duration:'1h 0m', points:30, description:'Conference talk on mentoring junior QA engineers.', evidence:null, skills:['Coaching','Leadership'], score:100, completedDate:'2026-01-22', hasCert:false },
-      { id:'c12', courseId:'sr-qa', path:'Leadership Path', level:'Intermediate', module:'Strategy', platform:'Coursera', title:'Building a QA Strategy', link:'https://www.coursera.org/learn/qa-strategy/', status:'in-progress', homolog:'optional', duration:'5h 0m', points:90, description:'Define quality goals, metrics and a test approach.', evidence:null, skills:['QA Strategy','Leadership'], progress:20, lastActivity:'3 days ago', remaining:'4h left' },
-      { id:'c13', courseId:'jr-qa', path:'Technical Path', level:'Foundational', module:'Test Cases', platform:'Udemy', title:'Writing Effective Test Cases', link:'https://www.udemy.com/course/test-cases/', status:'not-started', homolog:'optional', duration:'4h 0m', points:60, description:'Crafting clear, maintainable manual test cases.', evidence:null, skills:['Manual Testing'] },
-      { id:'c14', courseId:'jr-qa', path:'Technical Path', level:'Foundational', module:'SDLC', platform:'YouTube', title:'Intro to the SDLC', link:'https://www.youtube.com/watch?v=sdlc', status:'not-started', homolog:'auto', duration:'1h 0m', points:30, description:'Overview of the software development lifecycle.', evidence:null, skills:['Manual Testing'] },
-      { id:'c15', courseId:'jr-qa', path:'Soft Skills Path', level:'Foundational', module:'Reporting', platform:'LinkedIn Learning', title:'Bug Reporting 101', link:'https://www.linkedin.com/learning/bug-reporting/', status:'not-started', homolog:'optional', duration:'2h 0m', points:40, description:'Writing actionable, reproducible bug reports.', evidence:null, skills:['Manual Testing'] },
-      { id:'c16', courseId:'mid-qa', path:'Technical Path', level:'Intermediate', module:'Selenium', platform:'Udemy', title:'Selenium WebDriver Mastery', link:'https://www.udemy.com/course/selenium/', status:'waiting', homolog:'required', duration:'8h 0m', points:100, description:'Building robust Selenium WebDriver suites.', evidence:'selenium-cert.pdf', skills:['Selenium','Test Automation'] },
-      { id:'c17', courseId:'mid-qa', path:'Technical Path', level:'Intermediate', module:'Databases', platform:'LinkedIn Learning', title:'SQL Fundamentals', link:'https://www.linkedin.com/learning/sql/', status:'not-started', homolog:'optional', duration:'4h 0m', points:70, description:'Core SQL queries for test data validation.', evidence:null, skills:['SQL'] },
-      { id:'c18', courseId:'mid-qa', path:'Compliance Path', level:'Foundational', module:'ISTQB', platform:'Udemy', title:'ISTQB Foundation Level', link:'https://www.udemy.com/course/istqb/', status:'not-started', homolog:'required', duration:'12h 0m', points:120, description:'Foundation-level ISTQB certification prep.', evidence:null, skills:['QA Strategy'] },
-      { id:'c19', courseId:'qa-lead', path:'Leadership Path', level:'Foundational', module:'Team Leadership', platform:'Coursera', title:'Leading QA Teams', link:'https://www.coursera.org/learn/leading-qa/', status:'not-started', homolog:'required', duration:'6h 0m', points:100, description:'People leadership for quality engineering teams.', evidence:null, skills:['Leadership'] },
-      { id:'c20', courseId:'qa-lead', path:'Leadership Path', level:'Intermediate', module:'Quality Strategy', platform:'Internal', title:'Enterprise Quality Strategy', link:'#', status:'not-started', homolog:'required', duration:'5h 0m', points:110, description:'Defining quality strategy across product lines.', evidence:null, skills:['QA Strategy','Leadership'] },
-      { id:'c21', courseId:'qa-lead', path:'Soft Skills Path', level:'Foundational', module:'Stakeholders', platform:'LinkedIn Learning', title:'Stakeholder Management', link:'https://www.linkedin.com/learning/stakeholders/', status:'not-started', homolog:'optional', duration:'4h 0m', points:70, description:'Managing expectations across stakeholders.', evidence:null, skills:['Leadership'] },
-      { id:'c22', courseId:'automation', path:'Technical Path', level:'Intermediate', module:'Frameworks', platform:'Udemy', title:'Designing Test Frameworks', link:'https://www.udemy.com/course/test-frameworks/', status:'not-started', homolog:'required', duration:'9h 0m', points:120, description:'Page Object Model and scalable framework design.', evidence:null, skills:['Test Automation','Python'] },
-      { id:'c23', courseId:'automation', path:'Technical Path', level:'Advanced', module:'CI/CD', platform:'Microsoft Learn', title:'CI Pipelines for Tests', link:'https://learn.microsoft.com/ci/', status:'not-started', homolog:'optional', duration:'5h 0m', points:90, description:'Wiring automated tests into CI pipelines.', evidence:null, skills:['CI/CD'] },
-      { id:'c24', courseId:'automation', path:'Technical Path', level:'Foundational', module:'Programming', platform:'Udemy', title:'Python for Automation', link:'https://www.udemy.com/course/python-automation/', status:'not-started', homolog:'optional', duration:'6h 0m', points:85, description:'Python essentials for test automation engineers.', evidence:null, skills:['Python','Test Automation'] },
-      { id:'c25', courseId:'automation', path:'Tooling Path', level:'Intermediate', module:'Containers', platform:'Pluralsight', title:'Docker for Test Environments', link:'https://www.pluralsight.com/courses/docker/', status:'not-started', homolog:'optional', duration:'6h 0m', points:80, description:'Reproducible test environments with Docker.', evidence:null, skills:['Docker','CI/CD'] },
-      { id:'c26', courseId:'ba', path:'Technical Path', level:'Foundational', module:'Requirements', platform:'Coursera', title:'Requirements Engineering', link:'https://www.coursera.org/learn/requirements/', status:'waiting', homolog:'required', duration:'7h 0m', points:90, description:'Eliciting and documenting clear requirements.', evidence:'requirements-proj.pdf', skills:['Requirements Analysis'] },
-      { id:'c27', courseId:'ba', path:'Technical Path', level:'Intermediate', module:'Data', platform:'LinkedIn Learning', title:'SQL for Analysts', link:'https://www.linkedin.com/learning/sql-analysts/', status:'not-started', homolog:'optional', duration:'5h 0m', points:75, description:'Querying data to support business analysis.', evidence:null, skills:['SQL'] },
-      { id:'c28', courseId:'ba', path:'Soft Skills Path', level:'Foundational', module:'Workshops', platform:'Udemy', title:'Facilitation Skills', link:'https://www.udemy.com/course/facilitation/', status:'not-started', homolog:'optional', duration:'3h 0m', points:60, description:'Running effective requirement workshops.', evidence:null, skills:['Facilitation'] },
-      { id:'c29', courseId:'rpa', path:'Technical Path', level:'Intermediate', module:'UiPath', platform:'Udemy', title:'UiPath Advanced Automation', link:'https://www.udemy.com/course/uipath/', status:'not-started', homolog:'required', duration:'10h 0m', points:110, description:'Building advanced UiPath automation workflows.', evidence:null, skills:['RPA'] },
-      { id:'c30', courseId:'rpa', path:'Technical Path', level:'Foundational', module:'Power Automate', platform:'Microsoft Learn', title:'Power Automate Essentials', link:'https://learn.microsoft.com/power-automate/', status:'not-started', homolog:'optional', duration:'6h 0m', points:80, description:'Low-code automation with Power Automate.', evidence:null, skills:['RPA'] }
-    ]
+      { id:'c1', courseId:'qa', path:'Technical Path', level:'Junior QA', module:'Playwright', platform:'Udemy', title:'Playwright Fundamentals', link:'https://www.udemy.com/course/playwright/', status:'completed', homolog:'required', duration:'6h 0m', points:100, description:'Modern end-to-end browser automation with Playwright.', evidence:'playwright-cert.pdf', skills:['Test Automation','Playwright'], score:94, completedDate:'2026-04-12', hasCert:true },
+      { id:'c2', courseId:'qa', path:'Technical Path', level:'Senior QA', module:'Playwright', platform:'Udemy', title:'Playwright Advanced Patterns', link:'https://www.udemy.com/course/playwright-adv/', status:'in-progress', homolog:'optional', duration:'7h 0m', points:110, description:'Fixtures, sharding and visual testing at scale.', evidence:null, skills:['Playwright','Test Automation'], progress:60, lastActivity:'2 days ago', remaining:'3h left' },
+      { id:'c3', courseId:'qa', path:'Technical Path', level:'Senior QA', module:'Cypress', platform:'Coursera', title:'Cypress Advanced', link:'https://www.coursera.org/learn/cypress-adv/', status:'in-progress', homolog:'optional', duration:'8h 0m', points:110, description:'Component testing, network stubbing and CI integration.', evidence:null, skills:['Cypress','Test Automation'], progress:35, lastActivity:'Yesterday', remaining:'5h left' },
+      { id:'c4', courseId:'qa', path:'Technical Path', level:'Junior QA', module:'Cypress', platform:'Udemy', title:'Cypress Fundamentals', link:'https://www.udemy.com/course/cypress/', status:'completed', homolog:'optional', duration:'5h 0m', points:80, description:'Getting started with Cypress for component and e2e tests.', evidence:'cypress-badge.png', skills:['Cypress'], score:86, completedDate:'2026-02-05', hasCert:true },
+      { id:'c5', courseId:'qa', path:'Technical Path', level:'QA Lead', module:'Selenium', platform:'Pluralsight', title:'Selenium Grid at Scale', link:'https://www.pluralsight.com/courses/selenium-grid/', status:'completed', homolog:'required', duration:'6h 0m', points:90, description:'Running distributed Selenium suites with Grid.', evidence:'selenium-grid.pdf', skills:['Selenium','Test Automation'], score:88, completedDate:'2026-03-02', hasCert:true },
+      { id:'c6', courseId:'qa', path:'Technical Path', level:'Senior QA', module:'REST APIs', platform:'Coursera', title:'API Testing with Postman', link:'https://www.coursera.org/learn/api-testing/', status:'waiting', homolog:'required', duration:'5h 0m', points:80, description:'Design, run and automate REST API test collections.', evidence:'postman-completion.pdf', skills:['API Testing'], progress:100, lastActivity:'4 days ago' },
+      { id:'c7', courseId:'qa', path:'Technical Path', level:'QA Lead', module:'Performance', platform:'Udemy', title:'Performance Testing with JMeter', link:'https://www.udemy.com/course/jmeter/', status:'not-started', homolog:'required', duration:'9h 0m', points:120, description:'Load and stress testing fundamentals with Apache JMeter.', evidence:null, skills:['Performance Testing'], progress:0, dueDate:'2026-07-04' },
+      { id:'c8', courseId:'qa', path:'Technical Path', level:'Senior QA', module:'Databases', platform:'LinkedIn Learning', title:'Advanced SQL for QA', link:'https://www.linkedin.com/learning/sql-qa/', status:'completed', homolog:'optional', duration:'4h 0m', points:70, description:'Validating data and writing complex test queries.', evidence:'sql-badge.png', skills:['SQL'], score:91, completedDate:'2026-02-18', hasCert:true },
+      { id:'c9', courseId:'qa', path:'Compliance Path', level:'QA Lead', module:'ISTQB', platform:'Internal', title:'ISTQB Advanced Test Analyst', link:'#', status:'waiting', homolog:'required', duration:'12h 0m', points:140, description:'Advanced-level certification track for senior test analysts.', evidence:'istqb-advanced.pdf', skills:['QA Strategy'], progress:100, lastActivity:'1 week ago' },
+      { id:'c10', courseId:'qa', path:'Compliance Path', level:'Junior QA', module:'Security', platform:'Microsoft Learn', title:'Security Testing Essentials', link:'https://learn.microsoft.com/security-testing/', status:'not-started', homolog:'optional', duration:'5h 0m', points:80, description:'OWASP basics and security testing for QA engineers.', evidence:null, skills:['Security Testing'], progress:0, dueDate:'2026-07-15' },
+      { id:'c11', courseId:'qa', path:'Leadership Path', level:'Junior QA', module:'Mentoring', platform:'YouTube', title:'Coaching Junior Testers (talk)', link:'https://www.youtube.com/watch?v=coaching', status:'completed', homolog:'auto', duration:'1h 0m', points:30, description:'Conference talk on mentoring junior QA engineers.', evidence:null, skills:['Coaching','Leadership'], score:100, completedDate:'2026-01-22', hasCert:false },
+      { id:'c12', courseId:'qa', path:'Leadership Path', level:'Senior QA', module:'Strategy', platform:'Coursera', title:'Building a QA Strategy', link:'https://www.coursera.org/learn/qa-strategy/', status:'in-progress', homolog:'optional', duration:'5h 0m', points:90, description:'Define quality goals, metrics and a test approach.', evidence:null, skills:['QA Strategy','Leadership'], progress:20, lastActivity:'3 days ago', remaining:'4h left' },
+      { id:'c13', courseId:'qa', path:'Technical Path', level:'Junior QA', module:'Test Cases', platform:'Udemy', title:'Writing Effective Test Cases', link:'https://www.udemy.com/course/test-cases/', status:'not-started', homolog:'optional', duration:'4h 0m', points:60, description:'Crafting clear, maintainable manual test cases.', evidence:null, skills:['Manual Testing'] },
+      { id:'c14', courseId:'qa', path:'Technical Path', level:'Junior QA', module:'SDLC', platform:'YouTube', title:'Intro to the SDLC', link:'https://www.youtube.com/watch?v=sdlc', status:'not-started', homolog:'auto', duration:'1h 0m', points:30, description:'Overview of the software development lifecycle.', evidence:null, skills:['Manual Testing'] },
+      { id:'c15', courseId:'qa', path:'Soft Skills Path', level:'Junior QA', module:'Reporting', platform:'LinkedIn Learning', title:'Bug Reporting 101', link:'https://www.linkedin.com/learning/bug-reporting/', status:'not-started', homolog:'optional', duration:'2h 0m', points:40, description:'Writing actionable, reproducible bug reports.', evidence:null, skills:['Manual Testing'] },
+      { id:'c16', courseId:'qa', path:'Technical Path', level:'Mid-Level QA', module:'Selenium', platform:'Udemy', title:'Selenium WebDriver Mastery', link:'https://www.udemy.com/course/selenium/', status:'waiting', homolog:'required', duration:'8h 0m', points:100, description:'Building robust Selenium WebDriver suites.', evidence:'selenium-cert.pdf', skills:['Selenium','Test Automation'] },
+      { id:'c17', courseId:'qa', path:'Technical Path', level:'Mid-Level QA', module:'Databases', platform:'LinkedIn Learning', title:'SQL Fundamentals', link:'https://www.linkedin.com/learning/sql/', status:'not-started', homolog:'optional', duration:'4h 0m', points:70, description:'Core SQL queries for test data validation.', evidence:null, skills:['SQL'] },
+      { id:'c18', courseId:'qa', path:'Compliance Path', level:'Mid-Level QA', module:'ISTQB', platform:'Udemy', title:'ISTQB Foundation Level', link:'https://www.udemy.com/course/istqb/', status:'not-started', homolog:'required', duration:'12h 0m', points:120, description:'Foundation-level ISTQB certification prep.', evidence:null, skills:['QA Strategy'] },
+      { id:'c19', courseId:'qa', path:'Leadership Path', level:'QA Lead', module:'Team Leadership', platform:'Coursera', title:'Leading QA Teams', link:'https://www.coursera.org/learn/leading-qa/', status:'not-started', homolog:'required', duration:'6h 0m', points:100, description:'People leadership for quality engineering teams.', evidence:null, skills:['Leadership'] },
+      { id:'c20', courseId:'qa', path:'Leadership Path', level:'QA Lead', module:'Quality Strategy', platform:'Internal', title:'Enterprise Quality Strategy', link:'#', status:'not-started', homolog:'required', duration:'5h 0m', points:110, description:'Defining quality strategy across product lines.', evidence:null, skills:['QA Strategy','Leadership'] },
+      { id:'c21', courseId:'qa', path:'Soft Skills Path', level:'QA Lead', module:'Stakeholders', platform:'LinkedIn Learning', title:'Stakeholder Management', link:'https://www.linkedin.com/learning/stakeholders/', status:'not-started', homolog:'optional', duration:'4h 0m', points:70, description:'Managing expectations across stakeholders.', evidence:null, skills:['Leadership'] },
+      { id:'c22', courseId:'dev', path:'Technical Path', level:'Mid-Level Dev', module:'Frameworks', platform:'Udemy', title:'Designing Test Frameworks', link:'https://www.udemy.com/course/test-frameworks/', status:'not-started', homolog:'required', duration:'9h 0m', points:120, description:'Page Object Model and scalable framework design.', evidence:null, skills:['Test Automation','Python'] },
+      { id:'c23', courseId:'dev', path:'Technical Path', level:'Senior Dev', module:'CI/CD', platform:'Microsoft Learn', title:'CI Pipelines for Tests', link:'https://learn.microsoft.com/ci/', status:'not-started', homolog:'optional', duration:'5h 0m', points:90, description:'Wiring automated tests into CI pipelines.', evidence:null, skills:['CI/CD'] },
+      { id:'c24', courseId:'dev', path:'Technical Path', level:'Junior Dev', module:'Programming', platform:'Udemy', title:'Python for Automation', link:'https://www.udemy.com/course/python-automation/', status:'not-started', homolog:'optional', duration:'6h 0m', points:85, description:'Python essentials for test automation engineers.', evidence:null, skills:['Python','Test Automation'] },
+      { id:'c25', courseId:'dev', path:'Tooling Path', level:'Mid-Level Dev', module:'Containers', platform:'Pluralsight', title:'Docker for Test Environments', link:'https://www.pluralsight.com/courses/docker/', status:'not-started', homolog:'optional', duration:'6h 0m', points:80, description:'Reproducible test environments with Docker.', evidence:null, skills:['Docker','CI/CD'] },
+      { id:'c26', courseId:'ba', path:'Technical Path', level:'Junior BA', module:'Requirements', platform:'Coursera', title:'Requirements Engineering', link:'https://www.coursera.org/learn/requirements/', status:'waiting', homolog:'required', duration:'7h 0m', points:90, description:'Eliciting and documenting clear requirements.', evidence:'requirements-proj.pdf', skills:['Requirements Analysis'] },
+      { id:'c27', courseId:'ba', path:'Technical Path', level:'Senior BA', module:'Data', platform:'LinkedIn Learning', title:'SQL for Analysts', link:'https://www.linkedin.com/learning/sql-analysts/', status:'not-started', homolog:'optional', duration:'5h 0m', points:75, description:'Querying data to support business analysis.', evidence:null, skills:['SQL'] },
+      { id:'c28', courseId:'ba', path:'Soft Skills Path', level:'Junior BA', module:'Workshops', platform:'Udemy', title:'Facilitation Skills', link:'https://www.udemy.com/course/facilitation/', status:'not-started', homolog:'optional', duration:'3h 0m', points:60, description:'Running effective requirement workshops.', evidence:null, skills:['Facilitation'] },
+      { id:'c29', courseId:'rpa', path:'Technical Path', level:'Senior RPA', module:'UiPath', platform:'Udemy', title:'UiPath Advanced Automation', link:'https://www.udemy.com/course/uipath/', status:'not-started', homolog:'required', duration:'10h 0m', points:110, description:'Building advanced UiPath automation workflows.', evidence:null, skills:['RPA'] },
+      { id:'c30', courseId:'rpa', path:'Technical Path', level:'Junior RPA', module:'Power Automate', platform:'Microsoft Learn', title:'Power Automate Essentials', link:'https://learn.microsoft.com/power-automate/', status:'not-started', homolog:'optional', duration:'6h 0m', points:80, description:'Low-code automation with Power Automate.', evidence:null, skills:['RPA'] }
+    ],
+    homologRequests:[
+      { id:'hreq1', userId:'u1', resourceId:'c7', pathId:'qa', level:'QA Lead', module:'Performance', title:'Performance Testing with JMeter', evidence:'jmeter-prev.pdf', status:'pending', submitted:'2026-06-28', managerNote:'' }
+    ],
+    enrollRequests:[],
   };
 
   TODAY = '2026-06-29';
@@ -1425,6 +1667,20 @@ class Component extends DCLogic {
     });
   }
 
+  // ----- learner content helpers -----
+  learnerActiveUser(){ return this.state.users.find(u=>u.id==='u1')||this.state.users.find(u=>u.role==='Learner')||{}; }
+  learnerActivePath(){ return this.state.myPathActive||this.learnerActiveUser().primaryPathId; }
+  learnerLevelForPath(pathId){
+    const u=this.learnerActiveUser();
+    if(pathId===u.primaryPathId) return u.primaryLevel;
+    const sp=(u.secondaryPaths||[]).find(s=>s.pathId===pathId);
+    return sp?sp.level:u.primaryLevel;
+  }
+  learnerPathResources(pathId){
+    const level=this.learnerLevelForPath(pathId);
+    return this.state.resources.filter(r=>r.courseId===pathId&&r.level===level);
+  }
+
   // ----- enrollment-style aggregation -----
   courseProgress(courseId){
     const list=this.state.resources.filter(r=>r.courseId===courseId);
@@ -1433,14 +1689,14 @@ class Component extends DCLogic {
     return Math.round(done/list.length*100);
   }
   enrollments(){
-    return this.state.users.filter(u=>u.role==='Learner'&&u.courseId).map(u=>{
-      const c=this.courseById(u.courseId);
-      const prog=u.id==='u1'?this.courseProgress('sr-qa'):({u2:42,u3:18,u4:5,u6:67,u8:88}[u.id]||0);
+    return this.state.users.filter(u=>u.role==='Learner'&&u.primaryPathId).map(u=>{
+      const c=this.courseById(u.primaryPathId);
+      const prog=u.id==='u1'?this.courseProgress('qa'):({u2:42,u3:18,u4:5,u6:67,u8:88}[u.id]||0);
       let status='not-started';
       if(prog>=100) status='completed'; else if(prog>0) status='in-progress';
-      const pendingEv=this.state.resources.some(r=>r.courseId===u.courseId&&r.status==='waiting');
+      const pendingEv=this.state.resources.some(r=>r.courseId===u.primaryPathId&&r.status==='waiting');
       if(pendingEv&&prog>0&&prog<100) status='awaiting';
-      return { ...u, course:c, prog, status, source: (u.id==='u3')?'manual':'auto', since: ({u1:'Apr 2026',u2:'Mar 2026',u3:'May 2026',u4:'May 2026',u6:'Feb 2026',u8:'Jan 2026'}[u.id]||'—'), last: ({u1:'2 days ago',u2:'Today',u3:'5 days ago',u4:'3 weeks ago',u6:'Yesterday',u8:'Today'}[u.id]||'—') };
+      return { ...u, course:c, prog, status, source:(u.id==='u3')?'manual':'auto', since:({u1:'Apr 2026',u2:'Mar 2026',u3:'May 2026',u4:'May 2026',u6:'Feb 2026',u8:'Jan 2026'}[u.id]||'—'), last:({u1:'2 days ago',u2:'Today',u3:'5 days ago',u4:'3 weeks ago',u6:'Yesterday',u8:'Today'}[u.id]||'—') };
     });
   }
   // homologation queue records (non-youtube waiting resources)
@@ -1462,7 +1718,7 @@ class Component extends DCLogic {
 
   // ===== actions =====
   go(screen){ this.setState({ screen, searchOpen:false, notifOpen:false, detailRes:null }); }
-  setViewer(v){ const def={admin:'paths',manager:'team',learner:'mylearning'}[v]; this.setState({ viewer:v, screen:def, detailRes:null, searchOpen:false, notifOpen:false, filterPath:null, filterLevel:null, filterModule:null }); }
+  setViewer(v){ const def={admin:'paths',manager:'team',learner:'home'}[v]; this.setState({ viewer:v, screen:def, detailRes:null, searchOpen:false, notifOpen:false, filterPath:null, filterLevel:null, filterModule:null }); }
   closeMenus(){ if(this.state.searchOpen||this.state.notifOpen) this.setState({searchOpen:false,notifOpen:false}); }
   markAllRead(){ this.setState({ notifications:this.state.notifications.map(n=>({...n,read:true})) }); }
   pushNotif(text,type){ this.setState({ notifications:[{id:'n'+Date.now(),type,text,time:'Just now',read:false},...this.state.notifications].slice(0,10) }); }
@@ -1476,10 +1732,24 @@ class Component extends DCLogic {
   openReject(h){ this.setState({ rejectFor:h, rejectNote:'' }); }
   doReject(){
     const h=this.state.rejectFor; if(!this.state.rejectNote.trim()){ this.flash('Add a note explaining why','warn'); return; }
-    const resources=this.state.resources.map(r=>r.id===h.resId?{...r,status:'in-progress',evidence:null}:r);
-    this.setState({ resources, rejectFor:null, rejectNote:'' });
-    this.pushNotif('Evidence for "'+h.res.title+'" was rejected: '+this.state.rejectNote,'reject');
+    if(h.type==='homologation'){
+      const homologRequests=this.state.homologRequests.map(r=>r.id===h.reqId?{...r,status:'rejected',managerNote:this.state.rejectNote}:r);
+      this.setState({ homologRequests, rejectFor:null, rejectNote:'' });
+      this.pushNotif('Homologation request for "'+h.res.title+'" was rejected: '+this.state.rejectNote,'reject');
+    } else {
+      const resources=this.state.resources.map(r=>r.id===h.resId?{...r,status:'in-progress',evidence:null}:r);
+      this.setState({ resources, rejectFor:null, rejectNote:'' });
+      this.pushNotif('Evidence for "'+h.res.title+'" was rejected: '+this.state.rejectNote,'reject');
+    }
     this.flash('Rejected — '+h.user.name+' notified','warn');
+  }
+
+  startResource(id){
+    const r=this.state.resources.find(x=>x.id===id); if(!r) return;
+    const resources=this.state.resources.map(x=>x.id===id?{...x,status:'in-progress',progress:x.progress||0,lastActivity:'Hoy'}:x);
+    this.setState({resources});
+    this.flash('"'+r.title+'" en progreso','ok');
+    if(r.link) window.open(r.link,'_blank');
   }
 
   submitEvidence(){
@@ -1625,6 +1895,77 @@ class Component extends DCLogic {
   doEnroll(){ const u=this.userById(this.state.enrollUser); if(!u){ this.flash('Pick a user','warn'); return; } const users=this.state.users.map(x=>x.id===u.id?{...x,courseId:this.state.enrollCourse}:x); this.setState({ users, enrollOpen:false }); this.pushNotif('You were enrolled in '+this.courseById(this.state.enrollCourse).name,'assign'); this.flash('Enrolled '+u.name,'ok'); }
   requestAccess(c){ this.pushNotif('Access requested: '+c.name+' (pending admin approval)','assign'); this.flash('Access requested for "'+c.name+'"','ok'); }
 
+  // manager enrollment panel
+  openEnrollPanel(u){ this.setState({enrollPanelOpen:true,enrollPanelUser:u.id,enrollPanelPrimPath:u.primaryPathId||'',enrollPanelPrimLevel:u.primaryLevel||'',enrollPanelAddSecPath:'',enrollPanelAddSecLevel:''}); }
+  closeEnrollPanel(){ this.setState({enrollPanelOpen:false,enrollPanelUser:null}); }
+  savePrimaryPath(){
+    const S=this.state; if(!S.enrollPanelPrimPath||!S.enrollPanelPrimLevel){this.flash('Selecciona path y level','warn');return;}
+    const users=S.users.map(u=>u.id===S.enrollPanelUser?{...u,primaryPathId:S.enrollPanelPrimPath,primaryLevel:S.enrollPanelPrimLevel}:u);
+    this.setState({users}); this.flash('Primary path actualizado','ok');
+  }
+  addSecondaryPath(){
+    const S=this.state; if(!S.enrollPanelAddSecPath||!S.enrollPanelAddSecLevel){this.flash('Selecciona path y level','warn');return;}
+    const users=S.users.map(u=>{
+      if(u.id!==S.enrollPanelUser) return u;
+      const already=(u.secondaryPaths||[]).some(sp=>sp.pathId===S.enrollPanelAddSecPath);
+      if(already){this.flash('Ya tiene ese path secundario','warn');return u;}
+      return {...u,secondaryPaths:[...(u.secondaryPaths||[]),{pathId:S.enrollPanelAddSecPath,level:S.enrollPanelAddSecLevel}]};
+    });
+    this.setState({users,enrollPanelAddSecPath:'',enrollPanelAddSecLevel:''}); this.flash('Secondary path agregado','ok');
+  }
+  removeSecondaryPath(userId,pathId){
+    const users=this.state.users.map(u=>u.id!==userId?u:{...u,secondaryPaths:(u.secondaryPaths||[]).filter(sp=>sp.pathId!==pathId)});
+    this.setState({users}); this.flash('Secondary path removido','ok');
+  }
+  approveEnrollRequest(reqId){
+    const req=this.state.enrollRequests.find(r=>r.id===reqId); if(!req) return;
+    const users=this.state.users.map(u=>{
+      if(u.id!==req.userId) return u;
+      return {...u,secondaryPaths:[...(u.secondaryPaths||[]),{pathId:req.pathId,level:req.level}]};
+    });
+    const enrollRequests=this.state.enrollRequests.map(r=>r.id===reqId?{...r,status:'approved'}:r);
+    this.setState({users,enrollRequests}); this.flash('Acceso aprobado','ok');
+  }
+  rejectEnrollRequest(reqId){
+    const enrollRequests=this.state.enrollRequests.map(r=>r.id===reqId?{...r,status:'rejected'}:r);
+    this.setState({enrollRequests}); this.flash('Solicitud rechazada','ok');
+  }
+  requestSecondaryPath(pathId,level){
+    const S=this.state; const learner=S.users.find(u=>u.id==='u1');
+    const alreadyReq=(S.enrollRequests||[]).some(r=>r.userId==='u1'&&r.pathId===pathId&&r.status==='pending');
+    if(alreadyReq){this.flash('Ya enviaste una solicitud para este path','warn');return;}
+    const req={id:'ereq'+Date.now(),userId:'u1',pathId,level,status:'pending',submitted:this.TODAY};
+    const c=this.courseById(pathId);
+    this.setState({enrollRequests:[...(S.enrollRequests||[]),req]});
+    this.pushNotif('Solicitud de acceso enviada: '+( c?c.name:pathId),'assign');
+    this.flash('Solicitud enviada al manager','ok');
+  }
+
+  submitHomologRequest(){
+    const S=this.state;
+    if(!S.homologFormPath||!S.homologFormResource){this.flash('Selecciona un path y un recurso','warn');return;}
+    if(!S.homologFormEvidence){this.flash('Adjunta una evidencia','warn');return;}
+    const alreadyReq=(S.homologRequests||[]).some(r=>r.userId==='u1'&&r.resourceId===S.homologFormResource&&r.status==='pending');
+    if(alreadyReq){this.flash('Ya enviaste una solicitud para este recurso','warn');return;}
+    const res=S.resources.find(r=>r.id===S.homologFormResource);
+    const req={id:'hreq'+Date.now(),userId:'u1',resourceId:S.homologFormResource,pathId:S.homologFormPath,
+      level:res?res.level:'',module:res?res.module:'',title:res?res.title:'',
+      evidence:S.homologFormEvidence,note:S.homologFormNote,status:'pending',submitted:this.TODAY,managerNote:''};
+    this.setState({homologRequests:[...S.homologRequests,req],homologFormPath:'',homologFormResource:'',homologFormEvidence:'',homologFormNote:''});
+    this.pushNotif('Solicitud de homologación enviada al manager','assign');
+    this.flash('Solicitud enviada al manager','ok');
+  }
+  pickHomologEvidence(){ this.setState({homologFormEvidence:'certificado-'+Date.now()+'.pdf'}); }
+
+  approveHomologRequest(reqId){
+    const req=this.state.homologRequests.find(r=>r.id===reqId); if(!req) return;
+    const resources=this.state.resources.map(r=>r.id===req.resourceId?{...r,status:'completed',hasCert:true,score:90,completedDate:this.TODAY}:r);
+    const homologRequests=this.state.homologRequests.map(r=>r.id===reqId?{...r,status:'approved'}:r);
+    this.setState({resources,homologRequests});
+    this.pushNotif('Homologación aprobada: "'+req.title+'"','approved');
+    this.flash('Homologación aprobada — recurso marcado como completado','ok');
+  }
+
   renderVals(){
     return Object.assign({}, this.vChrome(), this.vNav(), this.vAdmin(), this.vWizard(), this.vManager(), this.vLearner(), this.vModals());
   }
@@ -1648,8 +1989,14 @@ class Component extends DCLogic {
       progress:['Team Progress','Individual learner progress'],
       approvals:['Approvals','Evidence review for your team'],
       mylearning:['My Learning','Pick up where you left off'],
-      explore:['Explore Courses','Discover courses and grow your skills'],
-      course:['Course', S.detailCourse?(this.courseById(S.detailCourse)||{}).name:'']
+      home:['Home','Tu aprendizaje de hoy'],
+      mypaths:['Paths','Todos tus paths asignados'],
+      todo:['ToDo List','Recursos pendientes por empezar'],
+      active:['Active Learning','Lo que estás cursando ahora'],
+      history:['History','Recursos completados'],
+      certificates:['Certificates','Certificados obtenidos'],
+      homologar:['Homologar','Solicita crédito por cursos previos'],
+      explore:['Explore Courses','Discover courses and grow your skills']
     };
     const scr = S.screen==='builder'?'builder':S.screen;
     const pt=titles[scr]||['',''];
@@ -1729,17 +2076,31 @@ class Component extends DCLogic {
         item('platforms','Platforms',[['line',{x1:4,x2:4,y1:21,y2:14}],['line',{x1:4,x2:4,y1:10,y2:3}],['line',{x1:12,x2:12,y1:21,y2:12}],['line',{x1:12,x2:12,y1:8,y2:3}],['line',{x1:20,x2:20,y1:21,y2:16}],['line',{x1:20,x2:20,y1:12,y2:3}],['line',{x1:2,x2:6,y1:14,y2:14}],['line',{x1:10,x2:14,y1:8,y2:8}],['line',{x1:18,x2:22,y1:16,y2:16}]],0,'settings')
       ];
     } else if(V==='manager'){
+      const homReq=S.homologRequests?S.homologRequests.filter(h=>h.status==='pending').length:0;
+      const totalPending=pendingCount+homReq;
       navItems=[
-        head('My Team'),
-        item('team','Team Overview',[['rect',{x:3,y:3,width:7,height:9}],['rect',{x:14,y:3,width:7,height:5}],['rect',{x:14,y:12,width:7,height:9}],['rect',{x:3,y:16,width:7,height:5}]]),
-        item('progress','Team Progress',[['path','M3 3v18h18'],['path','M18 17V9'],['path','M13 17V5'],['path','M8 17v-3']]),
-        item('approvals','Approvals',[['path','M22 11.08V12a10 10 0 1 1-5.93-9.14'],['path','M22 4 12 14.01l-3-3']],pendingCount)
+        head('My Team',''),
+        item('team','Team Overview',[['rect',{x:3,y:3,width:7,height:9}],['rect',{x:14,y:3,width:7,height:5}],['rect',{x:14,y:12,width:7,height:9}],['rect',{x:3,y:16,width:7,height:5}]],0,''),
+        item('progress','Team Progress',[['path','M3 3v18h18'],['path','M18 17V9'],['path','M13 17V5'],['path','M8 17v-3']],0,''),
+        item('enrollments','Enrollments',[['path','M9 11l3 3L22 4'],['path','M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11']],0,''),
+        item('approvals','Approvals',[['path','M22 11.08V12a10 10 0 1 1-5.93-9.14'],['path','M22 4 12 14.01l-3-3']],totalPending,'')
       ];
     } else {
+      const lActivePath=this.learnerActivePath();
+      const lPathRes=this.learnerPathResources(lActivePath);
+      const lTodoCount=lPathRes.filter(r=>r.status==='not-started').length;
+      const lActiveCount=lPathRes.filter(r=>r.status==='in-progress'||r.status==='waiting').length;
+      const lCertCount=lPathRes.filter(r=>r.status==='completed'&&r.hasCert).length;
       navItems=[
-        head('Learning'),
-        item('mylearning','My Learning',[['path','M4 19.5A2.5 2.5 0 0 1 6.5 17H20'],['path','M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z']]),
-        item('explore','Explore Courses',[['circle',{cx:12,cy:12,r:10}],['polygon',{points:'16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76'}]])
+        item('home','Home',[['rect',{x:3,y:3,width:7,height:9}],['rect',{x:14,y:3,width:7,height:5}],['rect',{x:14,y:12,width:7,height:9}],['rect',{x:3,y:16,width:7,height:5}]],0,''),
+        head('Content','lcontent'),
+        item('mypaths','Paths',[['path','M4 19.5A2.5 2.5 0 0 1 6.5 17H20'],['path','M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z']],0,'lcontent'),
+        item('todo','ToDo List',[['line',{x1:8,y1:6,x2:21,y2:6}],['line',{x1:8,y1:12,x2:21,y2:12}],['line',{x1:8,y1:18,x2:21,y2:18}],['line',{x1:3,y1:6,x2:3.01,y2:6}],['line',{x1:3,y1:12,x2:3.01,y2:12}],['line',{x1:3,y1:18,x2:3.01,y2:18}]],lTodoCount,'lcontent'),
+        item('active','Active Learning',[['circle',{cx:12,cy:12,r:10}],['polygon',{points:'10 8 16 12 10 16'}]],lActiveCount,'lcontent'),
+        item('history','History',[['path','M3 3v18h18'],['path','M18 17V9'],['path','M13 17V5'],['path','M8 17v-3']],0,'lcontent'),
+        item('certificates','Certificates',[['circle',{cx:12,cy:8,r:6}],['path','M15.5 13.5 17 22l-5-3-5 3 1.5-8.5']],lCertCount,'lcontent'),
+        item('explore','Explorar',[['circle',{cx:12,cy:12,r:10}],['polygon',{points:'16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76'}]],0,''),
+        item('homologar','Homologar',[['path','M9 11l3 3L22 4'],['path','M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11']],0,'')
       ];
     }
     return { navItems };
@@ -1766,15 +2127,16 @@ class Component extends DCLogic {
     ];
     const activity=acts.map(a=>({ text:a.text, time:a.time, color:ACT[a.t], bg:this.mix(ACT[a.t],12), icon:this.svg(aIc[a.t],15,ACT[a.t],2) }));
 
-    const courseCards=S.courses.map(c=>{
+    let pathCards=S.courses.map(c=>{
       const rs=S.resources.filter(r=>r.courseId===c.id);
-      const paths=new Set(rs.map(r=>r.path)).size;
+      const levelSet=new Set(rs.map(r=>r.level));
       const st=c.status;
       const stCol={published:'#15803d',draft:'#b45309',archived:'#64748b'}[st];
-      return { ...c, colorDark:this.dark(c.color,28), iconWhite:this.iconEl(c.icon,24,'#fff',2), pathCount:paths, resCount:rs.length,
-        statusLabel:st, statusColor:stCol, statusBg:'rgba(255,255,255,.22)', opacity:st==='archived'?'.6':'1',
+      return { ...c, colorDark:this.dark(c.color,28), iconWhite:this.iconEl(c.icon,24,'#fff',2),
+        levelCount:levelSet.size, resCount:rs.length, learnerCount:c.learners,
+        statusLabel:st, statusColor:stCol,
         edit:()=>this.setState({wizard:this.newWizard(c),screen:'builder'}),
-        learnersView:()=>this.setState({viewer:'admin',screen:'enrollments'}) };
+        viewLevels:()=>this.setState({screen:'levels',filterPath:c.id}) };
     });
 
     // shared filter state
@@ -1798,7 +2160,7 @@ class Component extends DCLogic {
     const totalLearners=S.users.filter(u=>u.role==='Learner').length||1;
     let skillRows=S.skills.map(s=>{
       const res=S.resources.filter(r=>(r.skills||[]).includes(s.name));
-      const learnersWith=this.enrollments().filter(e=>this.state.resources.some(r=>r.courseId===e.courseId&&(r.skills||[]).includes(s.name)&&r.status==='completed')).length;
+      const learnersWith=this.enrollments().filter(e=>this.state.resources.some(r=>r.courseId===e.primaryPathId&&(r.skills||[]).includes(s.name)&&r.status==='completed')).length;
       const modCount=new Set(res.map(r=>r.module)).size;
       const coveragePct=Math.round((learnersWith/totalLearners)*100);
       return { ...s, resCount:res.length, learnerCount:learnersWith, modCount, coveragePct, goResources:()=>this.setState({screen:'resources'}),
@@ -1812,10 +2174,14 @@ class Component extends DCLogic {
     const roleBadge={ 'Learner':'#4A2E80','Manager':'#0EA5A0','Admin':'#D99A00' };
     const userRows=S.users.map(u=>{
       const mgr=S.managers.find(m=>m.id===u.managerId);
+      const primaryPath=u.primaryPathId?this.courseById(u.primaryPathId):null;
+      const primaryLabel=primaryPath?(primaryPath.name+(u.primaryLevel?' › '+u.primaryLevel:'')):'—';
+      const primaryColor=primaryPath?primaryPath.color:'#94a3b8';
       return { ...u, initials:this.initials(u.name), avatarBg:this.avatarBg(u.name),
         roleColor:roleBadge[u.role], roleBg:this.mix(roleBadge[u.role],13),
         statusColor:u.status==='Active'?'#15803d':'#94a3b8', statusBg:this.mix(u.status==='Active'?'#15803d':'#94a3b8',14),
-        managerName:mgr?mgr.name:'—' };
+        managerName:mgr?mgr.name:'—',
+        primaryLabel, primaryColor, primaryBg:this.mix(primaryColor,13) };
     });
 
     // enrollments
@@ -1843,37 +2209,35 @@ class Component extends DCLogic {
     const allModules=this.getModules();
 
     const sfPaths=sf.paths||{q:'',prog:'',status:''};
-    let pathCards=allPaths.map(p=>{
-      const c=this.courseById(p.courseId)||{}; const col=c.color||'#4A2E80';
-      const lvls=allLevels.filter(l=>l.courseId===p.courseId&&l.pathName===p.name);
-      const mods=allModules.filter(m=>m.courseId===p.courseId&&m.pathName===p.name);
-      const rs=S.resources.filter(r=>r.courseId===p.courseId&&r.path===p.name);
-      const st=c.status||'published'; const stCol={published:'#15803d',draft:'#b45309',archived:'#64748b'}[st]||'#64748b';
-      return { ...p, programName:c.name||'', color:col, colorDark:this.dark(col,28), icon:this.iconEl(c.icon||'rocket',24,'#fff',2),
-        statusLabel:st, statusColor:stCol, progBg:this.mix(col,13), progColor:col,
-        levelCount:lvls.length, moduleCount:mods.length, resCount:rs.length,
-        edit:()=>this.openEditPath(p),
-        viewLevels:()=>this.setState({screen:'levels',filterPath:p.courseId+'|'+p.name,filterLevel:null}) };
-    });
-    if(sfPaths.q) pathCards=pathCards.filter(p=>p.name.toLowerCase().includes(sfPaths.q.toLowerCase())||p.programName.toLowerCase().includes(sfPaths.q.toLowerCase()));
-    if(sfPaths.prog) pathCards=pathCards.filter(p=>p.courseId===sfPaths.prog);
+    if(sfPaths.q) pathCards=pathCards.filter(p=>p.name.toLowerCase().includes(sfPaths.q.toLowerCase()));
+    if(sfPaths.prog) pathCards=pathCards.filter(p=>p.id===sfPaths.prog);
     if(sfPaths.status) pathCards=pathCards.filter(p=>p.statusLabel===sfPaths.status);
 
+    // levels — derived from resources, grouped by courseId+level
     const sfLevels=sf.levels||{q:'',prog:''};
-    const fPath=S.filterPath;
-    let filteredLevels=fPath?allLevels.filter(l=>(l.courseId+'|'+l.pathName)===fPath):allLevels;
-    if(sfLevels.q) filteredLevels=filteredLevels.filter(l=>l.name.toLowerCase().includes(sfLevels.q.toLowerCase()));
-    if(sfLevels.prog) filteredLevels=filteredLevels.filter(l=>l.courseId===sfLevels.prog);
-    const levelRows=filteredLevels.map(l=>{
-      const c=this.courseById(l.courseId)||{}; const col=c.color||'#4A2E80';
-      const mods=allModules.filter(m=>m.courseId===l.courseId&&m.pathName===l.pathName&&m.levelName===l.name);
-      const rs=S.resources.filter(r=>r.courseId===l.courseId&&r.path===l.pathName&&r.level===l.name);
-      return { ...l, programName:c.name||'', progBg:this.mix(col,13), progColor:col,
-        rule:'All modules', moduleCount:mods.length, resCount:rs.length,
-        edit:()=>this.openEditLevel(l),
-        goPath:()=>this.setState({screen:'paths',filterPath:null}),
-        viewModules:()=>this.setState({screen:'modules',filterLevel:l.courseId+'|'+l.pathName+'|'+l.name,filterPath:null}) };
+    const levelsSeen={}, levelsOut=[];
+    S.resources.forEach(r=>{
+      const k=r.courseId+'|'+r.level;
+      if(!levelsSeen[k]){
+        levelsSeen[k]=1;
+        const c=this.courseById(r.courseId)||{};
+        const mods=new Set(S.resources.filter(x=>x.courseId===r.courseId&&x.level===r.level).map(x=>x.module)).size;
+        const res=S.resources.filter(x=>x.courseId===r.courseId&&x.level===r.level).length;
+        levelsOut.push({
+          courseId:r.courseId, pathName:c.name||r.courseId, name:r.level,
+          moduleCount:mods, resCount:res,
+          progBg:this.mix(c.color||'#4A2E80',13), progColor:c.color||'#4A2E80',
+          edit:()=>this.openEditLevel({courseId:r.courseId,pathName:c.name||r.courseId,name:r.level}),
+          viewModules:()=>this.setState({screen:'modules',filterPath:r.courseId,filterLevel:r.courseId+'|'+(c.name||r.courseId)+'|'+r.level}),
+          goPath:()=>this.setState({screen:'paths',filterPath:r.courseId})
+        });
+      }
     });
+    let levelRows=[...levelsOut];
+    if(S.filterPath) levelRows=levelRows.filter(l=>l.courseId===S.filterPath);
+    if(sfLevels.q) levelRows=levelRows.filter(l=>l.name.toLowerCase().includes(sfLevels.q.toLowerCase())||l.pathName.toLowerCase().includes(sfLevels.q.toLowerCase()));
+    if(sfLevels.prog) levelRows=levelRows.filter(l=>l.courseId===sfLevels.prog);
+    const levelsCountLabel=levelRows.length+' levels'+(S.filterPath||sfLevels.prog?' — filtered':'');
 
     const sfModules=sf.modules||{q:'',prog:''};
     const fLevel=S.filterLevel;
@@ -1883,16 +2247,16 @@ class Component extends DCLogic {
     const moduleRows=filteredModules.map(m=>{
       const c=this.courseById(m.courseId)||{}; const col=c.color||'#4A2E80';
       const rs=S.resources.filter(r=>r.courseId===m.courseId&&r.path===m.pathName&&r.level===m.levelName&&r.module===m.name);
-      const skills=[...new Set(rs.flatMap(r=>r.skills||[]))].slice(0,3);
       return { ...m, programName:c.name||'', progBg:this.mix(col,13), progColor:col,
-        resCount:rs.length, skills,
+        resCount:rs.length,
         edit:()=>this.openEditModule(m),
-        goLevel:()=>this.setState({screen:'levels',filterPath:m.courseId+'|'+m.pathName,filterLevel:null}),
+        goLevel:()=>this.setState({screen:'levels',filterPath:m.courseId,filterLevel:null}),
         goPath:()=>this.setState({screen:'paths',filterPath:null,filterLevel:null}),
         viewResources:()=>this.setState({screen:'resources'}) };
     });
 
-    const levelFilterActive=!!fPath; const levelFilterLabel=fPath?(fPath.split('|')[1]||''):'';
+    const fPath=S.filterPath;
+    const levelFilterActive=!!fPath; const levelFilterLabel=fPath?((this.courseById(fPath)||{}).name||fPath):'';
     const moduleFilterActive=!!fLevel; const mfParts=fLevel?fLevel.split('|'):[];
     const moduleFilterPath=mfParts[1]||''; const moduleFilterLabel=mfParts[2]||'';
 
@@ -1921,8 +2285,8 @@ class Component extends DCLogic {
       goBuild:()=>this.go('paths'),
       goUsers:()=>this.go('users'), goHomolog:()=>this.go('homologations'),
       activity,
-      pathsCountLabel:pathCards.length+' paths across '+S.courses.length+' programs',
-      levelsCountLabel:filteredLevels.length+' levels'+(fPath?' — filtered':''),
+      pathsCountLabel:pathCards.length+' role paths',
+      levelsCountLabel,
       modulesCountLabel:filteredModules.length+' modules'+(fLevel?' — filtered':''),
       skillsEmpty:skillRows.length===0,
       sortUsageStyle:(sfSkills.sort!=='alpha')?'padding:7px 14px;border-radius:9px;border:none;background:var(--brand);color:#fff;font-size:12.5px;font-weight:700;cursor:pointer;':'padding:7px 14px;border-radius:9px;border:1px solid var(--border);background:var(--surface-2);color:var(--text-2);font-size:12.5px;font-weight:600;cursor:pointer;',
@@ -1990,7 +2354,6 @@ class Component extends DCLogic {
       levelOptions, saveNewModule:()=>this.saveNewModule(),
       stopProp:(e)=>this.stopProp(e),
       courseCountLabel:S.courses.length+' programs · '+allPaths.length+' paths · '+allModules.length+' modules',
-      courseCards,
       resLibRows:resLibUnique, resLibCount:resLibUnique.length,
       skillRows,
       userRows,
@@ -2078,7 +2441,7 @@ class Component extends DCLogic {
     const avg=enr.length?Math.round(enr.reduce((a,e)=>a+e.prog,0)/enr.length):0;
     const pending=this.homologs();
     const atRisk=enr.filter(e=>e.prog<40&&e.status!=='completed').map(e=>{
-      const due=this.state.resources.filter(r=>r.courseId===e.courseId&&r.dueDate).sort((a,b)=>a.dueDate.localeCompare(b.dueDate))[0];
+      const due=this.state.resources.filter(r=>r.courseId===e.primaryPathId&&r.dueDate).sort((a,b)=>a.dueDate.localeCompare(b.dueDate))[0];
       return { name:e.name, initials:this.initials(e.name), avatarBg:this.avatarBg(e.name), courseName:e.course?e.course.name:'—', prog:e.prog,
         due:due?this.fmtDate(due.dueDate):'No deadline', reason:e.prog<10?'Barely started':'Behind schedule' };
     });
@@ -2088,129 +2451,244 @@ class Component extends DCLogic {
 
     const stMap={ 'not-started':['Inactive','#94a3b8'], 'in-progress':['On Track','#2563eb'], 'awaiting':['Behind','#b45309'], 'completed':['Completed','#15803d'] };
     const progressRows=enr.map(e=>{
-      const lvl=this.state.resources.filter(r=>r.courseId===e.courseId).map(r=>r.level);
+      const lvl=this.state.resources.filter(r=>r.courseId===e.primaryPathId).map(r=>r.level);
       const curLevel=lvl[0]||'—';
       const st= e.prog<10?['Inactive','#94a3b8']: (e.prog>=100?['Completed','#15803d']: (e.prog<40?['Behind','#b45309']:['On Track','#2563eb']));
       return { id:e.id, name:e.name, initials:this.initials(e.name), avatarBg:this.avatarBg(e.name), email:e.email,
         courseName:e.course?e.course.name:'—', courseColor:e.course?e.course.color:'#64748b', level:curLevel, prog:e.prog, last:e.last,
         statusLabel:st[0], statusColor:st[1], statusBg:this.mix(st[1],14) };
     });
-    const approvalRows=pending.slice().sort((a,b)=>a.submitted.localeCompare(b.submitted)).map(h=>({ ...h, initials:this.initials(h.user.name), avatarBg:this.avatarBg(h.user.name), approve:()=>this.approve(h), reject:()=>this.openReject(h) }));
+    const evidenceRows=pending.map(h=>({
+      ...h, initials:this.initials(h.user.name), avatarBg:this.avatarBg(h.user.name),
+      type:'evidence', typeBg:this.mix('#2563eb',12), typeColor:'#2563eb', typeLabel:'Evidence',
+      approve:()=>this.approve(h), reject:()=>this.openReject(h)
+    }));
+    const homReqs=(S.homologRequests||[]).filter(h=>h.status==='pending').map(h=>{
+      const u=this.userById(h.userId); const res=S.resources.find(r=>r.id===h.resourceId)||{title:h.title,platform:'—'};
+      return { id:h.id, res:{...res,title:h.title||res.title,evidence:h.evidence||'evidencia.pdf'}, user:u,
+        submitted:h.submitted, overdue:false, submittedLabel:this.fmtDate(h.submitted), initials:this.initials(u.name), avatarBg:this.avatarBg(u.name),
+        type:'homologation', typeBg:this.mix('#7c3aed',12), typeColor:'#7c3aed', typeLabel:'Homologation',
+        approve:()=>this.approveHomologRequest(h.id),
+        reject:()=>this.openReject({type:'homologation',reqId:h.id,res:{title:h.title},user:u}) };
+    });
+    const approvalRows=[...evidenceRows,...homReqs].sort((a,b)=>a.submitted.localeCompare(b.submitted));
 
+    const programOptions=S.courses.map(c=>({id:c.id,name:c.name}));
     return {
       showTeam:isMgr&&S.screen==='team', showProgress:isMgr&&S.screen==='progress', showApprovals:isMgr&&S.screen==='approvals',
       mgrCards:[ {value:team.length,label:'Team learners',color:'var(--text)',flag:false},
         {value:avg+'%',label:'Avg completion',color:'var(--text)',flag:false},
-        {value:pending.length,label:'Pending approvals',color:pending.length?'#dc2626':'var(--text)',flag:pending.length>0},
+        {value:approvalRows.length,label:'Pending approvals',color:approvalRows.length?'#dc2626':'var(--text)',flag:approvalRows.length>0},
         {value:atRisk.length,label:'At-risk learners',color:atRisk.length?'#b45309':'var(--text)',flag:false} ],
       atRisk, atRiskEmpty:atRisk.length===0,
       mgrApprovals:approvalRows.slice(0,3), mgrApprovalsMore:Math.max(0,approvalRows.length-3), mgrApprovalsEmpty:approvalRows.length===0,
       goApprovals:()=>this.go('approvals'),
       teamByCourse,
       progressRows,
-      approvalRows, approvalsEmpty:approvalRows.length===0
+      approvalRows, approvalsEmpty:approvalRows.length===0,
+      showEnrollments: isMgr&&S.screen==='enrollments',
+      enrollmentRows: S.users.filter(u=>u.role==='Learner').map(u=>{
+        const primary=u.primaryPathId?this.courseById(u.primaryPathId):null;
+        const secondaries=(u.secondaryPaths||[]).map(sp=>{const c=this.courseById(sp.pathId);return{...sp,name:c?c.name:'—',color:c?c.color:'#94a3b8'};});
+        const prog=({u1:78,u2:42,u3:18,u4:5,u6:67,u8:88}[u.id]||0);
+        return { ...u, initials:this.initials(u.name), avatarBg:this.avatarBg(u.name),
+          primaryName:primary?primary.name:'Sin asignar', primaryLevel:u.primaryLevel||'—', primaryColor:primary?primary.color:'#94a3b8',
+          primaryBg:this.mix(primary?primary.color:'#94a3b8',12), secondaries, prog,
+          statusLabel:prog===0?'No iniciado':prog>=100?'Completado':'En progreso',
+          statusColor:prog===0?'#64748b':prog>=100?'#15803d':'#2563eb',
+          statusBg:this.mix(prog===0?'#64748b':prog>=100?'#15803d':'#2563eb',12),
+          manage:()=>this.openEnrollPanel(u) };
+      }),
+      enrollPanelOpen: S.enrollPanelOpen,
+      enrollPanelUser: S.enrollPanelUser?S.users.find(u=>u.id===S.enrollPanelUser):null,
+      enrollPanelPrimPath: S.enrollPanelPrimPath,
+      enrollPanelPrimLevel: S.enrollPanelPrimLevel,
+      enrollPanelAddSecPath: S.enrollPanelAddSecPath,
+      enrollPanelAddSecLevel: S.enrollPanelAddSecLevel,
+      enrollPanelSecondaries: S.enrollPanelUser?(S.users.find(u=>u.id===S.enrollPanelUser)||{secondaryPaths:[]}).secondaryPaths.map(sp=>{const c=this.courseById(sp.pathId);return{...sp,name:c?c.name:'—',color:c?c.color:'#94a3b8',remove:()=>this.removeSecondaryPath(S.enrollPanelUser,sp.pathId)};}):[],
+      enrollLevelOptions: S.enrollPanelPrimPath?[...new Set(S.resources.filter(r=>r.courseId===S.enrollPanelPrimPath).map(r=>r.level))].map(l=>({value:l,label:l})):[],
+      enrollSecLevelOptions: S.enrollPanelAddSecPath?[...new Set(S.resources.filter(r=>r.courseId===S.enrollPanelAddSecPath).map(r=>r.level))].map(l=>({value:l,label:l})):[],
+      setEnrollPrimPath:(e)=>this.setState({enrollPanelPrimPath:e.target.value,enrollPanelPrimLevel:''}),
+      setEnrollPrimLevel:(e)=>this.setState({enrollPanelPrimLevel:e.target.value}),
+      setEnrollSecPath:(e)=>this.setState({enrollPanelAddSecPath:e.target.value,enrollPanelAddSecLevel:''}),
+      setEnrollSecLevel:(e)=>this.setState({enrollPanelAddSecLevel:e.target.value}),
+      savePrimaryPath:()=>this.savePrimaryPath(),
+      addSecondaryPath:()=>this.addSecondaryPath(),
+      closeEnrollPanel:()=>this.closeEnrollPanel(),
+      stopEnrollProp:(e)=>e&&e.stopPropagation&&e.stopPropagation(),
+      pendingEnrollRequests: (S.enrollRequests||[]).filter(r=>r.status==='pending').length,
+      programOptions
     };
   }
 
   vLearner(){
     const S=this.state, isLn=S.viewer==='learner';
-    const cid='sr-qa';
+    const cid='qa';
     const all=this.state.resources.filter(r=>r.courseId===cid).map(r=>this.decorate(r));
     const course=this.courseById(cid);
     // continue: most recent in-progress
     const inProg=all.filter(r=>r.status==='in-progress');
     const cont=inProg[0]||all.find(r=>r.status==='not-started')||all[0];
     const contD=cont?this.decorate(cont):null;
-    // required = has dueDate or homolog required & not complete
-    const required=all.filter(r=>(r.dueDate||r.homolog==='required')&&r.status!=='completed').slice(0,4);
-    // progress per path
-    const paths={};
-    all.forEach(r=>{ (paths[r.path]=paths[r.path]||{done:0,total:0,color:this.platColor(r.platform)}); paths[r.path].total++; if(r.status==='completed') paths[r.path].done++; });
-    const pathProgress=Object.keys(paths).map((p,i)=>({ name:p, pct:Math.round(paths[p].done/paths[p].total*100), done:paths[p].done, total:paths[p].total, color:this.PALETTE[i%this.PALETTE.length] }));
-    // skills gained
-    const gained={}, pendingSk={};
-    all.forEach(r=>{ (r.skills||[]).forEach(s=>{ if(r.status==='completed') gained[s]=true; else if(r.status==='waiting') pendingSk[s]=true; }); });
-    const skillsGained=Object.keys(gained).map(s=>({ name:s, pending:false }));
-    const skillsPending=Object.keys(pendingSk).filter(s=>!gained[s]).map(s=>({ name:s, pending:true }));
-    const chipStyle=(pend)=> pend ? 'background:color-mix(in srgb,#b45309 13%,var(--surface));color:#b45309;' : 'background:var(--brand-soft);color:var(--brand);';
-    const allSkillChips=[...skillsGained,...skillsPending].map(c=>({ name:c.name, css:chipStyle(c.pending) }));
-    // tabs
-    const TABS=[['overview','Overview'],['todo','To Do'],['progress','In Progress'],['history','History'],['skills','Skills'],['certs','Certificates']];
-    const todo=all.filter(r=>r.status==='not-started'||r.status==='waiting');
-    const history=all.filter(r=>r.status==='completed').slice().sort((a,b)=>(b.completedDate||'').localeCompare(a.completedDate||''));
-    const certs=all.filter(r=>r.hasCert);
-    const counts={ todo:todo.length, progress:inProg.length, certs:certs.length };
-    const learnerTabs=TABS.map(t=>({ key:t[0], label:t[1], count:counts[t[0]]||0, hasCount:!!counts[t[0]], sel:S.learnerTab===t[0], pick:()=>this.setState({learnerTab:t[0]}),
-      style:S.learnerTab===t[0]?'padding:12px 2px;border:none;background:none;font-size:13.5px;font-weight:700;color:var(--brand);border-bottom:2.5px solid var(--brand);white-space:nowrap;':'padding:12px 2px;border:none;background:none;font-size:13.5px;font-weight:600;color:var(--text-3);border-bottom:2.5px solid transparent;white-space:nowrap;' }));
 
-    // course page tree (learner)
-    const lcid=S.detailCourse||cid;
-    const lcourse=this.courseById(lcid);
-    const tree=this.tree(lcid).map(p=>({
-      path:p.path, open:S.learnerOpenPath[p.path]!==false, toggle:()=>this.setState({learnerOpenPath:Object.assign({},S.learnerOpenPath,{[p.path]:S.learnerOpenPath[p.path]===false})}),
-      chev:S.learnerOpenPath[p.path]!==false?'transform:rotate(90deg);transition:.15s;':'transition:.15s;',
-      levels:p.levels.map(l=>({ level:l.level, modules:l.modules.map(m=>({ module:m.module, resources:m.resources.map(r=>{
-        const d=this.decorate(r); const dot={ 'completed':'#15803d','in-progress':'#2563eb','waiting':'#b45309','not-started':'#cbd5e1' }[r.status];
-        return { id:r.id, title:r.title, dot, sel:S.detailRes===r.id, pick:()=>this.setState({detailRes:r.id,evidenceFile:''}),
-          style:S.detailRes===r.id?'display:flex;align-items:center;gap:8px;width:100%;text-align:left;padding:7px 10px;border:none;border-radius:8px;background:var(--brand-soft);color:var(--brand);font-size:12.5px;font-weight:600;':'display:flex;align-items:center;gap:8px;width:100%;text-align:left;padding:7px 10px;border:none;border-radius:8px;background:transparent;color:var(--text-2);font-size:12.5px;font-weight:500;' };
-      }) })) }))
+    const selRes=S.detailRes?this.decorate(this.state.resources.find(r=>r.id===S.detailRes)):null;
+    const canSubmit=!!selRes&&(selRes.status==='not-started'||selRes.status==='in-progress')&&selRes.homolog==='required'&&!this.isAuto(selRes.platform);
+
+    // home screen data
+    const learnerUser=S.users.find(u=>u.id==='u1')||S.users.find(u=>u.role==='Learner')||{};
+    const primaryPath=learnerUser.primaryPathId?this.courseById(learnerUser.primaryPathId):null;
+    const primaryProg=this.courseProgress(learnerUser.primaryPathId||'qa');
+    const homeSecondaries=(learnerUser.secondaryPaths||[]).map(sp=>{
+      const c=this.courseById(sp.pathId); const prog=({qa:35,ba:20,bi:60,rpa:45,dev:50}[sp.pathId]||0);
+      return {...sp,name:c?c.name:'—',color:c?c.color:'#94a3b8',prog,go:()=>this.setState({screen:'active',myPathActive:sp.pathId})};
+    });
+
+    // paths landing: cards for every assigned path (primary + secondary)
+    const allPaths=[
+      {pathId:learnerUser.primaryPathId,level:learnerUser.primaryLevel,isPrimary:true},
+      ...(learnerUser.secondaryPaths||[]).map(sp=>({...sp,isPrimary:false}))
+    ].filter(p=>p.pathId);
+    const pathLandingCards=allPaths.map(p=>{
+      const c=this.courseById(p.pathId)||{};
+      const res=this.learnerPathResources(p.pathId);
+      const prog=res.length?Math.round(res.filter(r=>r.status==='completed').length/res.length*100):0;
+      return { pathId:p.pathId, name:c.name||p.pathId, level:p.level, isPrimary:p.isPrimary, prog,
+        color:c.color||'#4A2E80', iconWhite:this.iconEl(c.icon,22,'#fff',2), colorDark:this.dark(c.color||'#4A2E80',28),
+        pick:()=>this.setState({myPathActive:p.pathId,screen:'active'}) };
+    });
+
+    // shared hero + path pills (used by todo/active/history/certificates)
+    const heroPathId=this.learnerActivePath();
+    const heroPath=this.courseById(heroPathId)||{};
+    const heroLevel=this.learnerLevelForPath(heroPathId);
+    const heroRes=this.learnerPathResources(heroPathId);
+    const heroCompleted=heroRes.filter(r=>r.status==='completed');
+    const heroTotal=heroRes.length;
+    const heroProg=heroTotal?Math.round(heroCompleted.length/heroTotal*100):0;
+    const heroPoints=heroCompleted.reduce((a,r)=>a+(r.points||0),0);
+    const heroWaiting=heroRes.filter(r=>r.status==='waiting').length;
+    const heroPendingHomolog=(S.homologRequests||[]).filter(h=>h.userId==='u1'&&h.pathId===heroPathId&&h.status==='pending').length;
+    const heroAwaiting=heroWaiting+heroPendingHomolog;
+    const heroPills=allPaths.map(p=>{
+      const c=this.courseById(p.pathId)||{}; const isActive=p.pathId===heroPathId;
+      return { label:c.name||p.pathId, isPrimary:p.isPrimary, pick:()=>this.setState({myPathActive:p.pathId}),
+        style:isActive?'padding:8px 16px;border-radius:20px;border:none;background:var(--brand);color:#fff;font-size:13px;font-weight:700;cursor:pointer;':'padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-size:13px;font-weight:500;cursor:pointer;' };
+    });
+
+    // active learning
+    const activeLearningCards=heroRes.filter(r=>r.status==='in-progress'||r.status==='waiting').map(r=>{
+      const d=this.decorate(r);
+      return { ...d, isWaiting:r.status==='waiting',
+        open:()=>this.setState({detailRes:r.id}),
+        continueLink:r.link };
+    });
+
+    // todo list — grouped by module
+    const todoModuleMap={};
+    heroRes.filter(r=>r.status==='not-started').forEach(r=>{ (todoModuleMap[r.module]=todoModuleMap[r.module]||[]).push(r); });
+    const todoModules=Object.keys(todoModuleMap).map(mod=>({
+      name:mod,
+      resources:todoModuleMap[mod].map(r=>({...this.decorate(r), start:()=>this.startResource(r.id), open:()=>this.setState({detailRes:r.id})}))
     }));
-    const selRes=S.detailRes?this.decorate(this.state.resources.find(r=>r.id===S.detailRes)):(all[0]);
-    const canSubmit=selRes&&(selRes.status==='not-started'||selRes.status==='in-progress')&&selRes.homolog==='required'&&!this.isAuto(selRes.platform);
+
+    // history
+    const historyRows=heroCompleted.map(r=>{
+      const d=this.decorate(r);
+      const isAutoVal=this.isAuto(r.platform)||r.homolog==='auto';
+      return { ...d, dotColor:this.platColor(r.platform),
+        homogLabel:isAutoVal?'Auto-validated':'Homologated',
+        open:()=>this.setState({detailRes:r.id}) };
+    });
+
+    // certificates
+    const certificateCards=heroCompleted.filter(r=>r.hasCert).map(r=>{
+      const d=this.decorate(r);
+      return { ...d, view:()=>this.setState({certView:r.id}) };
+    });
 
     // explore
     const q=S.search.trim().toLowerCase();
-    const exploreCards=S.courses.filter(c=>c.status!=='draft').filter(c=>!q||c.name.toLowerCase().includes(q)).map(c=>{
-      const rs=this.state.resources.filter(r=>r.courseId===c.id);
-      const skillSet=new Set(); rs.forEach(r=>(r.skills||[]).forEach(s=>skillSet.add(s)));
-      const assigned=c.id===cid;
-      return { ...c, colorDark:this.dark(c.color,28), iconWhite:this.iconEl(c.icon,22,'#fff',2),
-        pathCount:new Set(rs.map(r=>r.path)).size, resCount:rs.length, skills:[...skillSet].slice(0,4), assigned,
-        preview:()=>this.setState({previewCourse:c.id}), open:()=>this.setState({detailCourse:c.id,screen:'course',detailRes:null}),
-        request:()=>this.requestAccess(c) };
+    const assignedPathIds=new Set([learnerUser.primaryPathId,...(learnerUser.secondaryPaths||[]).map(sp=>sp.pathId)].filter(Boolean));
+    const exploreCards=S.courses.filter(c=>!assignedPathIds.has(c.id)).map(c=>{
+      const rs=S.resources.filter(r=>r.courseId===c.id);
+      const levels=[...new Set(rs.map(r=>r.level))];
+      const pending=(S.enrollRequests||[]).some(r=>r.userId===learnerUser.id&&r.pathId===c.id&&r.status==='pending');
+      return { ...c, colorDark:this.dark(c.color,28), iconWhite:this.iconEl(c.icon,24,'#fff',2),
+        levelCount:levels.size||levels.length, resCount:rs.length,
+        skills:[...new Set(rs.flatMap(r=>r.skills||[]))].slice(0,4),
+        pending, assigned:false,
+        preview:()=>this.setState({previewCourse:c.id,previewOpen:true}),
+        request:()=>this.requestSecondaryPath(c.id,levels[0]||'Junior') };
     });
 
+    // homologar
+    const homologPathOptions=[
+      {id:learnerUser.primaryPathId,name:(this.courseById(learnerUser.primaryPathId)||{}).name||'Primary'},
+      ...(learnerUser.secondaryPaths||[]).map(sp=>({id:sp.pathId,name:(this.courseById(sp.pathId)||{}).name||sp.pathId}))
+    ].filter(p=>p.id);
+    const homologResourceOptions=S.homologFormPath?S.resources.filter(r=>r.courseId===S.homologFormPath&&r.status!=='completed').map(r=>({id:r.id,label:r.title+' ('+r.level+' · '+r.module+')'})):[];
+    const homologHistory=(S.homologRequests||[]).filter(h=>h.userId==='u1').map(h=>({
+      ...h, statusLabel:h.status==='pending'?'Pendiente':h.status==='approved'?'Aprobado':'Rechazado',
+      statusColor:h.status==='pending'?'#b45309':h.status==='approved'?'#15803d':'#dc2626',
+      statusBg:this.mix(h.status==='pending'?'#b45309':h.status==='approved'?'#15803d':'#dc2626',12),
+      submittedLabel:this.fmtDate(h.submitted)
+    }));
+
     return {
-      showMyLearning:isLn&&S.screen==='mylearning', showExplore:isLn&&S.screen==='explore', showCoursePage:isLn&&S.screen==='course',
+      showHome:isLn&&S.screen==='home', showExplore:isLn&&S.screen==='explore',
+      showMyPaths:isLn&&S.screen==='mypaths',
+      showHomologar:isLn&&S.screen==='homologar',
+      goMyPaths:()=>this.setState({screen:'mypaths'}),
+      goHomologar:()=>this.setState({screen:'homologar'}),
+      pathLandingCards,
+      showTodo:isLn&&S.screen==='todo', showActive:isLn&&S.screen==='active',
+      showHistory:isLn&&S.screen==='history', showCertificates:isLn&&S.screen==='certificates',
+      showContentHero: isLn&&['todo','active','history','certificates'].includes(S.screen),
+      heroIcon:this.iconEl(heroPath.icon,22,'#fff',2), heroColor:heroPath.color||'#4A2E80', heroColorDark:this.dark(heroPath.color||'#4A2E80',30),
+      heroName:heroPath.name||'—', heroLevel:heroLevel||'—', heroDesc:heroPath.desc||'',
+      heroProg, heroCompletedCount:heroCompleted.length, heroTotal, heroPoints, heroAwaiting,
+      heroPills,
+      activeLearningCards, activeLearningEmpty:activeLearningCards.length===0,
+      todoModules, todoEmpty:todoModules.length===0,
+      historyRows, historyEmpty:historyRows.length===0,
+      certificateCards, certificatesEmpty:certificateCards.length===0,
+      rd_open:!!selRes,
+      rd_title:selRes?selRes.title:'', rd_platform:selRes?selRes.platform:'', rd_platColor:selRes?this.platColor(selRes.platform):'#000',
+      rd_desc:selRes?selRes.description:'', rd_hasDesc:selRes?selRes.hasDesc:false,
+      rd_duration:selRes?selRes.duration:'', rd_points:selRes?selRes.points:0, rd_link:selRes?selRes.link:'#',
+      rd_statusLabel:selRes?selRes.statusLabel:'', rd_statusBg:selRes?selRes.statusBg:'', rd_statusColor:selRes?selRes.statusColor:'',
+      rd_skills:selRes?(selRes.skills||[]):[],
+      rd_homLabel:selRes?selRes.homLabel:'', rd_homColor:selRes?selRes.homColor:'', rd_homBg:selRes?selRes.homBg:'',
+      rd_canSubmit:canSubmit, rd_isAuto:selRes?(this.isAuto(selRes.platform)||selRes.homolog==='auto'):false,
+      rd_isWaiting:selRes?selRes.status==='waiting':false,
+      rd_fileLabel:S.evidenceFile||'Choose evidence file (PDF, PNG, DOCX…)', rd_fileColor:S.evidenceFile?'var(--text)':'var(--text-3)',
+      rd_pickEvidence:()=>{ const n=['certificate.pdf','completion-screenshot.png','badge.png','transcript.pdf'][Math.floor(Math.random()*4)]; this.setState({evidenceFile:n}); },
+      rd_submitEvidence:()=>this.submitEvidence(), rd_markDone:()=>{ if(selRes) this.markResourceDone(selRes.id); this.setState({detailRes:null,evidenceFile:''}); },
+      rd_close:()=>this.setState({detailRes:null,evidenceFile:''}),
+      homePrimaryName:primaryPath?primaryPath.name:'Sin path asignado',
+      homePrimaryLevel:learnerUser.primaryLevel||'—',
+      homePrimaryProg:primaryProg,
+      homeHasSecondary:homeSecondaries.length>0,
+      homeSecondaries,
       // continue card
       hasContinue:!!contD,
       cl_title:contD?contD.title:'', cl_breadcrumb:contD?contD.breadcrumb:'', cl_platform:contD?contD.platform:'', cl_platColor:contD?contD.platColor:'#000',
       cl_progress:contD?contD.progressVal:0, cl_remaining:contD?(contD.remainingLabel||contD.duration):'', cl_color:course.color, cl_colorDark:this.dark(course.color,30),
-      cl_continue:()=>{ if(contD) this.setState({detailCourse:cid,screen:'course',detailRes:contD.id}); },
+      cl_continue:()=>{ if(contD) this.setState({myPathActive:cid,screen:'active',detailRes:contD.id}); },
       ln_courseName:course.name,
-      required:required.map(r=>({ ...r, go:()=>this.setState({detailCourse:cid,screen:'course',detailRes:r.id}) })), requiredEmpty:required.length===0,
-      pathProgress,
-      skillChips:allSkillChips, skillChipsEmpty:allSkillChips.length===0,
-      learnerTabs,
-      tab_overview:S.learnerTab==='overview', tab_todo:S.learnerTab==='todo', tab_progress:S.learnerTab==='progress', tab_history:S.learnerTab==='history', tab_skills:S.learnerTab==='skills', tab_certs:S.learnerTab==='certs',
-      todoList:todo, todoEmpty:todo.length===0,
-      progList:inProg, progEmpty:inProg.length===0,
-      historyList:history, historyEmpty:history.length===0,
-      certList:certs.map(c=>({ ...c, view:()=>this.setState({certView:c.id}) })), certEmpty:certs.length===0,
-      // skills tab full list
-      skillsFull: this.state.skills.map(s=>{
-        const has=skillsGained.some(g=>g.name===s.name); const pend=skillsPending.some(g=>g.name===s.name);
-        const src=all.find(r=>(r.skills||[]).includes(s.name));
-        return { name:s.name, has, pend, pct:has?100:pend?60:0, barColor:has?'#15803d':pend?'#b45309':'var(--border)',
-          state:has?'Gained':pend?'Pending validation':'Not started', stateColor:has?'#15803d':pend?'#b45309':'var(--text-3)',
-          source:src?src.title:'—' };
-      }),
-      // course page
-      cp_courseName:lcourse.name, cp_tree:tree,
-      cp_hasSel:!!selRes,
-      cp_title:selRes?selRes.title:'', cp_platform:selRes?selRes.platform:'', cp_platColor:selRes?this.platColor(selRes.platform):'#000',
-      cp_desc:selRes?selRes.description:'', cp_hasDesc:selRes?selRes.hasDesc:false,
-      cp_duration:selRes?selRes.duration:'', cp_points:selRes?selRes.points:0, cp_link:selRes?selRes.link:'#',
-      cp_statusLabel:selRes?selRes.statusLabel:'', cp_statusBg:selRes?selRes.statusBg:'', cp_statusColor:selRes?selRes.statusColor:'',
-      cp_skills:selRes?(selRes.skills||[]):[],
-      cp_homLabel:selRes?selRes.homLabel:'', cp_homColor:selRes?selRes.homColor:'', cp_homBg:selRes?selRes.homBg:'',
-      cp_canSubmit:canSubmit, cp_isAuto:selRes?(this.isAuto(selRes.platform)||selRes.homolog==='auto'):false,
-      cp_isWaiting:selRes?selRes.status==='waiting':false, cp_isDone:selRes?selRes.status==='completed':false,
-      cp_fileLabel:S.evidenceFile||'Choose evidence file (PDF, PNG, DOCX…)', cp_fileColor:S.evidenceFile?'var(--text)':'var(--text-3)',
-      pickEvidence:()=>{ const n=['certificate.pdf','completion-screenshot.png','badge.png','transcript.pdf'][Math.floor(Math.random()*4)]; this.setState({evidenceFile:n}); },
-      submitEvidence:()=>this.submitEvidence(), markDone:()=>{ if(selRes) this.markResourceDone(selRes.id); },
-      cp_back:()=>this.go('explore'),
-      exploreCards, exploreEmpty:exploreCards.length===0
+      exploreCards, exploreEmpty:exploreCards.length===0,
+      // homologar
+      homologPathOptions, homologResourceOptions,
+      homologFormPath:S.homologFormPath, homologFormResource:S.homologFormResource,
+      homologFormEvidence:S.homologFormEvidence, homologFormNote:S.homologFormNote,
+      homologEvidenceLabel:S.homologFormEvidence||'Adjuntar certificado o captura…',
+      homologEvidenceColor:S.homologFormEvidence?'var(--brand)':'var(--text-3)',
+      homologHistory, homologHistoryEmpty:homologHistory.length===0,
+      setHomologPath:(e)=>this.setState({homologFormPath:e.target.value,homologFormResource:''}),
+      setHomologResource:(e)=>this.setState({homologFormResource:e.target.value}),
+      setHomologNote:(e)=>this.setState({homologFormNote:e.target.value}),
+      pickHomologEvidence:()=>this.pickHomologEvidence(),
+      submitHomologRequest:()=>this.submitHomologRequest()
     };
   }
 
@@ -2224,7 +2702,7 @@ class Component extends DCLogic {
     // preview modal
     const pc=S.previewCourse?this.courseById(S.previewCourse):null;
     const previewTree=pc?this.tree(pc.id).map(p=>({ path:p.path, levels:p.levels.map(l=>({ level:l.level, modules:l.modules.map(m=>({ module:m.module, count:m.resources.length, resources:m.resources.map(r=>({title:r.title,platform:r.platform,platColor:this.platColor(r.platform)})) })) })) })):[];
-    const pcAssigned=pc&&pc.id==='sr-qa';
+    const pcAssigned=pc&&pc.id==='qa';
     // cert modal
     const cv=S.certView?this.state.resources.find(r=>r.id===S.certView):null;
     const cvCourse=cv?this.courseById(cv.courseId):null;
@@ -2239,7 +2717,7 @@ class Component extends DCLogic {
       pv_name:pc?pc.name:'', pv_desc:pc?pc.desc:'', pv_color:pc?pc.color:'#000', pv_colorDark:pc?this.dark(pc.color,28):'#000', pv_icon:pc?this.iconEl(pc.icon,26,'#fff',2):null,
       pv_tree:previewTree, pv_assigned:pcAssigned,
       pv_request:()=>{ if(pc) this.requestAccess(pc); this.setState({previewCourse:null}); },
-      pv_open:()=>{ if(pc){ this.setState({detailCourse:pc.id,screen:'course',previewCourse:null,detailRes:null}); } },
+      pv_open:()=>{ if(pc){ this.setState({myPathActive:pc.id,screen:'active',previewCourse:null,detailRes:null}); } },
       certOpen:!!cv, closeCert:()=>this.setState({certView:null}),
       cv_title:cv?cv.title:'', cv_course:cvCourse?cvCourse.name:'', cv_date:cv?this.fmtDate(cv.completedDate):'', cv_learner:'Yolanda Ortega',
       cv_color:cvCourse?cvCourse.color:'#4A2E80'
