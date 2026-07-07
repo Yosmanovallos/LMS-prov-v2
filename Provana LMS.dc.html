@@ -710,13 +710,23 @@
       <sc-if value="{{ showProgress }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:1200px;margin:0 auto;">
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);">
-          <div style="display:grid;grid-template-columns:1.6fr 1.4fr 1.1fr 1.4fr 1fr 1fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Learner</div><div>Course</div><div>Current Level</div><div>Progress</div><div>Last Active</div><div>Status</div></div>
+          <div style="display:grid;grid-template-columns:1.4fr 1.8fr 1.8fr 0.9fr 0.9fr;gap:14px;padding:13px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-3);text-transform:uppercase;"><div>Learner</div><div>Primary Path</div><div>Secondary Paths</div><div>Last Active</div><div>Status</div></div>
           <sc-for list="{{ progressRows }}" as="p" hint-placeholder-count="6">
-            <div style="display:grid;grid-template-columns:1.6fr 1.4fr 1.1fr 1.4fr 1fr 1fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;">
+            <div style="display:grid;grid-template-columns:1.4fr 1.8fr 1.8fr 0.9fr 0.9fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;">
               <div style="display:flex;align-items:center;gap:10px;min-width:0;"><div style="width:34px;height:34px;border-radius:50%;background:{{ p.avatarBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11.5px;flex-shrink:0;">{{ p.initials }}</div><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ p.name }}</div></div>
-              <div style="display:flex;align-items:center;gap:7px;min-width:0;"><span style="width:8px;height:8px;border-radius:3px;background:{{ p.courseColor }};flex-shrink:0;"></span><span style="font-size:12.5px;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ p.courseName }}</span></div>
-              <div style="font-size:12.5px;color:var(--text-2);">{{ p.level }}</div>
-              <div style="display:flex;align-items:center;gap:9px;"><div style="flex:1;height:7px;border-radius:6px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ p.prog }}%;background:var(--brand);border-radius:6px;"></div></div><span style="font-size:12px;font-weight:700;color:var(--text-2);width:30px;text-align:right;">{{ p.prog }}%</span></div>
+              <div style="min-width:0;">
+                <div style="display:flex;align-items:center;gap:7px;min-width:0;"><span style="width:8px;height:8px;border-radius:3px;background:{{ p.courseColor }};flex-shrink:0;"></span><span style="font-size:12.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ p.courseName }}</span><span style="font-size:11px;color:var(--text-3);flex-shrink:0;">{{ p.level }}</span></div>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:6px;"><div style="flex:1;height:6px;border-radius:4px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ p.prog }}%;background:{{ p.courseColor }};border-radius:4px;"></div></div><span style="font-size:11.5px;font-weight:700;color:var(--text-2);width:32px;text-align:right;">{{ p.prog }}%</span></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:7px;min-width:0;">
+                <sc-for list="{{ p.secondaries }}" as="sp" hint-placeholder-count="1">
+                  <div style="min-width:0;">
+                    <div style="display:flex;align-items:center;gap:7px;min-width:0;"><span style="width:7px;height:7px;border-radius:3px;background:{{ sp.color }};flex-shrink:0;"></span><span style="font-size:12px;font-weight:600;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ sp.name }}</span><span style="font-size:10.5px;color:var(--text-3);flex-shrink:0;">{{ sp.level }}</span></div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-top:4px;"><div style="flex:1;height:5px;border-radius:4px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ sp.prog }}%;background:{{ sp.color }};border-radius:4px;"></div></div><span style="font-size:11px;font-weight:700;color:var(--text-3);width:32px;text-align:right;">{{ sp.prog }}%</span></div>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ p.noSecondaries }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:var(--text-3);">—</span></sc-if>
+              </div>
               <div style="font-size:12px;color:var(--text-3);">{{ p.last }}</div>
               <div><span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;background:{{ p.statusBg }};color:{{ p.statusColor }};">{{ p.statusLabel }}</span></div>
             </div>
@@ -2515,13 +2525,16 @@ class Component extends DCLogic {
     enr.forEach(e=>{ const k=e.course?e.course.name:'—'; (byCourse[k]=byCourse[k]||{name:k,color:e.course?e.course.color:'#64748b',sum:0,count:0}); byCourse[k].sum+=e.prog; byCourse[k].count++; });
     const teamByCourse=Object.values(byCourse).map(c=>({ name:c.name, color:c.color, avg:Math.round(c.sum/c.count), count:c.count }));
 
-    const stMap={ 'not-started':['Inactive','#94a3b8'], 'in-progress':['On Track','#2563eb'], 'awaiting':['Behind','#b45309'], 'completed':['Completed','#15803d'] };
+    const secProgMap={ u1:{dev:14}, u2:{qa:25}, u6:{bi:60} };
     const progressRows=enr.map(e=>{
-      const lvl=this.state.resources.filter(r=>r.courseId===e.primaryPathId).map(r=>r.level);
-      const curLevel=lvl[0]||'—';
       const st= e.prog<10?['Inactive','#94a3b8']: (e.prog>=100?['Completed','#15803d']: (e.prog<40?['Behind','#b45309']:['On Track','#2563eb']));
+      const secondaries=(e.secondaryPaths||[]).map(sp=>{
+        const c=this.courseById(sp.pathId);
+        return { name:c?c.name:'—', color:c?c.color:'#94a3b8', level:sp.level, prog:(secProgMap[e.id]||{})[sp.pathId]||0 };
+      });
       return { id:e.id, name:e.name, initials:this.initials(e.name), avatarBg:this.avatarBg(e.name), email:e.email,
-        courseName:e.course?e.course.name:'—', courseColor:e.course?e.course.color:'#64748b', level:curLevel, prog:e.prog, last:e.last,
+        courseName:e.course?e.course.name:'—', courseColor:e.course?e.course.color:'#64748b', level:e.primaryLevel||'—', prog:e.prog, last:e.last,
+        secondaries, noSecondaries:secondaries.length===0,
         statusLabel:st[0], statusColor:st[1], statusBg:this.mix(st[1],14) };
     });
     const evidenceRows=pending.map(h=>({
