@@ -1498,24 +1498,26 @@ class Component extends DCLogic {
       {id:'n6', type:'reject', text:'Evidence for "API Testing with Postman" needs a clearer screenshot', time:'4 days ago', read:true}
     ],
     users:[
-      { id:'u1', name:'Yolanda Ortega',    email:'yolanda.ortega@provana.com',    role:'Learner',  status:'Active',   managerId:'m1', primaryPathId:'qa',  primaryLevel:'Senior QA',    secondaryPaths:[] },
+      { id:'u1', name:'Yolanda Ortega',    email:'yolanda.ortega@provana.com',    role:'Learner',  status:'Active',   managerId:'m1', primaryPathId:'qa',  primaryLevel:'Senior QA',    secondaryPaths:[{pathId:'dev',level:'Junior Dev'}] },
       { id:'u2', name:'Mateo Castro',      email:'mateo.castro@provana.com',      role:'Learner',  status:'Active',   managerId:'m2', primaryPathId:'dev', primaryLevel:'Junior Dev',    secondaryPaths:[{pathId:'qa',level:'Junior QA'}] },
       { id:'u3', name:'Sofia Herrera',     email:'sofia.herrera@provana.com',     role:'Learner',  status:'Active',   managerId:'m1', primaryPathId:'ba',  primaryLevel:'Junior BA',     secondaryPaths:[] },
       { id:'u4', name:'Diego Ramirez',     email:'diego.ramirez@provana.com',     role:'Learner',  status:'Inactive', managerId:'m3', primaryPathId:'rpa', primaryLevel:'Junior RPA',    secondaryPaths:[] },
       { id:'u5', name:'Carlos Mendez',     email:'carlos.mendez@provana.com',     role:'Manager',  status:'Active',   managerId:null,  primaryPathId:null,  primaryLevel:null,            secondaryPaths:[] },
       { id:'u6', name:'Lucia Fernandez',   email:'lucia.fernandez@provana.com',   role:'Learner',  status:'Active',   managerId:'m2', primaryPathId:'qa',  primaryLevel:'Mid-Level QA',  secondaryPaths:[{pathId:'bi',level:'BI Analyst'}] },
       { id:'u7', name:'Patricia Lozano',   email:'patricia.lozano@provana.com',   role:'Admin',    status:'Active',   managerId:null,  primaryPathId:null,  primaryLevel:null,            secondaryPaths:[] },
-      { id:'u8', name:'Andres Vargas',     email:'andres.vargas@provana.com',     role:'Learner',  status:'Active',   managerId:'m3', primaryPathId:'qa',  primaryLevel:'Junior QA',     secondaryPaths:[] }
+      { id:'u8', name:'Andres Vargas',     email:'andres.vargas@provana.com',     role:'Learner',  status:'Active',   managerId:'m3', primaryPathId:'qa',  primaryLevel:'Junior QA',     secondaryPaths:[] },
+      { id:'u9',  name:'Valentina Rios',   email:'valentina.rios@provana.com',   role:'Learner',  status:'Active',   managerId:'m1', primaryPathId:'bi',  primaryLevel:'BI Analyst',    secondaryPaths:[] },
+      { id:'u10', name:'Javier Morales',   email:'javier.morales@provana.com',   role:'Learner',  status:'Active',   managerId:'m2', primaryPathId:'cm',  primaryLevel:'Junior CM',     secondaryPaths:[] }
     ],
     courses:[
-      { id:'qa',    name:'Quality Assurance',    desc:'Testing, automation and quality assurance.',              icon:'flask',     color:'#2A6FDB', status:'published', learners:29 },
-      { id:'ba',    name:'Business Analyst',     desc:'Requirements gathering and process analysis.',            icon:'chart',     color:'#E0457B', status:'published', learners:5  },
-      { id:'bi',    name:'Business Intelligence',desc:'Data analysis, reporting and BI tooling.',               icon:'database',  color:'#0EA5A0', status:'published', learners:3  },
+      { id:'qa',    name:'Quality Assurance',    desc:'Testing, automation and quality assurance.',              icon:'flask',     color:'#2A6FDB', status:'published', learners:31 },
+      { id:'ba',    name:'Business Analyst',     desc:'Requirements gathering and process analysis.',            icon:'chart',     color:'#E0457B', status:'published', learners:6  },
+      { id:'bi',    name:'Business Intelligence',desc:'Data analysis, reporting and BI tooling.',               icon:'database',  color:'#0EA5A0', status:'published', learners:4  },
       { id:'rpa',   name:'RPA Developer',        desc:'Robotic process automation and orchestration.',          icon:'rocket',    color:'#E2662C', status:'published', learners:4  },
-      { id:'dev',   name:'Developer',            desc:'Software development and engineering.',                  icon:'code',      color:'#1F8A5B', status:'published', learners:7  },
+      { id:'dev',   name:'Developer',            desc:'Software development and engineering.',                  icon:'code',      color:'#1F8A5B', status:'published', learners:8  },
       { id:'arch',  name:'Architect',            desc:'System and enterprise architecture design.',             icon:'globe',     color:'#7C3AED', status:'published', learners:2  },
       { id:'it',    name:'IT',                   desc:'Infrastructure, support and IT operations.',             icon:'cpu',       color:'#475569', status:'published', learners:4  },
-      { id:'cm',    name:'Case Manager',         desc:'Case management and client services.',                   icon:'clipboard', color:'#D99A00', status:'published', learners:6  },
+      { id:'cm',    name:'Case Manager',         desc:'Case management and client services.',                   icon:'clipboard', color:'#D99A00', status:'published', learners:7  },
       { id:'legal', name:'Legal System',         desc:'Legal processes, compliance and documentation.',         icon:'shield',    color:'#DC2626', status:'published', learners:3  },
       { id:'pm',    name:'Project Manager',      desc:'Project planning, delivery and stakeholder management.', icon:'briefcase', color:'#4A2E80', status:'published', learners:8  }
     ],
@@ -1524,7 +1526,13 @@ class Component extends DCLogic {
       {id:'sk5',name:'API Testing'},{id:'sk6',name:'Performance Testing'},{id:'sk7',name:'SQL'},{id:'sk8',name:'Security Testing'},
       {id:'sk9',name:'Leadership'},{id:'sk10',name:'Coaching'},{id:'sk11',name:'QA Strategy'},{id:'sk12',name:'Python'},
       {id:'sk13',name:'CI/CD'},{id:'sk14',name:'Docker'},{id:'sk15',name:'Requirements Analysis'},{id:'sk16',name:'RPA'},
-      {id:'sk17',name:'Facilitation'},{id:'sk18',name:'Manual Testing'}
+      {id:'sk17',name:'Facilitation'},{id:'sk18',name:'Manual Testing'},
+      {id:'sk19',name:'JavaScript'},{id:'sk20',name:'Accessibility'},{id:'sk21',name:'Mobile Testing'},{id:'sk22',name:'Web Development'},
+      {id:'sk23',name:'Software Design'},{id:'sk24',name:'Architecture'},{id:'sk25',name:'Power BI'},{id:'sk26',name:'Data Visualization'},
+      {id:'sk27',name:'Tableau'},{id:'sk28',name:'Data Modeling'},{id:'sk29',name:'Networking'},{id:'sk30',name:'IT Operations'},
+      {id:'sk31',name:'Communication'},{id:'sk32',name:'Case Management'},{id:'sk33',name:'Compliance'},{id:'sk34',name:'Legal Research'},
+      {id:'sk35',name:'Project Management'},{id:'sk36',name:'Agile'},{id:'sk37',name:'Risk Management'},{id:'sk38',name:'Process Modeling'},
+      {id:'sk39',name:'Data Analysis'}
     ],
     platforms:[
       { name:'Udemy', color:'#a435f0', mode:'Certificate' },
@@ -1579,7 +1587,7 @@ class Component extends DCLogic {
     enrollRequests:[],
   };
 
-  TODAY = '2026-06-29';
+  TODAY = '2026-07-07';
   SM = {
     'not-started':{ label:'Not started', color:'#64748b' },
     'in-progress':{ label:'In progress', color:'#2563eb' },
