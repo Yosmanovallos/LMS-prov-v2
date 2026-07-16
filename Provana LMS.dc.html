@@ -47,10 +47,20 @@
         </sc-if>
         <sc-if value="{{ n.isItem }}" hint-placeholder-val="{{ true }}">
           <sc-if value="{{ n.visible }}" hint-placeholder-val="{{ true }}">
-            <button onClick="{{ n.go }}" style="{{ n.style }}">
-              <span style="display:flex;">{{ n.icon }}</span><span style="flex:1;text-align:left;">{{ n.label }}</span>
-              <sc-if value="{{ n.hasBadge }}" hint-placeholder-val="{{ false }}"><span style="background:#dc2626;color:#fff;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:20px;">{{ n.badge }}</span></sc-if>
-            </button>
+            <sc-if value="{{ n.hasChevron }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ n.rowStyle }}">
+                <button onClick="{{ n.go }}" style="{{ n.style }}">
+                  <span style="display:flex;">{{ n.icon }}</span><span style="flex:1;text-align:left;">{{ n.label }}</span>
+                </button>
+                <button onClick="{{ n.toggleChevron }}" style="{{ n.chevronBtnStyle }}">{{ n.chevronIcon }}</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{ !n.hasChevron }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ n.go }}" style="{{ n.style }}">
+                <span style="display:flex;">{{ n.icon }}</span><span style="flex:1;text-align:left;">{{ n.label }}</span>
+                <sc-if value="{{ n.hasBadge }}" hint-placeholder-val="{{ false }}"><span style="background:#dc2626;color:#fff;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:20px;">{{ n.badge }}</span></sc-if>
+              </button>
+            </sc-if>
           </sc-if>
         </sc-if>
       </sc-for>
@@ -885,18 +895,22 @@
       <!-- LEARNER: PATHS (landing) -->
       <sc-if value="{{ showMyPaths }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:1100px;margin:0 auto;">
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,420px));gap:18px;">
           <sc-for list="{{ pathLandingCards }}" as="p" hint-placeholder-count="2">
-            <button onClick="{{ p.pick }}" style="text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);cursor:pointer;">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-                <span style="width:38px;height:38px;border-radius:10px;background:linear-gradient(125deg,{{ p.color }},{{ p.colorDark }});display:flex;align-items:center;justify-content:center;flex-shrink:0;">{{ p.iconWhite }}</span>
-                <span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--brand-soft);color:var(--brand);"><sc-if value="{{ p.isPrimary }}" hint-placeholder-val="{{ true }}">🎯 Primary</sc-if><sc-if value="{{ !p.isPrimary }}" hint-placeholder-val="{{ false }}">📘 Secondary</sc-if></span>
+            <button onClick="{{ p.pick }}" style="text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);cursor:pointer;padding:0;">
+              <div style="height:88px;background:linear-gradient(125deg,{{ p.color }},{{ p.colorDark }});padding:16px;display:flex;align-items:flex-start;justify-content:space-between;">
+                <span style="width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">{{ p.iconWhite }}</span>
+                <span style="font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.25);color:#fff;"><sc-if value="{{ p.isPrimary }}" hint-placeholder-val="{{ true }}">🎯 Primary</sc-if><sc-if value="{{ !p.isPrimary }}" hint-placeholder-val="{{ false }}">📘 Secondary</sc-if></span>
               </div>
-              <div style="font-size:16px;font-weight:800;color:var(--text);">{{ p.name }}</div>
-              <div style="font-size:13px;color:var(--text-2);margin-top:2px;">{{ p.level }}</div>
-              <div style="display:flex;align-items:center;gap:10px;margin-top:12px;">
-                <div style="flex:1;height:7px;border-radius:6px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ p.prog }}%;background:{{ p.color }};border-radius:6px;"></div></div>
-                <span style="font-size:12px;font-weight:700;color:var(--text-2);">{{ p.prog }}%</span>
+              <div style="padding:18px 20px 20px;">
+                <div style="font-size:17px;font-weight:800;color:var(--text);">{{ p.name }}</div>
+                <div style="font-size:13px;color:var(--text-2);margin-top:2px;">{{ p.level }}</div>
+                <div style="font-size:12.5px;color:var(--text-2);margin-top:8px;line-height:1.5;min-height:38px;">{{ p.desc }}</div>
+                <div style="display:flex;gap:14px;font-size:11.5px;color:var(--text-3);padding-top:10px;margin-top:4px;border-top:1px solid var(--border);"><span><strong style="color:var(--text);">{{ p.levelCount }}</strong> levels</span><span><strong style="color:var(--text);">{{ p.resCount }}</strong> resources</span></div>
+                <div style="display:flex;align-items:center;gap:10px;margin-top:14px;">
+                  <div style="flex:1;height:7px;border-radius:6px;background:var(--border);overflow:hidden;"><div style="height:100%;width:{{ p.prog }}%;background:{{ p.color }};border-radius:6px;"></div></div>
+                  <span style="font-size:12px;font-weight:700;color:var(--text-2);">{{ p.prog }}%</span>
+                </div>
               </div>
             </button>
           </sc-for>
@@ -931,8 +945,6 @@
             </div>
           </div>
           <div style="display:flex;gap:24px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.25);">
-            <div><div style="font-size:16px;font-weight:800;">{{ pd_levelCount }}</div><div style="font-size:11px;opacity:.8;">levels</div></div>
-            <div><div style="font-size:16px;font-weight:800;">{{ pd_resCount }}</div><div style="font-size:11px;opacity:.8;">resources</div></div>
             <sc-if value="{{ pd_assigned }}" hint-placeholder-val="{{ true }}">
               <div><div style="font-size:16px;font-weight:800;">{{ pd_inProgressCount }}</div><div style="font-size:11px;opacity:.8;">in progress</div></div>
               <div><div style="font-size:16px;font-weight:800;">{{ pd_doneCount }}</div><div style="font-size:11px;opacity:.8;">completed</div></div>
@@ -942,12 +954,6 @@
             </sc-if>
           </div>
         </div>
-
-        <sc-if value="{{ pd_hasSkills }}" hint-placeholder-val="{{ false }}">
-        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;">
-          <sc-for list="{{ pd_skills }}" as="s" hint-placeholder-count="4"><span style="font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;background:var(--brand-soft);color:var(--brand);">{{ s }}</span></sc-for>
-        </div>
-        </sc-if>
 
         <div style="display:flex;flex-direction:column;gap:14px;">
           <sc-for list="{{ pd_levels }}" as="lv" hint-placeholder-count="2">
@@ -1002,16 +1008,9 @@
           </div>
           <div style="display:flex;gap:24px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.25);">
             <div><div style="font-size:16px;font-weight:800;">{{ heroCompletedCount }}/{{ heroTotal }}</div><div style="font-size:11px;opacity:.8;">homologated</div></div>
-            <div><div style="font-size:16px;font-weight:800;">{{ heroPoints }}</div><div style="font-size:11px;opacity:.8;">points</div></div>
             <div><div style="font-size:16px;font-weight:800;">{{ heroAwaiting }}</div><div style="font-size:11px;opacity:.8;">awaiting homologation</div></div>
           </div>
         </div>
-        <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
-          <sc-for list="{{ heroPills }}" as="hp" hint-placeholder-count="2">
-            <button onClick="{{ hp.pick }}" style="{{ hp.style }}">{{ hp.label }}<sc-if value="{{ hp.isPrimary }}" hint-placeholder-val="{{ false }}"> 🎯</sc-if></button>
-          </sc-for>
-        </div>
-
         <!-- ACTIVE LEARNING -->
         <sc-if value="{{ showActive }}" hint-placeholder-val="{{ false }}">
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
@@ -1025,7 +1024,7 @@
                 <span style="display:inline-block;font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:color-mix(in srgb,#2563eb 12%,var(--surface));color:#2563eb;margin-bottom:10px;">In Progress</span>
                 <div style="display:flex;align-items:center;justify-content:space-between;">
                   <span style="font-size:11.5px;color:var(--text-3);">Last activity · {{ c.lastActivity }}</span>
-                  <a href="{{ c.continueLink }}" target="_blank" style="font-size:12.5px;font-weight:700;color:#fff;background:var(--brand);padding:7px 14px;border-radius:9px;text-decoration:none;">Continue →</a>
+                  <a href="{{ c.continueLink }}" target="_blank" style="font-size:12.5px;font-weight:700;color:#fff;background:var(--brand);padding:7px 14px;border-radius:9px;text-decoration:none;">Resume →</a>
                 </div>
               </sc-if>
               <sc-if value="{{ c.isWaiting }}" hint-placeholder-val="{{ false }}">
@@ -1052,7 +1051,7 @@
                     <div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.title }}</div>
                     <div style="font-size:11.5px;color:var(--text-3);">{{ r.platform }} · {{ r.duration }}</div>
                   </button>
-                  <button onClick="{{ r.start }}" style="font-size:12.5px;font-weight:700;color:#fff;background:var(--brand);border:none;padding:8px 15px;border-radius:9px;cursor:pointer;flex-shrink:0;">Empezar →</button>
+                  <button onClick="{{ r.start }}" style="font-size:12.5px;font-weight:700;color:#fff;background:var(--brand);border:none;padding:8px 15px;border-radius:9px;cursor:pointer;flex-shrink:0;">Start →</button>
                 </div>
               </sc-for>
             </div>
@@ -2151,15 +2150,20 @@ class Component extends DCLogic {
       home:['Home','Your learning today'],
       mypaths:['Paths','All your assigned paths'],
       pathdetail:['Path Overview','Levels, modules and resources in this path'],
-      todo:['ToDo List','Resources waiting to be started'],
-      active:['Active Learning','What you are working on right now'],
-      history:['Achievements','Everything you have completed in this path'],
+      todo:['Pending','These are the resources pending to be started'],
+      active:['In Progress','These are the resources In Progress and ready to be resumed'],
+      history:['Achievements','These are the resources that have been previously completed.'],
       certificates:['Certificates','Certificates earned'],
-      homologar:['Homologation','Request credit for previous courses'],
-      explore:['Explore Courses','Discover courses and grow your skills']
+      homologar:['Homologation','Request a resource that was completed in the past, to be homologated'],
+      explore:['Explore Other Paths','Discover courses and grow your skills']
     };
     const scr = S.screen==='builder'?'builder':S.screen;
-    const pt=titles[scr]||['',''];
+    let pt=titles[scr]||['',''];
+    if(scr==='pathdetail'){
+      const pdC=this.courseById(S.pathDetail);
+      const pdName=pdC?pdC.name:'Path';
+      pt=[pdName+' Path Overview','These are all the items embedded in the '+pdName+' Path'];
+    }
     const hu= isManager?{name:'Carlos Mendez',sub:'Team Manager · Quality West'}: isAdmin?{name:'Patricia Lozano',sub:'Learning Admin'}:{name:'Yolanda Ortega',sub:'Senior QA Engineer'};
     const NIC={
       assign:[['path','M9 11l3 3L22 4'],['path','M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11']],
@@ -2210,14 +2214,31 @@ class Component extends DCLogic {
     const S=this.state, V=S.viewer;
     const on='display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;border:none;border-left:3px solid var(--brand);background:var(--brand-soft);color:var(--brand);font-size:13.5px;font-weight:600;width:100%;';
     const off='display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;border:none;border-left:3px solid transparent;background:transparent;color:var(--text-2);font-size:13.5px;font-weight:500;width:100%;';
-    const I=(p)=>this.svg(p,18,'currentColor',2);
+    const I=(p,size)=>this.svg(p,size||18,'currentColor',2);
     const pendingCount=this.homologs().length;
     const coll=S.navCollapsed||{};
     const chev=(collapsed)=>this.svg([['path',collapsed?'M9 18l6-6-6-6':'M18 15l-6-6-6 6']],12,'var(--text-3)',2);
     const navU=this.learnerActiveUser();
     const pdNavAssigned=!!S.pathDetail&&(S.pathDetail===navU.primaryPathId||(navU.secondaryPaths||[]).some(sp=>sp.pathId===S.pathDetail));
-    const item=(key,label,paths,badge,grp)=>({ isItem:true, isHeading:false, label, icon:I(paths), go:()=>this.go(key), style:(S.screen===key||(key==='mypaths'&&S.screen==='pathdetail'&&pdNavAssigned)||(key==='explore'&&S.screen==='pathdetail'&&!pdNavAssigned)||(key==='progress'&&S.screen==='learnerdetail'))?on:off, hasBadge:!!badge&&badge>0, badge, visible:!coll[grp] });
+    const item=(key,label,paths,badge,grp,indent)=>{
+      const active=(S.screen===key||(key==='mypaths'&&S.screen==='pathdetail'&&pdNavAssigned)||(key==='explore'&&S.screen==='pathdetail'&&!pdNavAssigned)||(key==='progress'&&S.screen==='learnerdetail'));
+      let style=active?on:off;
+      if(indent) style=style.replace('gap:11px;padding:10px 12px;','gap:9px;padding:9px 12px 9px 34px;').replace('font-size:13.5px;','font-size:13px;');
+      return { isItem:true, isHeading:false, label, icon:I(paths,indent?15:18), go:()=>this.go(key), style, hasBadge:!!badge&&badge>0, badge, visible:!coll[grp] };
+    };
     const head=(label,key)=>({ isHeading:true, isItem:false, label, key, toggle:()=>this.toggleNav(key), chevron:chev(coll[key]) });
+    const pathsItem=(key,label,paths,grp)=>{
+      const active=(S.screen===key||(S.screen==='pathdetail'&&pdNavAssigned));
+      return {
+        isItem:true, isHeading:false, hasChevron:true, visible:true,
+        label, icon:I(paths,18), go:()=>this.go(key),
+        rowStyle: active?'display:flex;align-items:center;border-radius:10px;border-left:3px solid var(--brand);background:var(--brand-soft);width:100%;':'display:flex;align-items:center;border-radius:10px;border-left:3px solid transparent;background:transparent;width:100%;',
+        style: active?'display:flex;align-items:center;gap:11px;flex:1;min-width:0;padding:10px 4px 10px 12px;border:none;background:transparent;color:var(--brand);font-size:13.5px;font-weight:600;text-align:left;cursor:pointer;':'display:flex;align-items:center;gap:11px;flex:1;min-width:0;padding:10px 4px 10px 12px;border:none;background:transparent;color:var(--text-2);font-size:13.5px;font-weight:500;text-align:left;cursor:pointer;',
+        toggleChevron:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); this.toggleNav(grp); },
+        chevronBtnStyle:'display:flex;align-items:center;justify-content:center;padding:8px 12px 8px 4px;border:none;background:transparent;cursor:pointer;color:var(--text-3);',
+        chevronIcon:chev(coll[grp])
+      };
+    };
     let navItems=[];
     if(V==='admin'){
       navItems=[
@@ -2255,12 +2276,11 @@ class Component extends DCLogic {
       const lCertCount=lPathRes.filter(r=>r.status==='completed'&&r.hasCert).length;
       navItems=[
         item('home','Home',[['rect',{x:3,y:3,width:7,height:9}],['rect',{x:14,y:3,width:7,height:5}],['rect',{x:14,y:12,width:7,height:9}],['rect',{x:3,y:16,width:7,height:5}]],0,''),
-        head('Content','lcontent'),
-        item('mypaths','Paths',[['path','M4 19.5A2.5 2.5 0 0 1 6.5 17H20'],['path','M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z']],0,'lcontent'),
-        item('todo','ToDo List',[['line',{x1:8,y1:6,x2:21,y2:6}],['line',{x1:8,y1:12,x2:21,y2:12}],['line',{x1:8,y1:18,x2:21,y2:18}],['line',{x1:3,y1:6,x2:3.01,y2:6}],['line',{x1:3,y1:12,x2:3.01,y2:12}],['line',{x1:3,y1:18,x2:3.01,y2:18}]],lTodoCount,'lcontent'),
-        item('active','Active Learning',[['circle',{cx:12,cy:12,r:10}],['polygon',{points:'10 8 16 12 10 16'}]],lActiveCount,'lcontent'),
-        item('history','Achievements',[['path','M6 9H4.5a2.5 2.5 0 0 1 0-5H6'],['path','M18 9h1.5a2.5 2.5 0 0 0 0-5H18'],['path','M4 22h16'],['path','M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22'],['path','M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22'],['path','M18 2H6v7a6 6 0 0 0 12 0V2Z']],0,'lcontent'),
-        item('certificates','Certificates',[['circle',{cx:12,cy:8,r:6}],['path','M15.5 13.5 17 22l-5-3-5 3 1.5-8.5']],lCertCount,'lcontent'),
+        pathsItem('mypaths','Paths',[['path','M4 19.5A2.5 2.5 0 0 1 6.5 17H20'],['path','M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z']],'lpaths'),
+        item('todo','ToDo List',[['line',{x1:8,y1:6,x2:21,y2:6}],['line',{x1:8,y1:12,x2:21,y2:12}],['line',{x1:8,y1:18,x2:21,y2:18}],['line',{x1:3,y1:6,x2:3.01,y2:6}],['line',{x1:3,y1:12,x2:3.01,y2:12}],['line',{x1:3,y1:18,x2:3.01,y2:18}]],lTodoCount,'lpaths',true),
+        item('active','Active Learning',[['circle',{cx:12,cy:12,r:10}],['polygon',{points:'10 8 16 12 10 16'}]],lActiveCount,'lpaths',true),
+        item('history','Achievements',[['path','M6 9H4.5a2.5 2.5 0 0 1 0-5H6'],['path','M18 9h1.5a2.5 2.5 0 0 0 0-5H18'],['path','M4 22h16'],['path','M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22'],['path','M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22'],['path','M18 2H6v7a6 6 0 0 0 12 0V2Z']],0,'lpaths',true),
+        item('certificates','Certificates',[['circle',{cx:12,cy:8,r:6}],['path','M15.5 13.5 17 22l-5-3-5 3 1.5-8.5']],lCertCount,'lpaths',true),
         item('explore','Explore',[['circle',{cx:12,cy:12,r:10}],['polygon',{points:'16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76'}]],0,''),
         item('homologar','Homologation',[['path','M9 11l3 3L22 4'],['path','M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11']],0,'')
       ];
@@ -2739,7 +2759,10 @@ class Component extends DCLogic {
       const c=this.courseById(p.pathId)||{};
       const res=this.learnerPathResources(p.pathId);
       const prog=res.length?Math.round(res.filter(r=>r.status==='completed').length/res.length*100):0;
+      const allRes=S.resources.filter(r=>r.courseId===p.pathId);
+      const levelSet=new Set(allRes.map(r=>r.level));
       return { pathId:p.pathId, name:c.name||p.pathId, level:p.level, isPrimary:p.isPrimary, prog,
+        desc:c.desc||'', levelCount:levelSet.size, resCount:allRes.length,
         color:c.color||'#4A2E80', iconWhite:this.iconEl(c.icon,22,'#fff',2), colorDark:this.dark(c.color||'#4A2E80',28),
         pick:()=>this.setState({pathDetail:p.pathId,screen:'pathdetail'}) };
     });
