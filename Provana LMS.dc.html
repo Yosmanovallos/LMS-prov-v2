@@ -849,7 +849,7 @@
       <sc-if value="{{ showProgress }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:1200px;margin:0 auto;">
         <div class="dc-table" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);">
-          <div style="display:grid;grid-template-columns:1.6fr 1.3fr 1.5fr 0.9fr 0.9fr 22px;gap:14px;padding:12px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--text-3);text-transform:uppercase;"><div>Learner</div><div>Primary Path</div><div>Secondary Paths</div><div>Last Active</div><div>Status</div><div></div></div>
+          <div style="display:grid;grid-template-columns:1.6fr 1.3fr 1.5fr 0.9fr 0.9fr 22px;gap:14px;padding:12px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--text-3);text-transform:uppercase;"><div>Learner</div><div>Primary Path</div><div>Other Paths</div><div>Last Active</div><div>Status</div><div></div></div>
           <sc-for list="{{ progressRows }}" as="p" hint-placeholder-count="6">
             <button onClick="{{ p.open }}" style-hover="background:var(--surface-2);" style="display:grid;grid-template-columns:1.6fr 1.3fr 1.5fr 0.9fr 0.9fr 22px;gap:14px;padding:14px 22px;border:none;border-bottom:1px solid var(--border);align-items:center;width:100%;text-align:left;background:none;cursor:pointer;transition:background .15s ease;">
               <div style="display:flex;align-items:center;gap:10px;min-width:0;"><div style="width:34px;height:34px;border-radius:50%;background:{{ p.avatarBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11.5px;flex-shrink:0;box-shadow:inset 0 0 0 2px rgba(255,255,255,.22);">{{ p.initials }}</div><div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ p.name }}</div></div>
@@ -973,9 +973,9 @@
       <!-- MANAGER: ENROLLMENTS -->
       <sc-if value="{{ showEnrollments }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:1200px;margin:0 auto;">
-        <div style="font-size:13.5px;color:var(--text-2);margin-bottom:16px;">Manage each team member's primary and secondary paths.</div>
+        <div style="font-size:13.5px;color:var(--text-2);margin-bottom:16px;">Manage each team member's primary and other paths.</div>
         <div class="dc-table" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);">
-          <div style="display:grid;grid-template-columns:1.6fr 1.4fr 0.8fr 1.6fr 0.8fr;gap:14px;padding:12px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--text-3);text-transform:uppercase;"><div>Learner</div><div>Primary Path</div><div>Level</div><div>Secondary Paths</div><div style="text-align:right;">Actions</div></div>
+          <div style="display:grid;grid-template-columns:1.6fr 1.4fr 0.8fr 1.6fr 0.8fr;gap:14px;padding:12px 22px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--text-3);text-transform:uppercase;"><div>Learner</div><div>Primary Path</div><div>Level</div><div>Other Paths</div><div style="text-align:right;">Actions</div></div>
           <sc-for list="{{ enrollmentRows }}" as="e" hint-placeholder-count="5">
             <div style-hover="background:var(--surface-2);" style="display:grid;grid-template-columns:1.6fr 1.4fr 0.8fr 1.6fr 0.8fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);align-items:center;transition:background .15s ease;">
               <div style="display:flex;align-items:center;gap:10px;min-width:0;"><div style="width:34px;height:34px;border-radius:50%;background:{{ e.avatarBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11.5px;flex-shrink:0;box-shadow:inset 0 0 0 2px rgba(255,255,255,.22);">{{ e.initials }}</div><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ e.name }}</div></div>
@@ -1032,7 +1032,7 @@
         <!-- Secondary Paths -->
         <sc-if value="{{ homeHasSecondary }}" hint-placeholder-val="{{ false }}">
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);margin-bottom:16px;">
-          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;">Secondary Paths</div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;">Other Paths</div>
           <div style="display:flex;flex-direction:column;gap:10px;">
             <sc-for list="{{ homeSecondaries }}" as="sp" hint-placeholder-count="2">
               <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:11px;background:var(--surface-2);border:1px solid var(--border);flex-wrap:wrap;">
@@ -1702,27 +1702,48 @@
           </div>
           <button onClick="{{ savePrimaryPath }}" style-hover="background:var(--btn-hover);" style="width:100%;padding:9px;border-radius:9px;border:none;background:var(--btn);color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Save Primary Path</button>
         </div>
-        <!-- SECONDARY PATHS -->
+        <!-- OTHER PATHS -->
         <div style="padding:16px;border-radius:13px;border:1px solid var(--border);background:var(--surface-2);">
-          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px;">Secondary Paths</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);">Other Paths</div>
+            <sc-if value="{{ !enrollPanelNoSec }}" hint-placeholder-val="{{ true }}"><span class="dc-num" style="font-size:10.5px;font-weight:800;color:var(--brand);background:var(--brand-soft);border-radius:999px;padding:1px 8px;min-width:20px;text-align:center;">{{ enrollPanelSecCount }}</span></sc-if>
+          </div>
+
+          <!-- assigned paths -->
           <sc-for list="{{ enrollPanelSecondaries }}" as="sp" hint-placeholder-count="2">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:9px;background:var(--surface);border:1px solid var(--border);margin-bottom:7px;">
-              <span style="font-size:13px;font-weight:600;">{{ sp.name }} › {{ sp.level }}</span>
-              <button onClick="{{ sp.remove }}" aria-label="Remove secondary path" style-hover="background:color-mix(in srgb,var(--danger) 12%,var(--surface));" style="font-size:13px;color:var(--danger);background:none;border:none;cursor:pointer;font-weight:700;padding:2px 7px;border-radius:6px;">×</button>
+            <div style="display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:11px;background:var(--surface);border:1px solid var(--border);margin-bottom:8px;box-shadow:var(--shadow);">
+              <span style="width:9px;height:9px;border-radius:50%;background:{{ sp.color }};flex-shrink:0;box-shadow:0 0 0 3px {{ sp.color }}22;"></span>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ sp.name }}</div>
+                <div style="font-size:11.5px;color:var(--text-3);margin-top:1px;">{{ sp.level }}</div>
+              </div>
+              <button onClick="{{ sp.remove }}" aria-label="Remove other path" style-hover="background:color-mix(in srgb,var(--danger) 12%,var(--surface));border-color:color-mix(in srgb,var(--danger) 42%,var(--border));color:var(--danger);" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1;color:var(--text-3);background:var(--surface-2);border:1px solid var(--border);cursor:pointer;font-weight:700;border-radius:8px;flex-shrink:0;transition:all .15s ease;">×</button>
             </div>
           </sc-for>
-          <div style="font-size:11.5px;font-weight:600;color:var(--text-3);margin:10px 0 8px;">+ Add secondary path</div>
-          <div class="dc-g-form" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
-            <select value="{{ enrollPanelAddSecPath }}" onChange="{{ setEnrollSecPath }}" aria-label="Secondary path" style="padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:13px;color:var(--text);outline:none;">
-              <option value="">Path…</option>
-              <sc-for list="{{ programOptions }}" as="o" hint-placeholder-count="10"><option value="{{ o.id }}">{{ o.name }}</option></sc-for>
-            </select>
-            <select value="{{ enrollPanelAddSecLevel }}" onChange="{{ setEnrollSecLevel }}" aria-label="Secondary level" style="padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:13px;color:var(--text);outline:none;">
-              <option value="">Level…</option>
-              <sc-for list="{{ enrollSecLevelOptions }}" as="lo" hint-placeholder-count="4"><option value="{{ lo.value }}">{{ lo.label }}</option></sc-for>
-            </select>
+
+          <!-- empty state -->
+          <sc-if value="{{ enrollPanelNoSec }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:10px;padding:14px;border-radius:11px;border:1px dashed var(--border-strong);background:var(--surface);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+            <div style="font-size:12.5px;color:var(--text-3);line-height:1.4;">No other paths yet. Add one below to broaden this learner's training.</div>
           </div>
-          <button onClick="{{ addSecondaryPath }}" style-hover="border-color:var(--border-strong);background:var(--surface-3);" style="width:100%;padding:9px;border-radius:9px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;">Add Secondary Path</button>
+          </sc-if>
+
+          <!-- add a path -->
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:9px;">Add a path</div>
+            <div class="dc-g-form" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+              <select value="{{ enrollPanelAddSecPath }}" onChange="{{ setEnrollSecPath }}" aria-label="Other path" style="padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:13px;color:var(--text);outline:none;">
+                <option value="">Path…</option>
+                <sc-for list="{{ programOptions }}" as="o" hint-placeholder-count="10"><option value="{{ o.id }}">{{ o.name }}</option></sc-for>
+              </select>
+              <select value="{{ enrollPanelAddSecLevel }}" onChange="{{ setEnrollSecLevel }}" aria-label="Other level" style="padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:13px;color:var(--text);outline:none;">
+                <option value="">Level…</option>
+                <sc-for list="{{ enrollSecLevelOptions }}" as="lo" hint-placeholder-count="4"><option value="{{ lo.value }}">{{ lo.label }}</option></sc-for>
+              </select>
+            </div>
+            <button onClick="{{ addSecondaryPath }}" style-hover="background:color-mix(in srgb,var(--brand) 16%,var(--surface));box-shadow:var(--shadow);" style="width:100%;display:flex;align-items:center;justify-content:center;gap:7px;padding:10px;border-radius:9px;border:none;background:var(--brand-soft);color:var(--brand);font-size:13px;font-weight:700;cursor:pointer;transition:all .15s ease;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add Path</button>
+          </div>
         </div>
       </div>
       <div style="padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
@@ -2241,14 +2262,14 @@ class Component extends DCLogic {
     const users=S.users.map(u=>{
       if(u.id!==S.enrollPanelUser) return u;
       const already=(u.secondaryPaths||[]).some(sp=>sp.pathId===S.enrollPanelAddSecPath);
-      if(already){this.flash('Already has that secondary path','warn');return u;}
+      if(already){this.flash('Already has that path','warn');return u;}
       return {...u,secondaryPaths:[...(u.secondaryPaths||[]),{pathId:S.enrollPanelAddSecPath,level:S.enrollPanelAddSecLevel}]};
     });
-    this.setState({users,enrollPanelAddSecPath:'',enrollPanelAddSecLevel:''}); this.flash('Secondary path added','ok');
+    this.setState({users,enrollPanelAddSecPath:'',enrollPanelAddSecLevel:''}); this.flash('Other path added','ok');
   }
   removeSecondaryPath(userId,pathId){
     const users=this.state.users.map(u=>u.id!==userId?u:{...u,secondaryPaths:(u.secondaryPaths||[]).filter(sp=>sp.pathId!==pathId)});
-    this.setState({users}); this.flash('Secondary path removed','ok');
+    this.setState({users}); this.flash('Other path removed','ok');
   }
   approveEnrollRequest(reqId){
     const req=this.state.enrollRequests.find(r=>r.id===reqId); if(!req) return;
@@ -2937,6 +2958,8 @@ class Component extends DCLogic {
       enrollPanelAddSecPath: S.enrollPanelAddSecPath,
       enrollPanelAddSecLevel: S.enrollPanelAddSecLevel,
       enrollPanelSecondaries: S.enrollPanelUser?(S.users.find(u=>u.id===S.enrollPanelUser)||{secondaryPaths:[]}).secondaryPaths.map(sp=>{const c=this.courseById(sp.pathId);return{...sp,name:c?c.name:'—',color:c?c.color:'#94a3b8',remove:()=>this.removeSecondaryPath(S.enrollPanelUser,sp.pathId)};}):[],
+      enrollPanelSecCount: S.enrollPanelUser?(((S.users.find(u=>u.id===S.enrollPanelUser)||{secondaryPaths:[]}).secondaryPaths)||[]).length:0,
+      enrollPanelNoSec: S.enrollPanelUser?((((S.users.find(u=>u.id===S.enrollPanelUser)||{secondaryPaths:[]}).secondaryPaths)||[]).length===0):false,
       enrollLevelOptions: S.enrollPanelPrimPath?[...new Set(S.resources.filter(r=>r.courseId===S.enrollPanelPrimPath).map(r=>r.level))].map(l=>({value:l,label:l})):[],
       enrollSecLevelOptions: S.enrollPanelAddSecPath?[...new Set(S.resources.filter(r=>r.courseId===S.enrollPanelAddSecPath).map(r=>r.level))].map(l=>({value:l,label:l})):[],
       setEnrollPrimPath:(e)=>this.setState({enrollPanelPrimPath:e.target.value,enrollPanelPrimLevel:''}),
