@@ -950,6 +950,15 @@
       <!-- MANAGER: APPROVALS -->
       <sc-if value="{{ showApprovals }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:1100px;margin:0 auto;">
+
+        <!-- sub-section tabs -->
+        <div style="display:inline-flex;gap:5px;padding:5px;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;margin-bottom:18px;">
+          <button onClick="{{ setApprTabHom }}" style="display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:9px;border:none;cursor:pointer;font-size:13px;font-weight:700;background:{{ apprHomTabBg }};color:{{ apprHomTabColor }};box-shadow:{{ apprHomTabShadow }};transition:all .15s ease;">Homologation<sc-if value="{{ apprHomHas }}" hint-placeholder-val="{{ true }}"><span class="dc-num" style="font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:var(--brand-soft);color:var(--brand);">{{ apprHomCount }}</span></sc-if></button>
+          <button onClick="{{ setApprTabEnroll }}" style="display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:9px;border:none;cursor:pointer;font-size:13px;font-weight:700;background:{{ apprEnrTabBg }};color:{{ apprEnrTabColor }};box-shadow:{{ apprEnrTabShadow }};transition:all .15s ease;">Other Paths Enrollments<sc-if value="{{ apprEnrHas }}" hint-placeholder-val="{{ true }}"><span class="dc-num" style="font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:var(--brand-soft);color:var(--brand);">{{ apprEnrCount }}</span></sc-if></button>
+        </div>
+
+        <!-- HOMOLOGATION PANEL -->
+        <sc-if value="{{ apprTabHom }}" hint-placeholder-val="{{ true }}">
         <div style="font-size:13px;color:var(--text-3);margin-bottom:16px;">Oldest first · scoped to your team · rejecting requires a note that reaches the learner</div>
         <div style="display:flex;flex-direction:column;gap:12px;">
           <sc-for list="{{ approvalRows }}" as="h" hint-placeholder-count="4">
@@ -967,6 +976,29 @@
           </sc-for>
           <sc-if value="{{ approvalsEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:48px;text-align:center;color:var(--text-3);font-size:14px;background:var(--surface);border:1px solid var(--border);border-radius:16px;">No evidence to review right now.</div></sc-if>
         </div>
+        </sc-if>
+
+        <!-- OTHER PATHS ENROLLMENTS PANEL -->
+        <sc-if value="{{ apprTabEnroll }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size:13px;color:var(--text-3);margin-bottom:16px;">Learners requesting access to an additional path · approving enrolls them right away</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <sc-for list="{{ enrollApprovalRows }}" as="er" hint-placeholder-count="2">
+            <div class="dc-lift" style-hover="box-shadow:var(--shadow-md);" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);">
+              <div style="display:flex;align-items:flex-start;gap:14px;">
+                <div style="width:40px;height:40px;border-radius:50%;background:{{ er.avatarBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0;box-shadow:inset 0 0 0 2px rgba(255,255,255,.22);">{{ er.initials }}</div>
+                <div style="flex:1;min-width:0;">
+                  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;"><span style="width:26px;height:26px;border-radius:8px;background:linear-gradient(130deg,{{ er.pathColor }},{{ er.colorDark }});display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);">{{ er.icon }}</span><span style="font-size:14.5px;font-weight:700;letter-spacing:-.01em;">{{ er.pathName }}</span><span style="font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:999px;background:{{ er.pathBg }};color:{{ er.pathColor }};letter-spacing:.04em;text-transform:uppercase;">Path access</span></div>
+                  <div style="font-size:12.5px;color:var(--text-2);margin-top:6px;"><strong style="color:var(--text);">{{ er.userName }}</strong> · wants to enroll at {{ er.level }} · requested {{ er.submittedLabel }}</div>
+                  <div style="display:flex;align-items:center;gap:8px;margin-top:12px;padding:9px 13px;border-radius:11px;background:var(--surface-2);border:1px solid var(--border);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span style="font-size:12.5px;color:var(--text-2);">Currently on <strong style="color:var(--text);">{{ er.currentPathName }}</strong></span></div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;"><button onClick="{{ er.approve }}" style-hover="background:color-mix(in srgb,var(--success) 88%,#000);box-shadow:var(--shadow-md);" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 20px;border-radius:10px;border:none;background:var(--success);color:#fff;font-size:13px;font-weight:700;cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>Approve</button><button onClick="{{ er.reject }}" style-hover="border-color:color-mix(in srgb,var(--danger) 45%,var(--border));background:color-mix(in srgb,var(--danger) 7%,var(--surface));" style="padding:9px 20px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--danger);font-size:13px;font-weight:700;cursor:pointer;">Reject</button></div>
+              </div>
+            </div>
+          </sc-for>
+          <sc-if value="{{ enrollApprovalsEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:48px;text-align:center;color:var(--text-3);font-size:14px;background:var(--surface);border:1px solid var(--border);border-radius:16px;">No path requests to review right now.</div></sc-if>
+        </div>
+        </sc-if>
+
       </div>
       </sc-if>
 
@@ -1932,7 +1964,11 @@ class Component extends DCLogic {
       { id:'hreq3', userId:'u1', resourceId:'c44', pathId:'dev', level:'Junior Dev', module:'Programming', title:'JavaScript Essentials', evidence:'js-essentials-cert.pdf', status:'approved', submitted:'2026-07-02', managerNote:'Valid Udemy certificate — approved.' },
       { id:'hreq4', userId:'u1', resourceId:'c34', pathId:'qa', level:'Senior QA', module:'CI/CD', title:'Quality Gates with SonarQube', evidence:'sonar-screenshot.png', status:'rejected', submitted:'2026-06-20', managerNote:'Certificate does not cover the SonarQube quality-gates module — please complete the assessment.' }
     ],
-    enrollRequests:[],
+    enrollRequests:[
+      { id:'ereq_seed1', userId:'u3', pathId:'qa',  level:'Junior QA',  status:'pending', submitted:'2026-07-03' },
+      { id:'ereq_seed2', userId:'u8', pathId:'dev', level:'Junior Dev', status:'pending', submitted:'2026-07-06' }
+    ],
+    approvalsTab:'homologation',
   };
 
   TODAY = '2026-07-07';
@@ -2460,7 +2496,8 @@ class Component extends DCLogic {
       ];
     } else if(V==='manager'){
       const homReq=S.homologRequests?S.homologRequests.filter(h=>h.status==='pending').length:0;
-      const totalPending=pendingCount+homReq;
+      const enrReq=(S.enrollRequests||[]).filter(r=>r.status==='pending').length;
+      const totalPending=pendingCount+homReq+enrReq;
       navItems=[
         head('My Team',''),
         item('team','Team Overview',[['rect',{x:3,y:3,width:7,height:9}],['rect',{x:14,y:3,width:7,height:5}],['rect',{x:14,y:12,width:7,height:9}],['rect',{x:3,y:16,width:7,height:5}]],0,''),
@@ -2917,6 +2954,21 @@ class Component extends DCLogic {
     });
     const approvalRows=[...evidenceRows,...homReqs].sort((a,b)=>a.submitted.localeCompare(b.submitted));
 
+    // Other Paths Enrollments — requests to enroll in an additional path
+    const enrollApprovalRows=(S.enrollRequests||[]).filter(r=>r.status==='pending')
+      .sort((a,b)=>a.submitted.localeCompare(b.submitted)).map(r=>{
+        const u=this.userById(r.userId)||{name:'—'};
+        const c=this.courseById(r.pathId)||{};
+        const cur=u.primaryPathId?this.courseById(u.primaryPathId):null;
+        return { id:r.id, userName:u.name, initials:this.initials(u.name), avatarBg:this.avatarBg(u.name),
+          pathName:c.name||r.pathId, pathColor:c.color||'#64748b', pathBg:this.mix(c.color||'#64748b',12),
+          colorDark:this.dark(c.color||'#64748b',28), icon:this.iconEl(c.icon,18,'#fff',2),
+          level:r.level, submittedLabel:this.fmtDate(r.submitted),
+          currentPathName:cur?cur.name:'No primary path yet',
+          approve:()=>this.approveEnrollRequest(r.id), reject:()=>this.rejectEnrollRequest(r.id) };
+      });
+    const apprTabEnroll=S.approvalsTab==='enroll';
+
     const programOptions=S.courses.map(c=>({id:c.id,name:c.name}));
     return {
       showTeam:isMgr&&S.screen==='team', showProgress:isMgr&&S.screen==='progress', showApprovals:isMgr&&S.screen==='approvals',
@@ -2938,6 +2990,18 @@ class Component extends DCLogic {
       tcd_learners:tcdLearners, tcd_close:()=>this.setState({teamCourseDetail:null}),
       progressRows,
       approvalRows, approvalsEmpty:approvalRows.length===0,
+      apprTabHom:!apprTabEnroll, apprTabEnroll,
+      apprHomTabBg:!apprTabEnroll?'var(--surface)':'transparent',
+      apprHomTabColor:!apprTabEnroll?'var(--text)':'var(--text-3)',
+      apprHomTabShadow:!apprTabEnroll?'var(--shadow)':'none',
+      apprEnrTabBg:apprTabEnroll?'var(--surface)':'transparent',
+      apprEnrTabColor:apprTabEnroll?'var(--text)':'var(--text-3)',
+      apprEnrTabShadow:apprTabEnroll?'var(--shadow)':'none',
+      apprHomCount:approvalRows.length, apprHomHas:approvalRows.length>0,
+      apprEnrCount:enrollApprovalRows.length, apprEnrHas:enrollApprovalRows.length>0,
+      enrollApprovalRows, enrollApprovalsEmpty:enrollApprovalRows.length===0,
+      setApprTabHom:()=>this.setState({approvalsTab:'homologation'}),
+      setApprTabEnroll:()=>this.setState({approvalsTab:'enroll'}),
       showEnrollments: isMgr&&S.screen==='enrollments',
       enrollmentRows: S.users.filter(u=>u.role==='Learner').map(u=>{
         const primary=u.primaryPathId?this.courseById(u.primaryPathId):null;
